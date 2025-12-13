@@ -29,6 +29,9 @@ importers:
       '@rbxts/charm-sync':
         specifier: ^0.3.0
         version: 0.3.0(@rbxts/charm@0.10.0)
+      '@rbxts/janitor':
+        specifier: 1.18.3-ts.0
+        version: 1.18.3-ts.0
       '@rbxts/jest':
         specifier: 3.13.3-ts.1
         version: 3.13.3-ts.1
@@ -274,6 +277,9 @@ packages:
 
   '@rbxts/emittery@3.13.3-ts.1':
     resolution: {integrity: sha512-iEUg8fk1xYO70H5t+a1sO34FkYerP+melGdJYkUV0Jf6fzYms7YQ/5awVjJ7KYJW3vo1bKUODBiBymqz4LHxEA==}
+
+  '@rbxts/janitor@1.18.3-ts.0':
+    resolution: {integrity: sha512-xr6DBJfQ+k0hbkx1pOYteYOBfinYO/otd+NnpiDaVaR78n89cusxBzKrdImNFzBs+GDVG9qnEZb6HbRZyMkz5g==}
 
   '@rbxts/jest-globals@3.13.3-ts.1':
     resolution: {integrity: sha512-vbALjRL4x2z/KPwI/6Rvxcd6wyU7c1c9x57U1YAKRwjDCdQFdDah+0y4QV9uJ09VgvKw0WODJzmPJNkLGdG8iQ==}
@@ -1076,6 +1082,8 @@ snapshots:
   '@rbxts/emittery@3.13.3-ts.1':
     dependencies:
       '@rbxts-js/emittery': 3.13.3-ts.3
+
+  '@rbxts/janitor@1.18.3-ts.0': {}
 
   '@rbxts/jest-globals@3.13.3-ts.1':
     dependencies:
