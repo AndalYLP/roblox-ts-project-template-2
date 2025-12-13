@@ -41,6 +41,9 @@ importers:
       '@rbxts/log':
         specifier: 0.6.3
         version: 0.6.3
+      '@rbxts/lyra':
+        specifier: 0.6.1
+        version: 0.6.1
       '@rbxts/ui-labs':
         specifier: 2.4.2
         version: 2.4.2
@@ -284,6 +287,9 @@ packages:
   '@rbxts/log@0.6.3':
     resolution: {integrity: sha512-YZpDvjL7yif9aYuNAkuM9vnegcwQmOwX0CfvGfWvrzCpmARY4Ey2pTMhoEgxKo36HcdPPi3aLxmcuvn0NHrPPg==}
 
+  '@rbxts/lyra@0.6.1':
+    resolution: {integrity: sha512-ulFu65VysKJfezi33HUL3N30QH45ld2FmJXI3LD10SqMyN/MCjaSD1/IL/rFUVeApBlwprVxUKSDXPUEFcXYzQ==}
+
   '@rbxts/maid@1.1.0':
     resolution: {integrity: sha512-bVWXZ0p2M3OJzPzvN5fY0T4s37ezUMY7EX31Xspp7Ds4C/K9yE4MHMRXjtlNvsYVPmoc5tdhAbpZY02Veix5lg==}
 
@@ -307,6 +313,9 @@ packages:
 
   '@rbxts/t@2.2.1':
     resolution: {integrity: sha512-MoFLHRQdm1tpAviAVxgkQj/ktxtnGBund2HXQj5xRqgYUWuC3kYuLkctuxXiJHUd1o1JzfU/HvVHtZfpqp61tg==}
+
+  '@rbxts/t@3.1.1':
+    resolution: {integrity: sha512-r+IvHHGLt9ZM8+cJAs5Q7ZyGaSlsbkXTaeat85FxRmjjozykHLbQ24rY/5utJbp63a5uCy3Wyl1fGv/Gk/GnIw==}
 
   '@rbxts/t@3.2.1':
     resolution: {integrity: sha512-/fnf2QSx+TI3HSJ6QW2ikvGQk0mlx/63UXo60pLAKGqbxXiAuTJh88bpKpHw6aCzfFLJAwrVIcgCUOokLMPcag==}
@@ -1089,6 +1098,10 @@ snapshots:
     dependencies:
       '@rbxts/message-templates': 0.3.2
 
+  '@rbxts/lyra@0.6.1':
+    dependencies:
+      '@rbxts/t': 3.1.1
+
   '@rbxts/maid@1.1.0': {}
 
   '@rbxts/message-templates@0.3.2': {}
@@ -1108,6 +1121,8 @@ snapshots:
   '@rbxts/signal@1.1.1': {}
 
   '@rbxts/t@2.2.1': {}
+
+  '@rbxts/t@3.1.1': {}
 
   '@rbxts/t@3.2.1': {}
 
