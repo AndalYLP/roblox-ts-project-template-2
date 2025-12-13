@@ -35,6 +35,9 @@ importers:
       '@rbxts/log':
         specifier: 0.6.3
         version: 0.6.3
+      '@rbxts/ui-labs':
+        specifier: 2.4.2
+        version: 2.4.2
       '@rbxts/vide-charm':
         specifier: ^0.3.0
         version: 0.3.0(@rbxts/charm@0.10.0)(@rbxts/vide@0.5.7)
@@ -290,6 +293,9 @@ packages:
 
   '@rbxts/types@1.0.896':
     resolution: {integrity: sha512-zuw1lpvW8hfnHxUmkoEjJ/NDrfpDjqzKWV1iU18DRoM0VsMleLfUv/t7giN70ST/KnGS6S6ubH8la+JTEl6aRw==}
+
+  '@rbxts/ui-labs@2.4.2':
+    resolution: {integrity: sha512-9cyzDYN4mM7KSupZpbHRCUWCfSHzy8LCqa9Czys2jaKYUCn8oV4j5AE+5jTrHD/8RcltP5EvCSFIFwB0N/NfxA==}
 
   '@rbxts/vide-charm@0.3.0':
     resolution: {integrity: sha512-leefLurc48uaJ72HAUBe0JsDcdvr4qib+XWC5196hkbDAOqdjqyjt8e1qY7WK8myG+QKOrU4U3M1hGFVJKdbKg==}
@@ -1067,6 +1073,8 @@ snapshots:
   '@rbxts/t@3.2.1': {}
 
   '@rbxts/types@1.0.896': {}
+
+  '@rbxts/ui-labs@2.4.2': {}
 
   '@rbxts/vide-charm@0.3.0(@rbxts/charm@0.10.0)(@rbxts/vide@0.5.7)':
     dependencies:
