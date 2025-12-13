@@ -29,6 +29,9 @@ importers:
       '@rbxts/jest-globals':
         specifier: 3.13.3-ts.1
         version: 3.13.3-ts.1
+      '@rbxts/lemon-signal':
+        specifier: 1.2.0
+        version: 1.2.0
       '@rbxts/log':
         specifier: 0.6.3
         version: 0.6.3
@@ -254,6 +257,9 @@ packages:
 
   '@rbxts/jest@3.13.3-ts.1':
     resolution: {integrity: sha512-3Nd0PTYG+Dej1Gz0MSJlzirycbaahZtGFKXvFnu2pNZKqvti9QCzFVHsMZ2GYWAYG3DwlgYRsaxNfLsQ/gMy8A==}
+
+  '@rbxts/lemon-signal@1.2.0':
+    resolution: {integrity: sha512-R8iZqtwqLCnA4g2gS8d8j/QVnctkvzLQspq3VfuKfFbXp+Zqs7rw/2LebD/9ifX/NGpHAGgatRqj0C6DABT9Rw==}
 
   '@rbxts/log@0.6.3':
     resolution: {integrity: sha512-YZpDvjL7yif9aYuNAkuM9vnegcwQmOwX0CfvGfWvrzCpmARY4Ey2pTMhoEgxKo36HcdPPi3aLxmcuvn0NHrPPg==}
@@ -1035,6 +1041,8 @@ snapshots:
       '@rbxts/emittery': 3.13.3-ts.1
       '@rbxts/jest-globals': 3.13.3-ts.1
       '@rbxts/pretty-format': 3.13.3-ts.1
+
+  '@rbxts/lemon-signal@1.2.0': {}
 
   '@rbxts/log@0.6.3':
     dependencies:
