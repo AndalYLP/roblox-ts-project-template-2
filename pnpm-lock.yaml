@@ -44,6 +44,9 @@ importers:
       '@rbxts/lyra':
         specifier: 0.6.1
         version: 0.6.1
+      '@rbxts/services':
+        specifier: 1.6.0
+        version: 1.6.0
       '@rbxts/ui-labs':
         specifier: 2.4.2
         version: 2.4.2
