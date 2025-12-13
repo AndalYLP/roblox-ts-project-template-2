@@ -2,6 +2,7 @@ import { Flamework, Modding } from "@flamework/core";
 import Log, { Logger } from "@rbxts/log";
 import { FLAMEWORK_IGNITED } from "shared/constants/core";
 import { setupLogger } from "shared/functions/logger";
+import { runCenturion } from "./centurion/run";
 
 async function run(): Promise<void> {
 	setupLogger();
@@ -12,6 +13,11 @@ async function run(): Promise<void> {
 
 	Log.Info("Starting Flamework...");
 	Flamework.ignite()
+
+	Log.Info("Starting Centurion...");
+	runCenturion().catch(err => {
+		Log.Fatal(`Error while running centurion: ${err}`);
+	});
 }
 
 run()
