@@ -52,6 +52,7 @@
     "@rbxts/lyra": "0.6.1",
     "@rbxts/services": "1.6.0",
     "@rbxts/ui-labs": "2.4.2",
+    "@rbxts/validate-tree": "2.0.2",
     "@rbxts/vide-charm": "^0.3.0"
   }
 }
