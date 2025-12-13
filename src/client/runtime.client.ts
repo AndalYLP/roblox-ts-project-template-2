@@ -5,14 +5,14 @@ import { setupLogger } from "shared/functions/logger";
 import { runCenturion } from "./centurion/run";
 
 async function run(): Promise<void> {
-	setupLogger();
+	setupLogger()
 
-	Modding.registerDependency<Logger>(ctor => Log.ForContext(ctor));
+	Modding.registerDependency<Logger>(ctor => Log.ForContext(ctor))
 
-	Flamework.addPaths("src/server/services");
+	Flamework.addPaths("src/client/controllers");
 
 	Log.Info("Starting Flamework...");
-	Flamework.ignite()
+	Flamework.ignite();
 
 	Log.Info("Starting Centurion...");
 	runCenturion().catch(err => {
@@ -20,11 +20,8 @@ async function run(): Promise<void> {
 	});
 }
 
-run()
-	.then(() => {
+run().
+	then(() => {
 		Log.Info("Flamework ignited succesfully")
 		FLAMEWORK_IGNITED.Fire();
 	})
-	.catch((err) => {
-		Log.Fatal(`Error while running server: ${err}`);
-	});
