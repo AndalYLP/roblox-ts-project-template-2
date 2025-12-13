@@ -1,8 +1,8 @@
 import { Flamework, Modding } from "@flamework/core";
 import Log, { Logger } from "@rbxts/log";
+import { runCenturion } from "client/centurion/run";
 import { FLAMEWORK_IGNITED } from "shared/constants/core";
 import { setupLogger } from "shared/functions/logger";
-import { runCenturion } from "./centurion/run";
 
 async function run(): Promise<void> {
 	setupLogger()
