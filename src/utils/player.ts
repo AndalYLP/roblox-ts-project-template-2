@@ -98,11 +98,12 @@ export function cleanupCharacter(player: Player): void {
  * @see character-service.ts which handles retries
  */
 export async function loadCharacter(player: Player): Promise<void> {
-	await Promise.race<unknown>([
+	await Promise.race<void>([
 		Promise.try(() => {
 			cleanupCharacter(player);
 			player.LoadCharacterAsync();
 		}),
-		Promise.delay(CHARACTER_LOAD_TIMEOUT),
+
+		Promise.delay(CHARACTER_LOAD_TIMEOUT).then(),
 	]);
 }

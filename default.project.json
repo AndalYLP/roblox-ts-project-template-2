@@ -11,7 +11,7 @@
 			"TS": {
 				"$path": "out/src/server",
 				"__test__": {
-					"$path": "out/test/tests/server"
+					"$path": "out/test/server"
 				}
 			}
 		},
@@ -32,7 +32,7 @@
 			"TS": {
 				"$path": "out/src/shared",
 				"__test__": {
-					"$path": "out/test/tests/shared"
+					"$path": "out/test/shared"
 				}
 			},
 			"TS-types": {

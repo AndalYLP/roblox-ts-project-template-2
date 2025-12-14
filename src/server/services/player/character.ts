@@ -53,7 +53,9 @@ export class CharacterService implements OnStart, OnPlayerJoin {
 
 		janitor.Add(
 			onCharacterAdded(player, character => {
-				janitor.AddPromise(this.characterAdded(playerEntity, character)).catch(err => {
+				janitor.AddPromise(Promise.defer(() => {
+					return this.characterAdded(playerEntity, character);
+				})).catch(err => {
 					this.logger.Fatal(`Could not get character rig because:\n${err}`);
 				});
 			}),
@@ -169,7 +171,9 @@ export class CharacterService implements OnStart, OnPlayerJoin {
 
 		debug.profileend();
 
-		janitor.AddPromise(this.characterAppearanceLoaded(player, rig)).catch(err => {
+		janitor.AddPromise(Promise.defer(() => {
+			return this.characterAppearanceLoaded(player, rig);
+		})).catch(err => {
 			this.logger.Info(
 				`Character appearance did not load for ${UserId}, with reason: ${err}`,
 			);
