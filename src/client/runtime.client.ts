@@ -1,6 +1,7 @@
 import { Flamework, Modding } from "@flamework/core";
 import Log, { Logger } from "@rbxts/log";
 import { runCenturion } from "client/centurion/run";
+import { mountApp } from "client/ui/app/mount";
 import { FLAMEWORK_IGNITED } from "shared/constants/core";
 import { setupLogger } from "shared/functions/logger";
 
@@ -18,6 +19,10 @@ async function run(): Promise<void> {
 	runCenturion().catch(err => {
 		Log.Fatal(`Error while running centurion: ${err}`);
 	});
+
+	mountApp().catch(() => {
+		Log.Fatal("Failed to create Vide app!");
+	})
 }
 
 run().
