@@ -23,7 +23,7 @@ export function setupLifecycle<T extends defined>(
 ): void {
 	assert(specifier, "[setupLifecycle] Specifier is required");
 
-	Modding.onListenerAdded<T>(object => {
+	Modding.onListenerAdded<T>((object) => {
 		lifecycle.push({
 			id: Reflect.getMetadata(object, "identifier") ?? "flamework:unknown",
 			event: object,
@@ -48,7 +48,6 @@ export function setupLifecycle<T extends defined>(
  *   as a generic.
  * @metadata macro
  */
-// eslint-disable-next-line better-max-params/better-max-params -- All params are required
 export function setupWithEventsLifecycle<T extends defined>(
 	index: keyof T,
 	lifecycle: Map<defined, ListenerData<T>>,
@@ -58,7 +57,7 @@ export function setupWithEventsLifecycle<T extends defined>(
 ): void {
 	assert(specifier, "[setupLifecycle] Specifier is required");
 
-	Modding.onListenerAdded<T>(object => {
+	Modding.onListenerAdded<T>((object) => {
 		lifecycle.set(index, {
 			id: Reflect.getMetadata(object, "identifier") ?? "flamework:unknown",
 			event: object,
@@ -68,7 +67,7 @@ export function setupWithEventsLifecycle<T extends defined>(
 		onAdded?.(object);
 	}, specifier);
 
-	Modding.onListenerRemoved<T>(object => {
+	Modding.onListenerRemoved<T>((object) => {
 		lifecycle.delete(object[index] as defined);
 		onRemoved?.(object);
 	}, specifier);

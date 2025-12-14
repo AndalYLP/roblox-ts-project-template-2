@@ -1,5 +1,5 @@
 import { Modding } from "@flamework/core";
-import { GamePass, Product } from "types/enums/mtx";
+import type { GamePass, Product } from "types/enums/mtx";
 
 /** @metadata flamework:implements flamework:parameters injectable */
 export const MtxEvents = Modding.createMetaDecorator("Class");

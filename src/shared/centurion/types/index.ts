@@ -1,4 +1,3 @@
-
 export const customCenturionType = {
-	username: "Username"
-}
+	username: "Username",
+};

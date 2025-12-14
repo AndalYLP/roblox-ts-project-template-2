@@ -1,4 +1,4 @@
-import { CollisionGroup } from "types/enums/collision-group";
+import type { CollisionGroup } from "types/enums/collision-group";
 
 /**
  * Adds an object and all of its descendants to a collision group.
@@ -25,7 +25,7 @@ export function addToCollisionGroup<T extends boolean>(
 		return undefined as T extends true ? () => void : undefined;
 	}
 
-	const connection = object.DescendantAdded.Connect(descendant => {
+	const connection = object.DescendantAdded.Connect((descendant) => {
 		addDescendantToCollision(descendant, group);
 	});
 
@@ -33,7 +33,6 @@ export function addToCollisionGroup<T extends boolean>(
 		connection.Disconnect();
 	}) as T extends true ? () => void : undefined;
 }
-
 
 function addDescendantToCollision(descendant: Instance, group: CollisionGroup): void {
 	if (descendant.IsA("BasePart")) {

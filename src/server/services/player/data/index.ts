@@ -6,10 +6,14 @@ import DataStoreServiceMock from "@rbxts/lapis-mockdatastore";
 import type { Logger } from "@rbxts/log";
 import { Players } from "@rbxts/services";
 import { defaultPlayerData, validate } from "server/services/player/data/schema";
-
 import type { PlayerRemovalService } from "server/services/player/removal";
 import { IS_DEV, IS_STUDIO } from "shared/constants/core";
-import { deletePlayerData, getPlayerData, PlayerData, setPlayerData } from "shared/store/atoms/player/datastore";
+import {
+	deletePlayerData,
+	getPlayerData,
+	type PlayerData,
+	setPlayerData,
+} from "shared/store/atoms/player/datastore";
 import { KickCode } from "types/enums/kick-reason";
 
 /**
@@ -45,7 +49,7 @@ export class PlayerDataService {
 	 */
 	public async loadPlayerData(player: Player): Promise<Document<PlayerData> | void> {
 		try {
-			const playerId = tostring(player.UserId)
+			const playerId = tostring(player.UserId);
 
 			const document = await this.collection.load(playerId, [player.UserId]);
 
@@ -63,10 +67,10 @@ export class PlayerDataService {
 
 			document.beforeClose(() => {
 				unsubscribe();
-				deletePlayerData(playerId)
+				deletePlayerData(playerId);
 			});
-			
-			setPlayerData(playerId, document.read())
+
+			setPlayerData(playerId, document.read());
 
 			return document;
 		} catch (err) {

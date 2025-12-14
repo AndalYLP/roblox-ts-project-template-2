@@ -4,6 +4,6 @@
  * These groups are used to categorize objects based on their interaction with
  * other objects.
  */
-export declare const enum CollisionGroup {
+export declare enum CollisionGroup {
 	Character = "Character",
 }

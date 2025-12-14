@@ -1,11 +1,10 @@
-/** 
- * script from littensy's charm example 
+/**
+ * script from littensy's charm example
  * @link https://github.com/littensy/charm-example/blob/main/src/client/composables/use-px.ts
  */
 import { useEventListener } from "@rbxts/pretty-vide-utils";
 import { Workspace } from "@rbxts/services";
 import { source } from "@rbxts/vide";
-
 
 const BASE_RESOLUTION = new Vector2(1280, 832);
 const MIN_SCALE = 0.5;
@@ -44,10 +43,10 @@ export const px = callable((value: number) => math.round(value * scale()), {
  * Scales the current `px` unit based on the current viewport size. Should be
  * called once when mounting the app.
  */
-export function usePx() {
+export function usePx(): void {
 	const camera = Workspace.CurrentCamera!;
 
-	const updateScale = () => {
+	const updateScale = (): void => {
 		const width = math.log(camera.ViewportSize.X / BASE_RESOLUTION.X, 2);
 		const height = math.log(camera.ViewportSize.Y / BASE_RESOLUTION.Y, 2);
 		const centered = width + (height - width) * DOMINANT_AXIS;

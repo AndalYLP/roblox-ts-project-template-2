@@ -4,7 +4,7 @@ export interface PlayerSettings {
 	readonly audio: {
 		musicVolume: number;
 		sfxVolume: number;
-	}
+	};
 }
 
 /**
@@ -15,35 +15,41 @@ export interface PlayerSettings {
  * @param settingType - The setting type to change.
  * @param value - The new value.
  */
-export function changeSetting<Category extends keyof PlayerSettings, SettingType extends keyof PlayerSettings[Category]>(
+export function changeSetting<
+	Category extends keyof PlayerSettings,
+	SettingType extends keyof PlayerSettings[Category],
+>(
 	id: string,
 	settingCategory: Category,
 	settingType: SettingType,
-	value: PlayerSettings[Category][SettingType]
-) {
+	value: PlayerSettings[Category][SettingType],
+): void {
 	updatePlayerData(id, (data) => {
-		const { settings } = data
-		
+		const { settings } = data;
+
 		return {
 			...data,
 			playerSettings: {
 				...settings,
 				[settingCategory]: {
-					[settingType]: value
-				}
-			}
-		}
-	})
+					[settingType]: value,
+				},
+			},
+		};
+	});
 }
 
-export function getAllPlayerSettings(id: string) {
-	return getPlayerData(id)?.settings
+export function getAllPlayerSettings(id: string): PlayerSettings | undefined {
+	return getPlayerData(id)?.settings;
 }
 
-export function getPlayerSetting<Category extends keyof PlayerSettings, SettingType extends keyof PlayerSettings[Category]>(
+export function getPlayerSetting<
+	Category extends keyof PlayerSettings,
+	SettingType extends keyof PlayerSettings[Category],
+>(
 	id: string,
 	settingCategory: Category,
 	settingType: SettingType,
-) {
-	return getAllPlayerSettings(id)?.[settingCategory][settingType]
+): PlayerSettings[Category][SettingType] | undefined {
+	return getAllPlayerSettings(id)?.[settingCategory][settingType];
 }

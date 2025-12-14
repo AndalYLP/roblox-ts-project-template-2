@@ -1,6 +1,5 @@
 import { GamePass } from "types/enums/mtx";
 
-
 export interface MtxClientToServerEvents {
 	/**
 	 * Sets the active state of a game pass, which is used to determine if a

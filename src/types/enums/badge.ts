@@ -1,6 +1,5 @@
 import { GameId, getConfigValueForGame } from "shared/functions/game-config";
 
-
 // NOTE: define before use.
 export const badge = {
 	Welcome: getConfigValueForGame({

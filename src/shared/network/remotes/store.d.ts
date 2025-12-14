@@ -2,7 +2,7 @@ import { SyncPayload } from "@rbxts/charm-sync";
 import { GlobalAtoms } from "shared/store/sync/atoms";
 
 export interface StoreClientToServerEvents {
-	init: () => void
+	init: () => void;
 }
 
 export interface StoreServerToClientEvents {

@@ -1,27 +1,24 @@
 import { Service } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
 import { BadgeService } from "@rbxts/services";
-
 import type { OnPlayerJoin } from "server/services/player";
 import type { PlayerEntity } from "server/services/player/entity";
 import { getPlayerAchievements, setBadgeStatus } from "shared/store/atoms/player/achievements";
-import { Badge, badge } from "types/enums/badge";
+import { type Badge, badge } from "types/enums/badge";
 
 @Service()
 export class PlayerBadgeService implements OnPlayerJoin {
-	constructor(private readonly logger: Logger) { }
+	constructor(private readonly logger: Logger) {}
 
 	/** @ignore */
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
 		const { UserId } = playerEntity;
 
-		this.awardBadge(playerEntity, badge.Welcome).catch(err => {
-			this.logger.Error(
-				`Failed to check if ${UserId} has badge ${badge.Welcome}: ${err}`,
-			);
+		this.awardBadge(playerEntity, badge.Welcome).catch((err) => {
+			this.logger.Error(`Failed to check if ${UserId} has badge ${badge.Welcome}: ${err}`);
 		});
 
-		this.awardUnrewardedBadges(playerEntity).catch(err => {
+		this.awardUnrewardedBadges(playerEntity).catch((err) => {
 			this.logger.Error(`Failed to award unrewarded badges to ${UserId}: ${err}`);
 		});
 	}
@@ -47,7 +44,10 @@ export class PlayerBadgeService implements OnPlayerJoin {
 		return this.giveBadge(playerEntity, badgeId);
 	}
 
-	public async checkIfPlayerHasBadge({ player, UserId }: PlayerEntity, badge: Badge): Promise<boolean> {
+	public async checkIfPlayerHasBadge(
+		{ player, UserId }: PlayerEntity,
+		badge: Badge,
+	): Promise<boolean> {
 		const hasBadge = getPlayerAchievements(UserId)?.badges.get(badge);
 		if (hasBadge !== undefined) {
 			return true;
@@ -80,7 +80,7 @@ export class PlayerBadgeService implements OnPlayerJoin {
 			this.logger.Info(`Awarded badge ${badgeId} to ${UserId}`);
 		}
 
-		setBadgeStatus(UserId, badgeId, awarded)
+		setBadgeStatus(UserId, badgeId, awarded);
 	}
 
 	private async awardUnrewardedBadges(playerEntity: PlayerEntity): Promise<void> {
@@ -96,7 +96,7 @@ export class PlayerBadgeService implements OnPlayerJoin {
 				continue;
 			}
 
-			this.awardBadge(playerEntity, badge).catch(err => {
+			this.awardBadge(playerEntity, badge).catch((err) => {
 				this.logger.Error(`Failed to check if ${UserId} has badge ${badge}: ${err}`);
 			});
 		}

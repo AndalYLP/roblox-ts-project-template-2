@@ -1,5 +1,5 @@
 import Log, { Logger, LogLevel } from "@rbxts/log";
-import { ILogEventSink, LogEvent } from "@rbxts/log/out/Core";
+import type { ILogEventSink, LogEvent } from "@rbxts/log/out/Core";
 import { MessageTemplateParser, PlainTextMessageTemplateRenderer } from "@rbxts/message-templates";
 import { IS_CLIENT, IS_DEV } from "shared/constants/core";
 
@@ -51,7 +51,7 @@ class LogEventsOutputSink implements ILogEventSink {
 			return "";
 		}
 
-		const source =
+		const [source] =
 			context === "Game"
 				? debug.info(STACK_TRACE_LEVEL_MODULE, "sl")
 				: debug.info(STACK_TRACE_LEVEL_FLAMEWORK, "sl");
@@ -62,9 +62,6 @@ class LogEventsOutputSink implements ILogEventSink {
 
 export function setupLogger(): void {
 	Log.SetLogger(
-		Logger.configure()
-			.SetMinLogLevel(LOG_LEVEL)
-			.WriteTo(new LogEventsOutputSink())
-			.Create()
+		Logger.configure().SetMinLogLevel(LOG_LEVEL).WriteTo(new LogEventsOutputSink()).Create(),
 	);
 }

@@ -4,6 +4,6 @@ type UndefinedToOptional<T> = {
 	) => void;
 }[keyof T] extends (x: infer I) => void
 	? I extends infer U
-	? { [K in keyof U]: U[K] }
-	: never
+		? { [K in keyof U]: U[K] }
+		: never
 	: never;

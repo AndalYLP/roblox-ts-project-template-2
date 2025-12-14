@@ -1,11 +1,14 @@
-import { AtomMap } from "@rbxts/charm-sync";
+import type { AtomMap } from "@rbxts/charm-sync";
 
 type NestedAtomMap = {
 	readonly [K in string]: AtomMap;
 };
 
 type FlattenNestedAtoms<T extends NestedAtomMap> = {
-	readonly [K in keyof T as `${string & K}/${string & keyof T[K]}`]: T[K][Extract<keyof T[K], string>];
+	readonly [K in keyof T as `${string & K}/${string & keyof T[K]}`]: T[K][Extract<
+		keyof T[K],
+		string
+	>];
 };
 
 /**

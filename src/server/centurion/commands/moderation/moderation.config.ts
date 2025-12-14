@@ -1,4 +1,4 @@
-import { CenturionType, CommandOptions } from "@rbxts/centurion";
+import { CenturionType, type CommandOptions } from "@rbxts/centurion";
 import { customCenturionType } from "shared/centurion/types";
 
 export const moderationCommandOptions = {
@@ -52,5 +52,5 @@ export const moderationCommandOptions = {
 			},
 		],
 		description: "Kick a player from the game.",
-	}
-} satisfies Record<string, CommandOptions>
+	},
+} satisfies Record<string, CommandOptions>;

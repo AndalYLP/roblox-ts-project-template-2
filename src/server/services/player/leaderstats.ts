@@ -3,10 +3,9 @@ import { Service } from "@flamework/core";
 import { subscribe } from "@rbxts/charm";
 import type { Logger } from "@rbxts/log";
 import { t } from "@rbxts/t";
-
 import type { OnPlayerJoin, OnPlayerLeave } from "server/services/player";
 import type { PlayerEntity } from "server/services/player/entity";
-import { getPlayerData, PlayerData } from "shared/store/atoms/player/datastore";
+import { getPlayerData, type PlayerData } from "shared/store/atoms/player/datastore";
 
 interface LeaderstatValueTypes {
 	IntValue: number;
@@ -36,11 +35,11 @@ type LeaderstatValue = Instances[keyof LeaderstatValueTypes];
  */
 @Service()
 export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
-	private readonly leaderstats = new Array<LeaderstatEntry>();
+	private readonly leaderstats = [] as LeaderstatEntry[];
 	private readonly playerToLeaderstatsMap = new Map<Player, Folder>();
 	private readonly playerToValueMap = new Map<Player, Map<string, LeaderstatValue>>();
 
-	constructor(private readonly logger: Logger) { }
+	constructor(private readonly logger: Logger) {}
 
 	/** @ignore */
 	public onInit(): void {
@@ -115,7 +114,9 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 			return;
 		}
 
-		const entry = this.leaderstats.find(leaderstatsEntry => leaderstatsEntry.Name === statName);
+		const entry = this.leaderstats.find(
+			(leaderstatsEntry) => leaderstatsEntry.Name === statName,
+		);
 		if (!entry) {
 			return;
 		}
@@ -159,7 +160,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		playerDataKey?: NestedKeyOf<PlayerData>,
 	): void {
 		assert(
-			this.leaderstats.find(entry => entry.Name === statName) === undefined,
+			this.leaderstats.find((entry) => entry.Name === statName) === undefined,
 			`Stat provided already exists.`,
 		);
 
@@ -182,12 +183,12 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		{ janitor, UserId }: PlayerEntity,
 		valueMap: Map<Leaderstats, LeaderstatValue>,
 	): void {
-		const getData = () => {
-			return getPlayerData(UserId)
-		}
+		const getData = (): PlayerData | undefined => {
+			return getPlayerData(UserId);
+		};
 
 		janitor.Add(
-			subscribe(getData, save => {
+			subscribe(getData, (save) => {
 				if (!save) {
 					return;
 				}

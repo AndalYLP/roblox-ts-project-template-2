@@ -1,6 +1,5 @@
 import Signal from "@rbxts/lemon-signal";
 import { RunService } from "@rbxts/services";
-
 import { $NODE_ENV } from "rbxts-transform-env";
 
 /** Game's name, `//NOTE:` define before use. */

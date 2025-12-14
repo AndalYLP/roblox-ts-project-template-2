@@ -3,14 +3,11 @@ import { Service } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
 import { setTimeout } from "@rbxts/set-timeout";
 import { promiseTree } from "@rbxts/validate-tree";
-
 import type { OnPlayerJoin } from "server/services/player";
 import type { PlayerEntity } from "server/services/player/entity";
-
 import { CollisionGroup } from "types/enums/collision-group";
 import { Tag } from "types/enums/tag";
-import { ListenerData, setupLifecycle } from "utils/flamework";
-
+import { type ListenerData, setupLifecycle } from "utils/flamework";
 import { addToCollisionGroup } from "utils/physics";
 import type { CharacterRig } from "utils/player";
 import {
@@ -35,11 +32,11 @@ export interface OnCharacterRemoved {
 
 @Service()
 export class CharacterService implements OnStart, OnPlayerJoin {
-	private readonly characterAddedEvents = new Array<ListenerData<OnCharacterAdded>>();
-	private readonly characterRemovedEvents = new Array<ListenerData<OnCharacterRemoved>>();
+	private readonly characterAddedEvents = [] as ListenerData<OnCharacterAdded>[];
+	private readonly characterRemovedEvents = [] as ListenerData<OnCharacterRemoved>[];
 	private readonly characterRigs = new Map<Player, CharacterRig>();
 
-	constructor(private readonly logger: Logger) { }
+	constructor(private readonly logger: Logger) {}
 
 	/** @ignore */
 	public onStart(): void {
@@ -52,12 +49,16 @@ export class CharacterService implements OnStart, OnPlayerJoin {
 		const { janitor, player } = playerEntity;
 
 		janitor.Add(
-			onCharacterAdded(player, character => {
-				janitor.AddPromise(Promise.defer(() => {
-					return this.characterAdded(playerEntity, character);
-				})).catch(err => {
-					this.logger.Fatal(`Could not get character rig because:\n${err}`);
-				});
+			onCharacterAdded(player, (character) => {
+				janitor
+					.AddPromise(
+						Promise.defer(() => {
+							return this.characterAdded(playerEntity, character);
+						}),
+					)
+					.catch((err) => {
+						this.logger.Fatal(`Could not get character rig because:\n${err}`);
+					});
 			}),
 		);
 	}
@@ -154,30 +155,32 @@ export class CharacterService implements OnStart, OnPlayerJoin {
 		this.characterRigs.set(player, rig);
 
 		debug.profilebegin("Lifecycle_Character_Added");
-		{
-			for (const { id, event } of this.characterAddedEvents) {
-				janitor
-					.AddPromise(
-						Promise.defer(() => {
-							debug.profilebegin(id);
-							event.onCharacterAdded(rig, playerEntity);
-						}),
-					)
-					.catch(err => {
-						this.logger.Error(`Error in character lifecycle ${id}: ${err}`);
-					});
-			}
+		for (const { id, event } of this.characterAddedEvents) {
+			janitor
+				.AddPromise(
+					Promise.defer(() => {
+						debug.profilebegin(id);
+						event.onCharacterAdded(rig, playerEntity);
+					}),
+				)
+				.catch((err) => {
+					this.logger.Error(`Error in character lifecycle ${id}: ${err}`);
+				});
 		}
 
 		debug.profileend();
 
-		janitor.AddPromise(Promise.defer(() => {
-			return this.characterAppearanceLoaded(player, rig);
-		})).catch(err => {
-			this.logger.Info(
-				`Character appearance did not load for ${UserId}, with reason: ${err}`,
-			);
-		});
+		janitor
+			.AddPromise(
+				Promise.defer(() => {
+					return this.characterAppearanceLoaded(player, rig);
+				}),
+			)
+			.catch((err) => {
+				this.logger.Info(
+					`Character appearance did not load for ${UserId}, with reason: ${err}`,
+				);
+			});
 	}
 
 	private removeCharacter(playerEntity: PlayerEntity): void {
@@ -191,7 +194,7 @@ export class CharacterService implements OnStart, OnPlayerJoin {
 						event.onCharacterRemoved(playerEntity);
 					}),
 				)
-				.catch(err => {
+				.catch((err) => {
 					this.logger.Error(`Error in character lifecycle ${id}: ${err}`);
 				});
 		}

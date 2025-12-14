@@ -4,5 +4,5 @@ import { flattenAtoms } from "utils/charm/flatten-atoms";
 export type GlobalAtoms = typeof atoms;
 
 export const atoms = flattenAtoms({
-	datastore
-})
+	datastore,
+});

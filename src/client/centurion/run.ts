@@ -16,7 +16,7 @@ export async function runCenturion(): Promise<void> {
 
 	client.registry.load(replicatedCenturion.types);
 
-	return client.start().then(value => {
+	return client.start().then((value) => {
 		runCenturionUI(client);
 		return value;
 	});

@@ -1,11 +1,11 @@
 import { Service } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
-import { KickCode } from "types/enums/kick-reason";
+import type { KickCode } from "types/enums/kick-reason";
 
 /** This handles removing the player from the game for various reasons. */
 @Service()
 export class PlayerRemovalService {
-	constructor(private readonly logger: Logger) { }
+	constructor(private readonly logger: Logger) {}
 
 	/**
 	 * Removes a player from the server due to a bug.

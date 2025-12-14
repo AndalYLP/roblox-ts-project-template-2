@@ -1,5 +1,5 @@
 import { getPlayerData, updatePlayerData } from "shared/store/atoms/player/datastore";
-import { GamePass, GamePassData, Product, ProductData } from "types/enums/mtx";
+import type { GamePass, GamePassData, Product, ProductData } from "types/enums/mtx";
 
 export interface PlayerMtx {
 	gamePasses: Map<GamePass, GamePassData>;
@@ -7,16 +7,20 @@ export interface PlayerMtx {
 	receiptHistory: Array<string>;
 }
 
-export function addDeveloperProductPurchase(id: string, product: Product, currencySpent: number) {
+export function addDeveloperProductPurchase(
+	id: string,
+	product: Product,
+	currencySpent: number,
+): void {
 	updatePlayerData(id, (data) => {
-		const { mtx } = data
+		const { mtx } = data;
 
 		const purchaseInfo = {
 			purchasePrice: currencySpent,
 			purchaseTime: os.time(),
 		};
 
-		return { 
+		return {
 			...data,
 			playerMtx: {
 				...mtx,
@@ -25,41 +29,41 @@ export function addDeveloperProductPurchase(id: string, product: Product, curren
 						...(mtx.products.get(product)?.purchaseInfo ?? []),
 						purchaseInfo,
 					],
-					timesPurchased: (mtx.products.get(product)?.timesPurchased ?? 0) + 1
-				})
-			}
-		}
-	})
+					timesPurchased: (mtx.products.get(product)?.timesPurchased ?? 0) + 1,
+				}),
+			},
+		};
+	});
 }
 
-export function setGamePassActive(id: string, gamePass: GamePass, active: boolean) {
+export function setGamePassActive(id: string, gamePass: GamePass, active: boolean): void {
 	updatePlayerData(id, (data) => {
-		const { mtx } = data
-		
+		const { mtx } = data;
+
 		return {
 			...data,
 			playerMtx: {
 				...mtx,
-				gamePasses: new Map([...mtx.gamePasses]).set(gamePass, {active})
-			}
-		}
-	})
+				gamePasses: new Map([...mtx.gamePasses]).set(gamePass, { active }),
+			},
+		};
+	});
 }
 
-export function updateReceiptHistory(id: string, receiptHistory: Array<string>) {
+export function updateReceiptHistory(id: string, receiptHistory: Array<string>): void {
 	updatePlayerData(id, (data) => {
-		const { mtx } = data
-		
+		const { mtx } = data;
+
 		return {
 			...data,
 			playerMtx: {
 				...mtx,
-				receiptHistory: receiptHistory
-			}
-		}
-	})
+				receiptHistory: receiptHistory,
+			},
+		};
+	});
 }
 
-export function getPlayerMtx(id: string) {
-	return getPlayerData(id)?.mtx
+export function getPlayerMtx(id: string): PlayerMtx | undefined {
+	return getPlayerData(id)?.mtx;
 }

@@ -6,14 +6,12 @@ import Signal from "@rbxts/lemon-signal";
 import type { Logger } from "@rbxts/log";
 import Object from "@rbxts/object-utils";
 import { Players } from "@rbxts/services";
-
 import type { PlayerDataService } from "server/services/player/data";
 import { PlayerEntity } from "server/services/player/entity";
 import type { PlayerRemovalService } from "server/services/player/removal";
 import { IS_DEV } from "shared/constants/core";
-import { PlayerData } from "shared/store/atoms/player/datastore";
+import type { PlayerData } from "shared/store/atoms/player/datastore";
 import { KickCode } from "types/enums/kick-reason";
-
 import type { ListenerData } from "utils/flamework";
 import { setupLifecycle } from "utils/flamework";
 import { onPlayerAdded, promisePlayerDisconnected } from "utils/player";
@@ -43,29 +41,29 @@ export class PlayerService implements OnStart {
 	private readonly onEntityJoined = new Signal<(playerEntity: PlayerEntity) => void>();
 	private readonly onEntityRemoving = new Signal();
 	private readonly playerEntities = new Map<Player, PlayerEntity>();
-	private readonly playerJoinEvents = new Array<ListenerData<OnPlayerJoin>>();
-	private readonly playerLeaveEvents = new Array<ListenerData<OnPlayerLeave>>();
+	private readonly playerJoinEvents = [] as ListenerData<OnPlayerJoin>[];
+	private readonly playerLeaveEvents = [] as ListenerData<OnPlayerLeave>[];
 
 	constructor(
 		private readonly logger: Logger,
 		private readonly playerDataService: PlayerDataService,
 		private readonly playerRemovalService: PlayerRemovalService,
-	) { }
+	) {}
 
 	/** @ignore */
 	public onStart(): void {
 		setupLifecycle<OnPlayerJoin>(this.playerJoinEvents);
 		setupLifecycle<OnPlayerLeave>(this.playerLeaveEvents);
 
-		onPlayerAdded(player => {
-			this.onPlayerJoin(player).catch(err => {
+		onPlayerAdded((player) => {
+			this.onPlayerJoin(player).catch((err) => {
 				this.logger.Error(`Failed to load player ${player.UserId}: ${err}`);
 			});
 		});
 
 		Players.PlayerRemoving.Connect(
-			this.withPlayerEntity(playerEntity => {
-				this.onPlayerRemoving(playerEntity).catch(err => {
+			this.withPlayerEntity((playerEntity) => {
+				this.onPlayerRemoving(playerEntity).catch((err) => {
 					this.logger.Error(`Failed to close player ${playerEntity.UserId}: ${err}`);
 				});
 			}),
@@ -91,19 +89,17 @@ export class PlayerService implements OnStart {
 		this.playerEntities.set(player, playerEntity);
 
 		debug.profilebegin("Lifecycle_Player_Join");
-		{
-			for (const { id, event } of this.playerJoinEvents) {
-				janitor
-					.AddPromise(
-						Promise.defer(() => {
-							debug.profilebegin(id);
-							event.onPlayerJoin(playerEntity);
-						}),
-					)
-					.catch(err => {
-						this.logger.Error(`Error in player lifecycle ${id}: ${err}`);
-					});
-			}
+		for (const { id, event } of this.playerJoinEvents) {
+			janitor
+				.AddPromise(
+					Promise.defer(() => {
+						debug.profilebegin(id);
+						event.onPlayerJoin(playerEntity);
+					}),
+				)
+				.catch((err) => {
+					this.logger.Error(`Error in player lifecycle ${id}: ${err}`);
+				});
 		}
 
 		debug.profileend();
@@ -128,7 +124,7 @@ export class PlayerService implements OnStart {
 			if (!playerEntity) {
 				this.logger.Error(
 					`Unable to find entity for player ${player}, unable to call callback. Stacktrace: \n` +
-					debug.traceback(),
+						debug.traceback(),
 				);
 				return;
 			}
@@ -177,7 +173,6 @@ export class PlayerService implements OnStart {
 			(playerEntity: PlayerEntity) => playerEntity.player === player,
 		);
 
-		// eslint-disable-next-line promise/always-return -- This is the last callback
 		const disconnect = promisePlayerDisconnected(player).then(() => {
 			promise.cancel();
 		});
@@ -219,32 +214,30 @@ export class PlayerService implements OnStart {
 	 * @param playerEntity - The player entity associated with the player.
 	 */
 	private async onPlayerRemoving(playerEntity: PlayerEntity): Promise<void> {
-		const promises = new Array<Promise<void>>();
+		const promises: Promise<void>[] = [];
 
 		debug.profilebegin("Lifecycle_Player_Leave");
-		{
-			for (const { id, event } of this.playerLeaveEvents) {
-				promises.push(
-					Promise.defer<void>((resolve, reject) => {
-						debug.profilebegin(id);
-						try {
-							const leaveEvent = async (): Promise<void> => {
-								await event.onPlayerLeave(playerEntity);
-							};
+		for (const { id, event } of this.playerLeaveEvents) {
+			promises.push(
+				Promise.defer<void>((resolve, reject) => {
+					debug.profilebegin(id);
+					try {
+						const leaveEvent = async (): Promise<void> => {
+							await event.onPlayerLeave(playerEntity);
+						};
 
-							const [success, err] = leaveEvent().await();
-							if (!success) {
-								reject(err);
-								return;
-							}
-
-							resolve();
-						} catch (err) {
-							this.logger.Error(`Error in player lifecycle ${id}: ${err}`);
+						const [success, err] = leaveEvent().await();
+						if (!success) {
+							reject(err);
+							return;
 						}
-					}),
-				);
-			}
+
+						resolve();
+					} catch (err) {
+						this.logger.Error(`Error in player lifecycle ${id}: ${err}`);
+					}
+				}),
+			);
 		}
 
 		debug.profileend();

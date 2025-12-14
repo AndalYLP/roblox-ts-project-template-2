@@ -8,7 +8,6 @@ interface ServerScriptService {
 	};
 }
 
-
 interface ReplicatedStorage {
 	TS: Folder & {
 		centurion: Folder & {

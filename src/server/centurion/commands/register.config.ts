@@ -1,12 +1,12 @@
-import { RegisterOptions } from "@rbxts/centurion";
+import type { RegisterOptions } from "@rbxts/centurion";
 
 export const groupRegisterOptions = {
 	moderation: {
 		groups: [
 			{
 				name: "moderation",
-				description: "Moderation related commands"
-			}
-		]
-	}
-} satisfies Record<string, RegisterOptions>
+				description: "Moderation related commands",
+			},
+		],
+	},
+} satisfies Record<string, RegisterOptions>;

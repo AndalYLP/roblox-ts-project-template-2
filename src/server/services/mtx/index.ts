@@ -1,23 +1,34 @@
-import { Modding, OnInit, OnStart, Service } from "@flamework/core";
-import { Logger } from "@rbxts/log";
+import { Modding, type OnInit, type OnStart, Service } from "@flamework/core";
+import type { Logger } from "@rbxts/log";
 import { MarketplaceService, Players } from "@rbxts/services";
 import { Array, Dictionary } from "@rbxts/sift";
 import { t } from "@rbxts/t";
 import { events } from "server/network";
-import { GamePassStatusChanged, MtxEvents, RegisterHandlerForEachProduct, RegisterProductHandler } from "server/services/mtx/decorators";
-import { OnPlayerJoin, PlayerService } from "server/services/player";
-import { PlayerEntity } from "server/services/player/entity";
-import { addDeveloperProductPurchase, getPlayerMtx, PlayerMtx, setGamePassActive, updateReceiptHistory } from "shared/store/atoms/player/mtx";
-import { gamePass, GamePass, product, Product } from "types/enums/mtx";
+import type {
+	GamePassStatusChanged,
+	MtxEvents,
+	RegisterHandlerForEachProduct,
+	RegisterProductHandler,
+} from "server/services/mtx/decorators";
+import type { OnPlayerJoin, PlayerService } from "server/services/player";
+import type { PlayerEntity } from "server/services/player/entity";
+import {
+	addDeveloperProductPurchase,
+	getPlayerMtx,
+	type PlayerMtx,
+	setGamePassActive,
+	updateReceiptHistory,
+} from "shared/store/atoms/player/mtx";
+import { type GamePass, gamePass, type Product, product } from "types/enums/mtx";
 import { noYield } from "utils/no-yield";
 
 const NETWORK_RETRY_ATTEMPTS = 10;
 const NETWORK_RETRY_DELAY = 2;
 
-const gamePassValidator = t.union(...Dictionary.values(gamePass).map(gp => t.literal(gp)));
-const productValidator = t.union(...Dictionary.values(product).map(p => t.literal(p)));
+const gamePassValidator = t.union(...Dictionary.values(gamePass).map((gp) => t.literal(gp)));
+const productValidator = t.union(...Dictionary.values(product).map((p) => t.literal(p)));
 
-export * from "server/services/mtx/decorators"
+export * from "server/services/mtx/decorators";
 
 /**
  * A service for managing game passes and processing receipts.
@@ -53,11 +64,11 @@ export * from "server/services/mtx/decorators"
  * ```
  */
 @Service()
-export class MtxService implements OnInit, OnStart, OnPlayerJoin { 
+export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 	private readonly gamePassHandlers = new Map<
 		GamePass,
 		Array<(playerEntity: PlayerEntity, gamePassId: GamePass, isActive: boolean) => void>
-	>(Dictionary.values(gamePass).map(gamePassId => [gamePassId, []]));
+	>(Dictionary.values(gamePass).map((gamePassId) => [gamePassId, []]));
 	private readonly productHandlers = new Map<
 		Product,
 		{
@@ -68,11 +79,14 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 				...args: Array<unknown>
 			) => boolean;
 		}
-		>();
+	>();
 	private readonly productInfoCache = new Map<number, ProductInfo>();
 	private readonly purchaseIdLog = 50;
 
-	constructor(private readonly logger: Logger, private readonly playerService: PlayerService) {}
+	constructor(
+		private readonly logger: Logger,
+		private readonly playerService: PlayerService,
+	) {}
 
 	public onInit(): void {
 		MarketplaceService.PromptGamePassPurchaseFinished.Connect(
@@ -87,7 +101,7 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 
 		MarketplaceService.ProcessReceipt = (...args): Enum.ProductPurchaseDecision => {
 			const result = this.processReceipt(...args).expect();
-			
+
 			this.logger.Info(`ProcessReceipt result: ${result}`);
 			return result;
 		};
@@ -98,7 +112,7 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 	public onStart(): void {
 		events.mtx.setGamePassActive.connect(
 			this.playerService.withPlayerEntity((playerEntity, gamePassId, active) => {
-				this.setGamePassActive(playerEntity, gamePassId, active).catch(err => {
+				this.setGamePassActive(playerEntity, gamePassId, active).catch((err) => {
 					this.logger.Error(
 						`Failed to set game pass ${gamePassId} active for ${playerEntity.UserId}: ${err}`,
 					);
@@ -115,17 +129,19 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 			return;
 		}
 
-		const unowned = Dictionary.values(gamePass).filter(gamePassId => !gamePasses.has(gamePassId));
+		const unowned = Dictionary.values(gamePass).filter(
+			(gamePassId) => !gamePasses.has(gamePassId),
+		);
 		for (const gamePassId of unowned) {
 			this.checkForGamePassOwned(playerEntity, gamePassId)
-				.then(owned => {
+				.then((owned) => {
 					if (!owned) {
 						return;
 					}
 
 					this.grantGamePass(playerEntity, gamePassId);
 				})
-				.catch(err => {
+				.catch((err) => {
 					this.logger.Warn(`Error checking game pass ${gamePassId}: ${err}`);
 				});
 		}
@@ -188,9 +204,8 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 		productType: T,
 		productId: T extends "Product" ? Product : GamePass,
 	): Promise<void> {
-		const withContextHandler = function (...handlerArgs: Array<unknown>): boolean {
-			return object[handler](object, ...handlerArgs) as boolean;
-		};
+		const withContextHandler = (...handlerArgs: Array<unknown>): boolean =>
+			object[handler](object, ...handlerArgs) as boolean;
 
 		if (productType === "Product") {
 			this.registerProductHandler(productId as Product, withContextHandler);
@@ -257,7 +272,7 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 		gamePassId: GamePass,
 		active: boolean,
 	): Promise<void> {
-		await this.checkForGamePassOwned(playerEntity, gamePassId).then(owned => {
+		await this.checkForGamePassOwned(playerEntity, gamePassId).then((owned) => {
 			const { UserId } = playerEntity;
 			if (!owned) {
 				this.logger.Warn(
@@ -267,11 +282,11 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 				return;
 			}
 
-			setGamePassActive(UserId, gamePassId, active)
+			setGamePassActive(UserId, gamePassId, active);
 			this.notifyGamePassActive(playerEntity, gamePassId, active);
 		});
 	}
-	
+
 	private notifyGamePassActive(
 		playerEntity: PlayerEntity,
 		gamePassId: GamePass,
@@ -299,7 +314,7 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 		}
 
 		this.logger.Info(`Player ${UserId} purchased game pass ${gamePassId}`);
-		setGamePassActive(UserId, gamePassId, true)
+		setGamePassActive(UserId, gamePassId, true);
 		this.notifyGamePassActive(playerEntity, gamePassId, true);
 	}
 
@@ -332,7 +347,7 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 		}
 
 		this.logger.Info(`Player ${UserId} purchased developer product ${productId}`);
-		addDeveloperProductPurchase(UserId, productId, currencySpent)
+		addDeveloperProductPurchase(UserId, productId, currencySpent);
 		return true;
 	}
 
@@ -391,7 +406,7 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 
 	private updateReceiptHistory(userId: string, data: PlayerMtx, purchaseId: string): void {
 		const { receiptHistory } = data;
-		
+
 		let updatedReceiptHistory = Array.push(receiptHistory, purchaseId);
 		if (updatedReceiptHistory.size() > this.purchaseIdLog) {
 			updatedReceiptHistory = Array.shift(
@@ -400,6 +415,6 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 			);
 		}
 
-		updateReceiptHistory(userId, updatedReceiptHistory)
+		updateReceiptHistory(userId, updatedReceiptHistory);
 	}
 }

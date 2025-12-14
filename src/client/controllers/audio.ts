@@ -4,12 +4,11 @@ import { subscribe } from "@rbxts/charm";
 import type { Logger } from "@rbxts/log";
 import Make from "@rbxts/make";
 import { SoundService, TweenService } from "@rbxts/services";
-
 import { USER_ID } from "shared/constants/player";
 import { SoundSystem } from "shared/modules/3dSound";
-import { getAllPlayerSettings, PlayerSettings } from "shared/store/atoms/player/settings";
+import { getAllPlayerSettings, type PlayerSettings } from "shared/store/atoms/player/settings";
 
-export const enum SoundType {
+export enum SoundType {
 	Music = "Music",
 	SoundEffect = "SoundEffect",
 }
@@ -22,15 +21,15 @@ interface PlaySoundOptions {
 	soundType: SoundType;
 }
 
-function getAllLocalPlayerSettings() {
-	return getAllPlayerSettings(USER_ID)
+function getAllLocalPlayerSettings(): PlayerSettings | undefined {
+	return getAllPlayerSettings(USER_ID);
 }
 
 @Controller()
 export class AudioController implements OnInit, OnStart {
 	private readonly soundGroups = new Map<SoundType, SoundGroup>();
 
-	constructor(private readonly logger: Logger) { }
+	constructor(private readonly logger: Logger) {}
 
 	/** @ignore */
 	public onInit(): void {
@@ -110,7 +109,9 @@ export class AudioController implements OnInit, OnStart {
 			Enum.EasingDirection.Out,
 		);
 
-		TweenService.Create(soundObject, tweenInfo, { Volume: desiredVolume }).Play();
+		TweenService.Create(soundObject, tweenInfo, {
+			Volume: desiredVolume,
+		}).Play();
 	}
 
 	private makeSoundGroup(soundType: SoundType): SoundGroup {
