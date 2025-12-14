@@ -2,18 +2,18 @@ import { Flamework } from "@flamework/core"
 import { PlayerData } from "shared/store/atoms/player/datastore"
 
 export const defaultPlayerData: PlayerData = {
-	playerBalance: {
+	balance: {
 		money: 0
 	},
-	playerAchievements: {
+	achievements: {
 		badges: new Map()
 	},
-	playerMtx: {
+	mtx: {
 		gamePasses: new Map(),
 		products: new Map(),
 		receiptHistory: []
 	},
-	playerSettings: {
+	settings: {
 		audio: {
 			musicVolume: 1,
 			sfxVolume: 1

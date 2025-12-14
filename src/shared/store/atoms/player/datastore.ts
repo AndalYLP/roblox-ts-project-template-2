@@ -5,10 +5,10 @@ import { PlayerMtx } from "shared/store/atoms/player/mtx";
 import { PlayerSettings } from "shared/store/atoms/player/settings";
 
 export interface PlayerData {
-	readonly playerBalance: PlayerBalance;
-	readonly playerAchievements: PlayerAchievements;
-	readonly playerMtx: PlayerMtx;
-	readonly playerSettings: PlayerSettings;
+	readonly balance: PlayerBalance;
+	readonly achievements: PlayerAchievements;
+	readonly mtx: PlayerMtx;
+	readonly settings: PlayerSettings;
 }
 
 type PlayerDataMap = {
