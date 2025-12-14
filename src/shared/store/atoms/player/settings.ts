@@ -22,12 +22,12 @@ export function changeSetting<Category extends keyof PlayerSettings, SettingType
 	value: PlayerSettings[Category][SettingType]
 ) {
 	updatePlayerData(id, (data) => {
-		const { playerSettings } = data
+		const { settings } = data
 		
 		return {
 			...data,
 			playerSettings: {
-				...playerSettings,
+				...settings,
 				[settingCategory]: {
 					[settingType]: value
 				}
@@ -37,7 +37,7 @@ export function changeSetting<Category extends keyof PlayerSettings, SettingType
 }
 
 export function getAllPlayerSettings(id: string) {
-	return getPlayerData(id)?.playerSettings
+	return getPlayerData(id)?.settings
 }
 
 export function getPlayerSetting<Category extends keyof PlayerSettings, SettingType extends keyof PlayerSettings[Category]>(

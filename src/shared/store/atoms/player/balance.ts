@@ -6,18 +6,18 @@ export interface PlayerBalance {
 
 export function addBalance(id: string, amount: number) {
 	updatePlayerData(id, (data) => {
-		const { playerBalance } = data
+		const { balance } = data
 
 		return {
 			...data,
 			playerBalance: {
-				...playerBalance,
-				money: playerBalance.money + amount
+				...balance,
+				money: balance.money + amount
 			}
 		}
 	})
 }
 
 export function getPlayerMoney(id: string) {
-	return getPlayerData(id)?.playerBalance.money
+	return getPlayerData(id)?.balance.money
 }

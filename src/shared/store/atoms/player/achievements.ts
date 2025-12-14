@@ -7,18 +7,18 @@ export interface PlayerAchievements {
 
 export function setBadgeStatus(id: string, badge: Badge, status: boolean) {
 	updatePlayerData(id, (data) => {
-		const { playerAchievements } = data
+		const { achievements } = data
 		
 		return {
 			...data,
 			playerAchievements: {
-				...playerAchievements,
-				badges: new Map([...playerAchievements.badges]).set(badge, status)
+				...achievements,
+				badges: new Map([...achievements.badges]).set(badge, status)
 			}
 		}
 	})
 }
 
 export function getPlayerBadges(id: string) {
-	return getPlayerData(id)?.playerAchievements.badges
+	return getPlayerData(id)?.achievements.badges
 }
