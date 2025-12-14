@@ -53,6 +53,9 @@ importers:
       '@rbxts/services':
         specifier: 1.6.0
         version: 1.6.0
+      '@rbxts/sift':
+        specifier: 0.0.11
+        version: 0.0.11
       '@rbxts/ui-labs':
         specifier: 2.4.2
         version: 2.4.2
@@ -327,6 +330,9 @@ packages:
 
   '@rbxts/set-timeout@1.1.2':
     resolution: {integrity: sha512-P/A0IiH9wuZdSJYr4Us0MDFm61nvIFR0acfKFHLkcOsgvIgELC90Up9ugiSsaMEHRIcIcO5UjE39LuS3xTzQHw==}
+
+  '@rbxts/sift@0.0.11':
+    resolution: {integrity: sha512-JT1WTLWKkoBdDaokPz/hEjC64kessP/MPe0OW2rHGtkpQkgnnvOx4wQXzqQs1XMwciyKazjhJZjoV83X3dJplA==}
 
   '@rbxts/signal@1.1.1':
     resolution: {integrity: sha512-WX+ONE+ld4pG9PvRkR8OgDld9NpaV1RfXyUIw+Q2oXP/5rehkYzvt20NWtrLAP3NhMc5inYInLd+hnufey6nFw==}
@@ -1141,6 +1147,8 @@ snapshots:
   '@rbxts/set-timeout@1.1.2':
     dependencies:
       '@rbxts/services': 1.6.0
+
+  '@rbxts/sift@0.0.11': {}
 
   '@rbxts/signal@1.1.1': {}
 
