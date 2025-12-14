@@ -20,7 +20,7 @@ export type GamePass = ValueOf<typeof gamePass>;
 export type Product = ValueOf<typeof product>;
 
 export interface GamePassData {
-	active: boolean;
+	status: boolean;
 }
 
 export interface ProductData {

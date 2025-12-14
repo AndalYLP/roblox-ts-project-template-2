@@ -1,7 +1,14 @@
 import { atom } from "@rbxts/charm";
+import { PlayerAchievements } from "shared/store/atoms/player/achievements";
+import type { PlayerBalance } from "shared/store/atoms/player/balance";
+import { PlayerMtx } from "shared/store/atoms/player/mtx";
+import { PlayerSettings } from "shared/store/atoms/player/settings";
 
 export interface PlayerData {
-	readonly money: number;
+	readonly playerBalance: PlayerBalance;
+	readonly playerAchievements: PlayerAchievements;
+	readonly playerMtx: PlayerMtx;
+	readonly playerSettings: PlayerSettings;
 }
 
 type PlayerDataMap = {
