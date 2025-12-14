@@ -9,7 +9,7 @@ export interface PlayerMtx {
 
 export function addDeveloperProductPurchase(id: string, product: Product, currencySpent: number) {
 	updatePlayerData(id, (data) => {
-		const { playerMtx } = data
+		const { mtx } = data
 
 		const purchaseInfo = {
 			purchasePrice: currencySpent,
@@ -19,28 +19,28 @@ export function addDeveloperProductPurchase(id: string, product: Product, curren
 		return { 
 			...data,
 			playerMtx: {
-				...playerMtx,
-				products: new Map([...playerMtx.products]).set(product, {
+				...mtx,
+				products: new Map([...mtx.products]).set(product, {
 					purchaseInfo: [
-						...(playerMtx.products.get(product)?.purchaseInfo ?? []),
+						...(mtx.products.get(product)?.purchaseInfo ?? []),
 						purchaseInfo,
 					],
-					timesPurchased: (playerMtx.products.get(product)?.timesPurchased ?? 0) + 1
+					timesPurchased: (mtx.products.get(product)?.timesPurchased ?? 0) + 1
 				})
 			}
 		}
 	})
 }
 
-export function setGamePassStatus(id: string, gamePass: GamePass, status: boolean) {
+export function setGamePassActive(id: string, gamePass: GamePass, active: boolean) {
 	updatePlayerData(id, (data) => {
-		const { playerMtx } = data
+		const { mtx } = data
 		
 		return {
 			...data,
 			playerMtx: {
-				...playerMtx,
-				gamePasses: new Map([...playerMtx.gamePasses]).set(gamePass, {status})
+				...mtx,
+				gamePasses: new Map([...mtx.gamePasses]).set(gamePass, {active})
 			}
 		}
 	})
@@ -48,12 +48,12 @@ export function setGamePassStatus(id: string, gamePass: GamePass, status: boolea
 
 export function updateReceiptHistory(id: string, receiptHistory: Array<string>) {
 	updatePlayerData(id, (data) => {
-		const { playerMtx } = data
+		const { mtx } = data
 		
 		return {
 			...data,
 			playerMtx: {
-				...playerMtx,
+				...mtx,
 				receiptHistory: receiptHistory
 			}
 		}
@@ -61,5 +61,5 @@ export function updateReceiptHistory(id: string, receiptHistory: Array<string>) 
 }
 
 export function getPlayerMtx(id: string) {
-	return getPlayerData(id)?.playerMtx
+	return getPlayerData(id)?.mtx
 }
