@@ -18,6 +18,6 @@ export function addBalance(id: string, amount: number) {
 	})
 }
 
-export function getPlayerMoney(id: string) {
-	return getPlayerData(id)?.balance.money
+export function getPlayerBalance(id: string) {
+	return getPlayerData(id)?.balance
 }

@@ -19,6 +19,6 @@ export function setBadgeStatus(id: string, badge: Badge, status: boolean) {
 	})
 }
 
-export function getPlayerBadges(id: string) {
-	return getPlayerData(id)?.achievements.badges
+export function getPlayerAchievements(id: string) {
+	return getPlayerData(id)?.achievements
 }
