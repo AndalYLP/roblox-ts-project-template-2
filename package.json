@@ -53,11 +53,13 @@
     "@rbxts/log": "0.6.3",
     "@rbxts/make": "1.0.6",
     "@rbxts/pretty-vide-utils": "0.0.5",
+    "@rbxts/ripple": "0.10.1",
     "@rbxts/services": "1.6.0",
     "@rbxts/sift": "0.0.11",
     "@rbxts/t": "3.2.1",
     "@rbxts/ui-labs": "2.4.2",
     "@rbxts/validate-tree": "2.0.2",
-    "@rbxts/vide-charm": "^0.3.0"
+    "@rbxts/vide-charm": "^0.3.0",
+    "@rbxts/vide-ripple": "0.10.1"
   }
 }

@@ -56,6 +56,9 @@ importers:
       '@rbxts/pretty-vide-utils':
         specifier: 0.0.5
         version: 0.0.5
+      '@rbxts/ripple':
+        specifier: 0.10.1
+        version: 0.10.1
       '@rbxts/services':
         specifier: 1.6.0
         version: 1.6.0
@@ -74,6 +77,9 @@ importers:
       '@rbxts/vide-charm':
         specifier: ^0.3.0
         version: 0.3.0(@rbxts/charm@0.10.0)(@rbxts/vide@0.5.7)
+      '@rbxts/vide-ripple':
+        specifier: 0.10.1
+        version: 0.10.1(@rbxts/vide@0.5.7)
     devDependencies:
       '@rbxts/compiler-types':
         specifier: 3.0.0-types.0
@@ -343,6 +349,9 @@ packages:
   '@rbxts/pretty-vide-utils@0.0.5':
     resolution: {integrity: sha512-zPfuL7Qt5wEox9zh8XNjXnhb7SuqHtaLpPvBYPw/a8RnpIymCDhLY2J/mJUKAwTqVJxH+7opZIhw4C4MWa13bg==}
 
+  '@rbxts/ripple@0.10.1':
+    resolution: {integrity: sha512-nBxSQCg4PKbQbFg08UGx0tBxWiufP/G0WaJ8QAV64V1bGxIWjfRmtrcuABodC1soTRDdVqqMm7C/CkYWP5Cm/g==}
+
   '@rbxts/ripple@0.9.3':
     resolution: {integrity: sha512-GmwjQl7a8pvGPGQYLmaAcf2RBPpneOL5P1+U8CzTHt9tBhCdk0TEJ/MQoTv9JnHD62RMBE1jogQBvuGgl9VXAg==}
 
@@ -377,6 +386,11 @@ packages:
     resolution: {integrity: sha512-leefLurc48uaJ72HAUBe0JsDcdvr4qib+XWC5196hkbDAOqdjqyjt8e1qY7WK8myG+QKOrU4U3M1hGFVJKdbKg==}
     peerDependencies:
       '@rbxts/charm': 0.10.0
+      '@rbxts/vide': '*'
+
+  '@rbxts/vide-ripple@0.10.1':
+    resolution: {integrity: sha512-QkgAdKxnIyTt0IkbH7E9HcTuBxAuyofECWm2MFQ5aMtUqv67ABxeZCj7Wo1omMTys8iR+i6c9xz/m+tdFtFGrg==}
+    peerDependencies:
       '@rbxts/vide': '*'
 
   '@rbxts/vide@0.5.7':
@@ -1177,6 +1191,8 @@ snapshots:
       '@rbxts/set-timeout': 1.1.2
       '@rbxts/vide': 0.5.7
 
+  '@rbxts/ripple@0.10.1': {}
+
   '@rbxts/ripple@0.9.3': {}
 
   '@rbxts/services@1.6.0': {}
@@ -1202,6 +1218,11 @@ snapshots:
   '@rbxts/vide-charm@0.3.0(@rbxts/charm@0.10.0)(@rbxts/vide@0.5.7)':
     dependencies:
       '@rbxts/charm': 0.10.0
+      '@rbxts/vide': 0.5.7
+
+  '@rbxts/vide-ripple@0.10.1(@rbxts/vide@0.5.7)':
+    dependencies:
+      '@rbxts/ripple': 0.10.1
       '@rbxts/vide': 0.5.7
 
   '@rbxts/vide@0.5.7': {}
