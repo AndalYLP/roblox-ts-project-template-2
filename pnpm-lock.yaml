@@ -53,6 +53,9 @@ importers:
       '@rbxts/make':
         specifier: 1.0.6
         version: 1.0.6
+      '@rbxts/pretty-vide-utils':
+        specifier: 0.0.5
+        version: 0.0.5
       '@rbxts/services':
         specifier: 1.6.0
         version: 1.6.0
@@ -336,6 +339,12 @@ packages:
 
   '@rbxts/pretty-format@3.13.3-ts.1':
     resolution: {integrity: sha512-uTSxVdfQv/cD+kvttLzw/LfyNC35mxAsJrSqom+F94etDYlz7ZRvG75izSPfzG2oVRSrhv6roaeWPeTqkpcIug==}
+
+  '@rbxts/pretty-vide-utils@0.0.5':
+    resolution: {integrity: sha512-zPfuL7Qt5wEox9zh8XNjXnhb7SuqHtaLpPvBYPw/a8RnpIymCDhLY2J/mJUKAwTqVJxH+7opZIhw4C4MWa13bg==}
+
+  '@rbxts/ripple@0.9.3':
+    resolution: {integrity: sha512-GmwjQl7a8pvGPGQYLmaAcf2RBPpneOL5P1+U8CzTHt9tBhCdk0TEJ/MQoTv9JnHD62RMBE1jogQBvuGgl9VXAg==}
 
   '@rbxts/services@1.6.0':
     resolution: {integrity: sha512-YH02E1/tGHeMXB0Mam8qPdAZa2fjQWdylEscSL4Zn0RIaQeByYImA2qUsXM3nBdhcyKHDwltzSznDKyCGfFEWA==}
@@ -1160,6 +1169,15 @@ snapshots:
   '@rbxts/pretty-format@3.13.3-ts.1':
     dependencies:
       '@rbxts-js/pretty-format': 3.13.3-ts.3
+
+  '@rbxts/pretty-vide-utils@0.0.5':
+    dependencies:
+      '@rbxts/ripple': 0.9.3
+      '@rbxts/services': 1.6.0
+      '@rbxts/set-timeout': 1.1.2
+      '@rbxts/vide': 0.5.7
+
+  '@rbxts/ripple@0.9.3': {}
 
   '@rbxts/services@1.6.0': {}
 
