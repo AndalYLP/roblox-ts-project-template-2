@@ -50,6 +50,9 @@ importers:
       '@rbxts/log':
         specifier: 0.6.3
         version: 0.6.3
+      '@rbxts/make':
+        specifier: 1.0.6
+        version: 1.0.6
       '@rbxts/services':
         specifier: 1.6.0
         version: 1.6.0
@@ -281,6 +284,9 @@ packages:
   '@rbxts/charm@0.10.0':
     resolution: {integrity: sha512-pcGpNyqNOcJ7r9UbAjFaUqU0F9Q+wCr4/2kUs8L0hh4dVhUN7t6ur4P7zAMzNuMJQG8YP47a9rq0l0/LlhLuow==}
 
+  '@rbxts/compiler-types@1.2.3-types.1':
+    resolution: {integrity: sha512-SXXIBazyJ7N6d2xcy471/kqZZpCv7EDOWrRJ45jcv3g00VQaZwYl4Elr10woqRloIblQanwJ7yUqGXAsWv7iuQ==}
+
   '@rbxts/compiler-types@3.0.0-types.0':
     resolution: {integrity: sha512-VGOHJPoL7+56NTatMGqQj3K7xWuzEV+aP4QD5vZiHu+bcff3kiTmtoadaF6NkJrmwfFAvbsd4Dg764ZjWNceag==}
 
@@ -315,6 +321,9 @@ packages:
 
   '@rbxts/maid@1.1.0':
     resolution: {integrity: sha512-bVWXZ0p2M3OJzPzvN5fY0T4s37ezUMY7EX31Xspp7Ds4C/K9yE4MHMRXjtlNvsYVPmoc5tdhAbpZY02Veix5lg==}
+
+  '@rbxts/make@1.0.6':
+    resolution: {integrity: sha512-ZL1FMxDqWv1TIzE064JFen75rgybV7ulQHTUVqXuvngDBa3lP3btFiIdUO2MMJAOZpHKinC9jFudcCenrprcPg==}
 
   '@rbxts/message-templates@0.3.2':
     resolution: {integrity: sha512-79onYskH3pgrBT73Zs+biQ31vAVvupKQaxGNWGjyGsxwNhO2YaN/qkut0bvOshaGa+ZzqAXApRVrN8ifIMPiMQ==}
@@ -1094,6 +1103,8 @@ snapshots:
 
   '@rbxts/charm@0.10.0': {}
 
+  '@rbxts/compiler-types@1.2.3-types.1': {}
+
   '@rbxts/compiler-types@3.0.0-types.0': {}
 
   '@rbxts/emittery@3.13.3-ts.1':
@@ -1133,6 +1144,11 @@ snapshots:
       '@rbxts/message-templates': 0.3.2
 
   '@rbxts/maid@1.1.0': {}
+
+  '@rbxts/make@1.0.6':
+    dependencies:
+      '@rbxts/compiler-types': 1.2.3-types.1
+      '@rbxts/types': 1.0.896
 
   '@rbxts/message-templates@0.3.2': {}
 
