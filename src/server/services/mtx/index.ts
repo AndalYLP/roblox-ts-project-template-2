@@ -2,6 +2,7 @@ import { Modding, OnInit, OnStart, Service } from "@flamework/core";
 import { Logger } from "@rbxts/log";
 import { MarketplaceService, Players } from "@rbxts/services";
 import { Array, Dictionary } from "@rbxts/sift";
+import { t } from "@rbxts/t";
 import { events } from "server/network";
 import { GamePassStatusChanged, MtxEvents, RegisterHandlerForEachProduct, RegisterProductHandler } from "server/services/mtx/decorators";
 import { OnPlayerJoin, PlayerService } from "server/services/player";
@@ -12,6 +13,9 @@ import { noYield } from "utils/no-yield";
 
 const NETWORK_RETRY_ATTEMPTS = 10;
 const NETWORK_RETRY_DELAY = 2;
+
+const gamePassValidator = t.union(...Dictionary.values(gamePass).map(gp => t.literal(gp)));
+const productValidator = t.union(...Dictionary.values(product).map(p => t.literal(p)));
 
 export * from "server/services/mtx/decorators"
 
@@ -236,7 +240,7 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 		{ UserId, player }: PlayerEntity,
 		gamePassId: GamePass,
 	): Promise<boolean> {
-		if (!Dictionary.values(gamePass).includes(gamePassId)) {
+		if (!gamePassValidator(gamePassId)) {
 			throw `Invalid game pass id ${gamePassId}`;
 		}
 
@@ -287,7 +291,7 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 	private grantGamePass(playerEntity: PlayerEntity, gamePassId: GamePass): void {
 		const { UserId } = playerEntity;
 
-		if (!Dictionary.values(gamePass).includes(gamePassId)) {
+		if (!gamePassValidator(gamePassId)) {
 			this.logger.Warn(
 				`Player ${UserId} attempted to purchased invalid game pass ${gamePassId}`,
 			);
@@ -306,7 +310,7 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 	): boolean {
 		const { UserId } = playerEntity;
 
-		if (!Dictionary.values(product).includes(productId)) {
+		if (!productValidator(productId)) {
 			this.logger.Warn(
 				`Player ${UserId} attempted to purchased invalid product ${productId}`,
 			);
