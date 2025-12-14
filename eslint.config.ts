@@ -22,6 +22,7 @@ export default defineConfig(
 				},
 			],
 			"no-void": ["off"],
+			"@typescript-eslint/no-floating-promises": "error",
 		},
 	},
 

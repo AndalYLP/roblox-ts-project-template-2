@@ -25,7 +25,11 @@ async function run(): Promise<void> {
 	});
 }
 
-run().then(() => {
-	Log.Info("Flamework ignited succesfully");
-	FLAMEWORK_IGNITED.Fire();
-});
+run()
+	.then(() => {
+		Log.Info("Flamework ignited succesfully");
+		FLAMEWORK_IGNITED.Fire();
+	})
+	.catch((err) => {
+		Log.Fatal(`Error while running server: ${err}`);
+	});
