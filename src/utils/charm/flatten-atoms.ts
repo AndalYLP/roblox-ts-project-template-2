@@ -4,11 +4,16 @@ type NestedAtomMap = {
 	readonly [K in string]: AtomMap;
 };
 
+type Flattened<T extends NestedAtomMap> = UnionToIntersection<
+	{
+		[P in keyof T]: {
+			[K in Extract<keyof T[P], string> as `${Extract<P, string>}/${K}`]: T[P][K];
+		};
+	}[keyof T]
+>;
+
 type FlattenNestedAtoms<T extends NestedAtomMap> = {
-	readonly [K in keyof T as `${string & K}/${string & keyof T[K]}`]: T[K][Extract<
-		keyof T[K],
-		string
-	>];
+	[K in keyof Flattened<T>]: Flattened<T>[K];
 };
 
 /**
