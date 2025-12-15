@@ -12,13 +12,15 @@ export function filterPayload(
 	player: Player,
 	payload: SyncPayload<GlobalAtoms>,
 ): SyncPayload<GlobalAtoms> {
+	const userId = player.UserId;
+
 	if (payload.type === "init") {
 		return {
 			...payload,
 			data: {
 				...payload.data,
 				"datastore/players": {
-					[player.Name]: payload.data["datastore/players"][player.Name],
+					[userId]: payload.data["datastore/players"][userId],
 				},
 			},
 		};
@@ -29,7 +31,7 @@ export function filterPayload(
 		data: {
 			...payload.data,
 			"datastore/players": payload.data["datastore/players"] && {
-				[player.Name]: payload.data["datastore/players"][player.Name],
+				[userId]: payload.data["datastore/players"][userId],
 			},
 		},
 	};
