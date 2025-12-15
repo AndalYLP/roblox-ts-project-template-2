@@ -80,9 +80,9 @@ importers:
       '@rbxts/vide-ripple':
         specifier: 0.10.1
         version: 0.10.1(@rbxts/vide@0.5.7)
-      eslint-config-prettier:
-        specifier: 10.1.8
-        version: 10.1.8(eslint@9.39.2(jiti@2.6.1))
+      '@rbxts/zone-plus':
+        specifier: 3.2.0
+        version: 3.2.0
     devDependencies:
       '@eslint/js':
         specifier: 9.39.2
@@ -102,6 +102,9 @@ importers:
       eslint:
         specifier: 9.39.2
         version: 9.39.2(jiti@2.6.1)
+      eslint-config-prettier:
+        specifier: 10.1.8
+        version: 10.1.8(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-prettier:
         specifier: 5.5.4
         version: 5.5.4(eslint-config-prettier@10.1.8(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))(prettier@3.7.4)
@@ -114,9 +117,6 @@ importers:
       eslint-plugin-unused-imports:
         specifier: 4.3.0
         version: 4.3.0(@typescript-eslint/eslint-plugin@8.49.0(@typescript-eslint/parser@8.49.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))
-      jiti:
-        specifier: 2.6.1
-        version: 2.6.1
       rbxts-build:
         specifier: ^2.4.3
         version: 2.4.3
@@ -498,6 +498,9 @@ packages:
 
   '@rbxts/vide@0.5.7':
     resolution: {integrity: sha512-Q9R7ybzuHK1phtLicBHgAjQnlJ/dMsXDs2k296PIMLgLqK9aX/f1skOP7F1K/vo7IrSE0jCG3B3XTOtQL1Sb0Q==}
+
+  '@rbxts/zone-plus@3.2.0':
+    resolution: {integrity: sha512-myxs7QXMVCCPhOpUzaoA/01ZCEG/6TBYRNk6LwksUvSp9bONnIpvEZYEazuWnIDwiOEIw/T9kCPY/7FGjMOvsA==}
 
   '@roblox-ts/luau-ast@2.0.0':
     resolution: {integrity: sha512-cmMi093IdwBOLVxwuordhM8AmtbyTIyRpsTbB0D/JauidW4SXsQRQowSwWjHo4QP0DRJBXvOIlxtqEQi50uNzQ==}
@@ -1874,6 +1877,8 @@ snapshots:
 
   '@rbxts/vide@0.5.7': {}
 
+  '@rbxts/zone-plus@3.2.0': {}
+
   '@roblox-ts/luau-ast@2.0.0': {}
 
   '@roblox-ts/luau-ast@2.0.1': {}
@@ -2383,7 +2388,8 @@ snapshots:
 
   isexe@2.0.0: {}
 
-  jiti@2.6.1: {}
+  jiti@2.6.1:
+    optional: true
 
   js-yaml@4.1.1:
     dependencies:
