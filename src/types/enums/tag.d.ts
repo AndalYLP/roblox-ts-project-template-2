@@ -4,7 +4,7 @@
  * These tags are assigned to specific parts of the player's character or other
  * objects.
  */
-export declare enum Tag {
+export declare const enum Tag {
 	PlayerCharacter = "PlayerCharacter",
 	PlayerHead = "PlayerHead",
 }
