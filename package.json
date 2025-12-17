@@ -69,8 +69,10 @@
     "@rbxts/t": "3.2.1",
     "@rbxts/ui-labs": "2.4.2",
     "@rbxts/validate-tree": "2.0.2",
+    "@rbxts/vide": "0.5.7",
     "@rbxts/vide-charm": "^0.3.0",
     "@rbxts/vide-ripple": "0.10.1",
-    "@rbxts/zone-plus": "3.2.0"
+    "@rbxts/zone-plus": "3.2.0",
+    "rimraf": "6.1.2"
   }
 }
