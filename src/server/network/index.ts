@@ -11,10 +11,10 @@ export const functions = globalFunctions.createServer({
 
 if (IS_DEV) {
 	globalEvents.registerHandler("onBadRequest", (player, message) => {
-		Log.Warn(`Bad request from ${player.UserId}: ${message}`);
+		Log.Warn(`Bad request from ${player.UserId}: {}`, message);
 	});
 
 	globalFunctions.registerHandler("onBadResponse", (player, message) => {
-		Log.Warn(`Bad response from ${player.UserId}: ${message}`);
+		Log.Warn(`Bad response from ${player.UserId}: {}`, message);
 	});
 }
