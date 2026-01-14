@@ -22,7 +22,7 @@ export function addDeveloperProductPurchase(
 
 		return {
 			...data,
-			playerMtx: {
+			mtx: {
 				...mtx,
 				products: new Map([...mtx.products]).set(product, {
 					purchaseInfo: [
@@ -42,7 +42,7 @@ export function setGamePassActive(id: string, gamePass: GamePass, active: boolea
 
 		return {
 			...data,
-			playerMtx: {
+			mtx: {
 				...mtx,
 				gamePasses: new Map([...mtx.gamePasses]).set(gamePass, { active }),
 			},
@@ -56,7 +56,7 @@ export function updateReceiptHistory(id: string, receiptHistory: Array<string>):
 
 		return {
 			...data,
-			playerMtx: {
+			mtx: {
 				...mtx,
 				receiptHistory: receiptHistory,
 			},

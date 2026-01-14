@@ -11,7 +11,7 @@ export function setBadgeStatus(id: string, badge: Badge, status: boolean): void 
 
 		return {
 			...data,
-			playerAchievements: {
+			achievements: {
 				...achievements,
 				badges: new Map([...achievements.badges]).set(badge, status),
 			},

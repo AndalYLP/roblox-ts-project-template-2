@@ -10,7 +10,7 @@ export function addBalance(id: string, amount: number): void {
 
 		return {
 			...data,
-			playerBalance: {
+			balance: {
 				...balance,
 				money: balance.money + amount,
 			},

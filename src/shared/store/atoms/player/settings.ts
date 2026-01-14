@@ -29,7 +29,7 @@ export function changeSetting<
 
 		return {
 			...data,
-			playerSettings: {
+			settings: {
 				...settings,
 				[settingCategory]: {
 					[settingType]: value,
