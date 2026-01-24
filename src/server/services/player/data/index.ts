@@ -5,6 +5,8 @@ import { createCollection, setConfig } from "@rbxts/lapis";
 import DataStoreServiceMock from "@rbxts/lapis-mockdatastore";
 import type { Logger } from "@rbxts/log";
 import { Players } from "@rbxts/services";
+import { KickCode } from "types/enums/kick-reason";
+
 import { defaultPlayerData, validate } from "server/services/player/data/schema";
 import type { PlayerRemovalService } from "server/services/player/removal";
 import { IS_DEV, IS_STUDIO } from "shared/constants/core";
@@ -14,7 +16,6 @@ import {
 	type PlayerData,
 	setPlayerData,
 } from "shared/store/atoms/player/datastore";
-import { KickCode } from "types/enums/kick-reason";
 
 /**
  * Service for loading and saving player data. This service is responsible for

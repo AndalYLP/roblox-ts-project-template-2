@@ -1,5 +1,6 @@
 import type { Janitor } from "@rbxts/janitor";
 import type { Document } from "@rbxts/lapis";
+
 import type { PlayerData } from "shared/store/atoms/player/datastore";
 
 export class PlayerEntity {

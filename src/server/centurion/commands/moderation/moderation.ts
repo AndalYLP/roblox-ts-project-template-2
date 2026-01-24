@@ -1,5 +1,6 @@
 import { Command, type CommandContext, Group, Guard, Register } from "@rbxts/centurion";
 import { Players } from "@rbxts/services";
+
 import { moderationCommandOptions } from "server/centurion/commands/moderation/moderation.config";
 import { isDeveloper } from "server/centurion/guards/is-developer";
 

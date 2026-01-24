@@ -1,4 +1,5 @@
 import Make from "@rbxts/make";
+
 import { DestroyableComponent } from "shared/components/abstract/destroyable";
 
 export type clickDetectorSettings = Partial<

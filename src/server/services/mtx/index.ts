@@ -3,6 +3,9 @@ import type { Logger } from "@rbxts/log";
 import { MarketplaceService, Players } from "@rbxts/services";
 import { Array, Dictionary } from "@rbxts/sift";
 import { t } from "@rbxts/t";
+import { type GamePass, gamePass, type Product, product } from "types/enums/mtx";
+import { noYield } from "utils/no-yield";
+
 import { events } from "server/network";
 import type {
 	GamePassStatusChanged,
@@ -19,8 +22,6 @@ import {
 	setGamePassActive,
 	updateReceiptHistory,
 } from "shared/store/atoms/player/mtx";
-import { type GamePass, gamePass, type Product, product } from "types/enums/mtx";
-import { noYield } from "utils/no-yield";
 
 const NETWORK_RETRY_ATTEMPTS = 10;
 const NETWORK_RETRY_DELAY = 2;

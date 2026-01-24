@@ -1,4 +1,5 @@
 import Make from "@rbxts/make";
+
 import { DestroyableComponent } from "shared/components/abstract/destroyable";
 import { IS_CLIENT } from "shared/constants/core";
 

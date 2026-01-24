@@ -4,6 +4,7 @@ import { subscribe } from "@rbxts/charm";
 import type { Logger } from "@rbxts/log";
 import Make from "@rbxts/make";
 import { SoundService, TweenService } from "@rbxts/services";
+
 import { USER_ID } from "shared/constants/player";
 import { SoundSystem } from "shared/modules/3dSound";
 import { getAllPlayerSettings, type PlayerSettings } from "shared/store/atoms/player/settings";

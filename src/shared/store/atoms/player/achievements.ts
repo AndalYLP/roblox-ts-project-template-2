@@ -1,5 +1,6 @@
-import { getPlayerData, updatePlayerData } from "shared/store/atoms/player/datastore";
 import type { Badge } from "types/enums/badge";
+
+import { getPlayerData, updatePlayerData } from "shared/store/atoms/player/datastore";
 
 export interface PlayerAchievements {
 	badges: Map<Badge, boolean>;

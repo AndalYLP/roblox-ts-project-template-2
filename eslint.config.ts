@@ -1,5 +1,5 @@
 import eslint from "@eslint/js";
-import { defineConfig, globalIgnores } from "eslint/config";
+import { defineConfig } from "eslint/config";
 import eslintPluginPrettier from "eslint-plugin-prettier";
 import prettierRecommended from "eslint-plugin-prettier/recommended";
 import roblox from "eslint-plugin-roblox-ts";
@@ -13,6 +13,13 @@ export default defineConfig(
 	roblox.configs.tsRecommendedCompat,
 	roblox.configs.recommended,
 	{
+		languageOptions: {
+			parserOptions: {
+				projectService: false,
+				project: "./tsconfig.build.json",
+				sourceType: "module",
+			},
+		},
 		rules: {
 			"@typescript-eslint/explicit-function-return-type": [
 				"error",
@@ -23,6 +30,13 @@ export default defineConfig(
 			],
 			"no-void": ["off"],
 			"@typescript-eslint/no-floating-promises": "error",
+			"@typescript-eslint/consistent-type-imports": [
+				"warn",
+				{
+					prefer: "type-imports",
+					fixStyle: "separate-type-imports",
+				},
+			],
 		},
 	},
 
@@ -52,8 +66,14 @@ export default defineConfig(
 			"simple-import-sort": simpleImportSort,
 		},
 		rules: {
-			"simple-import-sort/imports": "error",
 			"simple-import-sort/exports": "error",
+
+			"simple-import-sort/imports": [
+				"error",
+				{
+					groups: [["^@?\\w"], ["^(src|server|shared|test)(/.*|$)"], ["^\\."]],
+				},
+			],
 		},
 	},
 	{
@@ -71,6 +91,5 @@ export default defineConfig(
 			],
 		},
 	},
-	globalIgnores(["out/**"]),
 	prettierRecommended,
 );

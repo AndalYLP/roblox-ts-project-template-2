@@ -1,4 +1,5 @@
 import Log from "@rbxts/log";
+
 import { IS_DEV } from "shared/constants/core";
 import { globalEvents, globalFunctions } from "shared/network";
 

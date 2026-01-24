@@ -1,4 +1,4 @@
-import { GamePass } from "types/enums/mtx";
+import type { GamePass } from "types/enums/mtx";
 
 export interface MtxClientToServerEvents {
 	/**

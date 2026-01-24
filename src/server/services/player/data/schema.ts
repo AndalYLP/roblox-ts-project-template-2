@@ -1,4 +1,5 @@
 import { Flamework } from "@flamework/core";
+
 import type { PlayerData } from "shared/store/atoms/player/datastore";
 
 export const defaultPlayerData: PlayerData = {

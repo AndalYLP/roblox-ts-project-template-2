@@ -1,4 +1,5 @@
 import { atom } from "@rbxts/charm";
+
 import type { PlayerAchievements } from "shared/store/atoms/player/achievements";
 import type { PlayerBalance } from "shared/store/atoms/player/balance";
 import type { PlayerMtx } from "shared/store/atoms/player/mtx";

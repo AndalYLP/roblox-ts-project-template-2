@@ -1,4 +1,5 @@
 import type { SyncPayload } from "@rbxts/charm-sync";
+
 import type { GlobalAtoms } from "shared/store/sync/atoms";
 
 /**

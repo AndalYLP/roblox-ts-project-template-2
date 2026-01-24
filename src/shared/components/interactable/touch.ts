@@ -1,4 +1,5 @@
 import { Zone } from "@rbxts/zone-plus";
+
 import { DestroyableComponent } from "shared/components/abstract/destroyable";
 
 type Accuracy = 1 | 2 | 3 | 4;

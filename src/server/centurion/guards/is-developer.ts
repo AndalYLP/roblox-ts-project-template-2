@@ -1,4 +1,5 @@
 import type { CommandGuard } from "@rbxts/centurion";
+
 import { DEVELOPERS, IS_STUDIO } from "shared/constants/core";
 
 export const isDeveloper: CommandGuard = (context) => {

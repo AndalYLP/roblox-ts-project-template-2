@@ -1,4 +1,5 @@
 import { CenturionType, type CommandOptions } from "@rbxts/centurion";
+
 import { customCenturionType } from "shared/centurion/types";
 
 export const moderationCommandOptions = {

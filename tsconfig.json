@@ -4,17 +4,22 @@
 		"tsBuildInfoFile": "out/tsconfig.tsbuildinfo",
 		"target": "ESNext",
 		"jsx": "react",
-   		"jsxFactory": "Vide.jsx",
-    	"jsxFragmentFactory": "Vide.Fragment",
+		"jsxFactory": "Vide.jsx",
+		"jsxFragmentFactory": "Vide.Fragment",
 		"moduleDetection": "force",
 		"noLib": true,
 		"experimentalDecorators": true,
 		"baseUrl": "src",
-		"rootDirs": ["src", "test"],
+		"rootDirs": [
+			"src",
+			"test"
+		],
 		"module": "commonjs",
 		"moduleResolution": "Node",
 		"paths": {
-			"test/*": ["../test/*"]
+			"test/*": [
+				"../test/*"
+			]
 		},
 		"resolveJsonModule": true,
 		"typeRoots": [
@@ -43,7 +48,10 @@
 			}
 		]
 	},
-	"include": ["test", "src"],
+	"include": [
+		"test",
+		"src"
+	],
 	"exclude": [
 		"node_modules",
 		"include",

@@ -1,5 +1,6 @@
 import { TransformResult, TypeBuilder } from "@rbxts/centurion";
 import { Players } from "@rbxts/services";
+
 import { customCenturionType } from "shared/centurion/types";
 
 export const username = TypeBuilder.create<number>(customCenturionType.username)

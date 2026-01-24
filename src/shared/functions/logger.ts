@@ -1,6 +1,7 @@
 import Log, { Logger, LogLevel } from "@rbxts/log";
 import type { ILogEventSink, LogEvent } from "@rbxts/log/out/Core";
 import { MessageTemplateParser, PlainTextMessageTemplateRenderer } from "@rbxts/message-templates";
+
 import { IS_CLIENT, IS_DEV } from "shared/constants/core";
 
 export const LOG_LEVEL = IS_DEV ? LogLevel.Debugging : LogLevel.Information;

@@ -1,5 +1,6 @@
 import { Flamework, Modding } from "@flamework/core";
 import Log, { type Logger } from "@rbxts/log";
+
 import { runCenturion } from "server/centurion/run";
 import { FLAMEWORK_IGNITED } from "shared/constants/core";
 import { setupLogger } from "shared/functions/logger";
