@@ -96,19 +96,7 @@ export default defineConfig(
 			"perfectionist/sort-decorators": ["error"],
 			"perfectionist/sort-enums": ["error"],
 			"perfectionist/sort-exports": ["error"],
-			"perfectionist/sort-heritage-clauses": [
-				"error",
-				{
-					// customGroups: customClassGroups.reduce<Record<string, string>>(
-					// 	(accumulator, item) => {
-					// 		accumulator[item] = `^${capitalizeFirstLetter(item)}$`;
-					// 		return accumulator;
-					// 	},
-					// 	{},
-					// ),
-					groups: [/*...customClassGroups*/ "unknown"],
-				},
-			],
+			"perfectionist/sort-heritage-clauses": ["error"],
 			"perfectionist/sort-imports": [
 				"error",
 				{
