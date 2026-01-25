@@ -25,18 +25,6 @@ export const moderationCommandOptions = {
 		description: "Ban a player from the game.",
 	},
 
-	unban: {
-		name: "unban",
-		arguments: [
-			{
-				name: "Username",
-				description: "Player's username to unban from the game.",
-				type: customCenturionType.username,
-			},
-		],
-		description: "Unban a player from the game.",
-	},
-
 	kick: {
 		name: "kick",
 		arguments: [
@@ -53,5 +41,17 @@ export const moderationCommandOptions = {
 			},
 		],
 		description: "Kick a player from the game.",
+	},
+
+	unban: {
+		name: "unban",
+		arguments: [
+			{
+				name: "Username",
+				description: "Player's username to unban from the game.",
+				type: customCenturionType.username,
+			},
+		],
+		description: "Unban a player from the game.",
 	},
 } satisfies Record<string, CommandOptions>;

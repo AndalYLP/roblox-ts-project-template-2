@@ -65,7 +65,7 @@ export * from "server/services/mtx/decorators";
  * ```
  */
 @Service()
-export class MtxService implements OnInit, OnStart, OnPlayerJoin {
+export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 	private readonly gamePassHandlers = new Map<
 		GamePass,
 		Array<(playerEntity: PlayerEntity, gamePassId: GamePass, isActive: boolean) => void>
@@ -122,49 +122,6 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 		);
 	}
 
-	public onPlayerJoin(playerEntity: PlayerEntity): void {
-		const { UserId } = playerEntity;
-
-		const gamePasses = getPlayerMtx(UserId)?.gamePasses;
-		if (gamePasses === undefined) {
-			return;
-		}
-
-		const unowned = Dictionary.values(gamePass).filter(
-			(gamePassId) => !gamePasses.has(gamePassId),
-		);
-		for (const gamePassId of unowned) {
-			this.checkForGamePassOwned(playerEntity, gamePassId)
-				.then((owned) => {
-					if (!owned) {
-						return;
-					}
-
-					this.grantGamePass(playerEntity, gamePassId);
-				})
-				.catch((err) => {
-					this.logger.Warn(`Error checking game pass ${gamePassId}: ${err}`);
-				});
-		}
-
-		for (const [id, gamePassData] of gamePasses) {
-			this.notifyGamePassActive(playerEntity, id, gamePassData.active);
-		}
-	}
-
-	/**
-	 * Checks if a game pass is active for a specific player. This method will
-	 * return false if the game pass is not owned by the player.
-	 *
-	 * @param playerEntity - The player entity for whom to check the game pass.
-	 * @param playerEntity.player - The player's instance.
-	 * @param gamePassId - The ID of the game pass to check.
-	 * @returns A boolean indicating whether the game pass is active or not.
-	 */
-	public isGamePassActive({ UserId }: PlayerEntity, gamePassId: GamePass): boolean {
-		return getPlayerMtx(UserId)?.gamePasses.get(gamePassId)?.active ?? false;
-	}
-
 	/**
 	 * Retrieves the product information for a given product or game pass.
 	 *
@@ -199,61 +156,51 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 		return productInfo;
 	}
 
-	private async loadDecorator<T extends "GamePass" | "Product">(
-		object: Record<string, Callback>,
-		handler: string,
-		productType: T,
-		productId: T extends "Product" ? Product : GamePass,
-	): Promise<void> {
-		const withContextHandler = (...handlerArgs: Array<unknown>): boolean =>
-			object[handler](object, ...handlerArgs) as boolean;
-
-		if (productType === "Product") {
-			this.registerProductHandler(productId as Product, withContextHandler);
-		} else {
-			this.gamePassHandlers.get(productId as GamePass)?.push(withContextHandler);
-		}
+	/**
+	 * Checks if a game pass is active for a specific player. This method will
+	 * return false if the game pass is not owned by the player.
+	 *
+	 * @param playerEntity - The player entity for whom to check the game pass.
+	 * @param playerEntity.player - The player's instance.
+	 * @param gamePassId - The ID of the game pass to check.
+	 * @returns A boolean indicating whether the game pass is active or not.
+	 */
+	public isGamePassActive({ UserId }: PlayerEntity, gamePassId: GamePass): boolean {
+		return getPlayerMtx(UserId)?.gamePasses.get(gamePassId)?.active ?? false;
 	}
 
-	private async initRegister(): Promise<void> {
-		const mtxEvents = Modding.getDecorators<typeof MtxEvents>();
+	public onPlayerJoin(playerEntity: PlayerEntity): void {
+		const { UserId } = playerEntity;
 
-		for (const { constructor, object } of mtxEvents) {
-			const singleton = Modding.resolveSingleton(constructor!) as Record<string, Callback>;
-
-			const productDecorators = Dictionary.merge(
-				Modding.getPropertyDecorators<typeof RegisterProductHandler>(object),
-				Modding.getPropertyDecorators<typeof RegisterHandlerForEachProduct>(object),
-			);
-
-			for (const [handler, { arguments: args }] of productDecorators) {
-				void this.loadDecorator(singleton, handler, "Product", args[0]);
-			}
-
-			for (const [handler, { arguments: args }] of Modding.getPropertyDecorators<
-				typeof GamePassStatusChanged
-			>(object)) {
-				void this.loadDecorator(singleton, handler, "GamePass", args[0]);
-			}
-		}
-	}
-
-	private registerProductHandler(
-		productId: Product,
-		handler: (playerEntity: PlayerEntity, productId: Product) => boolean,
-		...args: Array<unknown>
-	): void {
-		if (this.productHandlers.has(productId)) {
-			this.logger.Error(`Handler already registered for product ${productId}`);
+		const gamePasses = getPlayerMtx(UserId)?.gamePasses;
+		if (gamePasses === undefined) {
 			return;
 		}
 
-		this.logger.Debug(`Registered handler for product ${productId}`);
-		this.productHandlers.set(productId, { args, handler });
+		const unowned = Dictionary.values(gamePass).filter(
+			(gamePassId) => !gamePasses.has(gamePassId),
+		);
+		for (const gamePassId of unowned) {
+			this.checkForGamePassOwned(playerEntity, gamePassId)
+				.then((owned) => {
+					if (!owned) {
+						return;
+					}
+
+					this.grantGamePass(playerEntity, gamePassId);
+				})
+				.catch((err) => {
+					this.logger.Warn(`Error checking game pass ${gamePassId}: ${err}`);
+				});
+		}
+
+		for (const [id, gamePassData] of gamePasses) {
+			this.notifyGamePassActive(playerEntity, id, gamePassData.active);
+		}
 	}
 
 	private async checkForGamePassOwned(
-		{ UserId, player }: PlayerEntity,
+		{ player, UserId }: PlayerEntity,
 		gamePassId: GamePass,
 	): Promise<boolean> {
 		if (!gamePassValidator(gamePassId)) {
@@ -266,42 +213,6 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 		}
 
 		return MarketplaceService.UserOwnsGamePassAsync(player.UserId, tonumber(gamePassId)!);
-	}
-
-	private async setGamePassActive(
-		playerEntity: PlayerEntity,
-		gamePassId: GamePass,
-		active: boolean,
-	): Promise<void> {
-		await this.checkForGamePassOwned(playerEntity, gamePassId).then((owned) => {
-			const { UserId } = playerEntity;
-			if (!owned) {
-				this.logger.Warn(
-					`Player ${UserId} tried to activate a game pass ${gamePassId} that they do not own.`,
-				);
-
-				return;
-			}
-
-			setGamePassActive(UserId, gamePassId, active);
-			this.notifyGamePassActive(playerEntity, gamePassId, active);
-		});
-	}
-
-	private notifyGamePassActive(
-		playerEntity: PlayerEntity,
-		gamePassId: GamePass,
-		active: boolean,
-	): void {
-		const handlers = this.gamePassHandlers.get(gamePassId);
-
-		if (handlers) {
-			for (const handler of handlers) {
-				task.defer(() => {
-					handler(playerEntity, gamePassId, active);
-				});
-			}
-		}
 	}
 
 	private grantGamePass(playerEntity: PlayerEntity, gamePassId: GamePass): void {
@@ -350,6 +261,61 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 		this.logger.Info(`Player ${UserId} purchased developer product ${productId}`);
 		addDeveloperProductPurchase(UserId, productId, currencySpent);
 		return true;
+	}
+
+	private async initRegister(): Promise<void> {
+		const mtxEvents = Modding.getDecorators<typeof MtxEvents>();
+
+		for (const { constructor, object } of mtxEvents) {
+			const singleton = Modding.resolveSingleton(constructor!) as Record<string, Callback>;
+
+			const productDecorators = Dictionary.merge(
+				Modding.getPropertyDecorators<typeof RegisterProductHandler>(object),
+				Modding.getPropertyDecorators<typeof RegisterHandlerForEachProduct>(object),
+			);
+
+			for (const [handler, { arguments: args }] of productDecorators) {
+				void this.loadDecorator(singleton, handler, "Product", args[0]);
+			}
+
+			for (const [handler, { arguments: args }] of Modding.getPropertyDecorators<
+				typeof GamePassStatusChanged
+			>(object)) {
+				void this.loadDecorator(singleton, handler, "GamePass", args[0]);
+			}
+		}
+	}
+
+	private async loadDecorator<T extends "GamePass" | "Product">(
+		object: Record<string, Callback>,
+		handler: string,
+		productType: T,
+		productId: T extends "Product" ? Product : GamePass,
+	): Promise<void> {
+		const withContextHandler = (...handlerArgs: Array<unknown>): boolean =>
+			object[handler](object, ...handlerArgs) as boolean;
+
+		if (productType === "Product") {
+			this.registerProductHandler(productId as Product, withContextHandler);
+		} else {
+			this.gamePassHandlers.get(productId as GamePass)?.push(withContextHandler);
+		}
+	}
+
+	private notifyGamePassActive(
+		playerEntity: PlayerEntity,
+		gamePassId: GamePass,
+		active: boolean,
+	): void {
+		const handlers = this.gamePassHandlers.get(gamePassId);
+
+		if (handlers) {
+			for (const handler of handlers) {
+				task.defer(() => {
+					handler(playerEntity, gamePassId, active);
+				});
+			}
+		}
 	}
 
 	private async processReceipt(receiptInfo: ReceiptInfo): Promise<Enum.ProductPurchaseDecision> {
@@ -403,6 +369,40 @@ export class MtxService implements OnInit, OnStart, OnPlayerJoin {
 		}
 
 		return Enum.ProductPurchaseDecision.PurchaseGranted;
+	}
+
+	private registerProductHandler(
+		productId: Product,
+		handler: (playerEntity: PlayerEntity, productId: Product) => boolean,
+		...args: Array<unknown>
+	): void {
+		if (this.productHandlers.has(productId)) {
+			this.logger.Error(`Handler already registered for product ${productId}`);
+			return;
+		}
+
+		this.logger.Debug(`Registered handler for product ${productId}`);
+		this.productHandlers.set(productId, { args, handler });
+	}
+
+	private async setGamePassActive(
+		playerEntity: PlayerEntity,
+		gamePassId: GamePass,
+		active: boolean,
+	): Promise<void> {
+		await this.checkForGamePassOwned(playerEntity, gamePassId).then((owned) => {
+			const { UserId } = playerEntity;
+			if (!owned) {
+				this.logger.Warn(
+					`Player ${UserId} tried to activate a game pass ${gamePassId} that they do not own.`,
+				);
+
+				return;
+			}
+
+			setGamePassActive(UserId, gamePassId, active);
+			this.notifyGamePassActive(playerEntity, gamePassId, active);
+		});
 	}
 
 	private updateReceiptHistory(userId: string, data: PlayerMtx, purchaseId: string): void {

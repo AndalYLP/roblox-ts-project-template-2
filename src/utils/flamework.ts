@@ -3,8 +3,8 @@ import { Modding, Reflect } from "@flamework/core";
 export const FLAMEWORK_DEFAULT_LOAD_ORDER = 1;
 
 export interface ListenerData<T> {
-	event: T;
 	id: string;
+	event: T;
 	loadOrder: number;
 }
 

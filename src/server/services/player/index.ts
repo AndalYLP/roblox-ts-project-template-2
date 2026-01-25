@@ -74,67 +74,6 @@ export class PlayerService implements OnStart {
 	}
 
 	/**
-	 * Called internally when a player joins the game.
-	 *
-	 * @param player - The player that joined the game.
-	 */
-	private async onPlayerJoin(player: Player): Promise<void> {
-		const playerDocument = await this.playerDataService.loadPlayerData(player);
-		if (!playerDocument) {
-			this.playerRemovalService.removeForBug(player, KickCode.PlayerInstantiationError);
-			return;
-		}
-
-		const janitor = this.setupPlayerJanitor(player, playerDocument);
-		const playerEntity = new PlayerEntity(player, janitor, playerDocument);
-		this.playerEntities.set(player, playerEntity);
-
-		debug.profilebegin("Lifecycle_Player_Join");
-		for (const { id, event } of this.playerJoinEvents) {
-			janitor
-				.AddPromise(
-					Promise.defer(() => {
-						debug.profilebegin(id);
-						event.onPlayerJoin(playerEntity);
-					}),
-				)
-				.catch((err) => {
-					this.logger.Error(`Error in player lifecycle ${id}: ${err}`);
-				});
-		}
-
-		debug.profileend();
-
-		this.logger.Info(`Player ${player.UserId} joined the game.`);
-		this.onEntityJoined.Fire(playerEntity);
-	}
-
-	/**
-	 * This method wraps a callback and replaces the first argument (that must
-	 * be of type `Player`) with that players `PlayerEntity` class.
-	 *
-	 * @param callback - The callback to wrap.
-	 * @returns A new callback that replaces the first argument with the
-	 *   player's `PlayerEntity` class.
-	 */
-	public withPlayerEntity<T extends Array<unknown>, R = void>(
-		callback: (playerEntity: PlayerEntity, ...args: T) => R,
-	) {
-		return (player: Player, ...args: T): R | undefined => {
-			const playerEntity = this.getPlayerEntity(player);
-			if (!playerEntity) {
-				this.logger.Error(
-					`Unable to find entity for player ${player}, unable to call callback. Stacktrace: \n` +
-						debug.traceback(),
-				);
-				return;
-			}
-
-			return callback(playerEntity, ...args);
-		};
-	}
-
-	/**
 	 * Returns an array of all `PlayerEntity` instances associated with players
 	 * that have joined the game.
 	 *
@@ -188,23 +127,81 @@ export class PlayerService implements OnStart {
 		return playerEntity;
 	}
 
-	private setupPlayerJanitor(player: Player, playerDocument: Document<PlayerData>): Janitor {
-		const janitor = new Janitor();
-
-		janitor.Add(async () => {
-			this.logger.Info(`Player ${player.UserId} leaving game, cleaning up Janitor`);
-
-			try {
-				await playerDocument.close();
-			} catch (err) {
-				this.logger.Error(`Failed to close player document for ${player.UserId}: ${err}`);
+	/**
+	 * This method wraps a callback and replaces the first argument (that must
+	 * be of type `Player`) with that players `PlayerEntity` class.
+	 *
+	 * @param callback - The callback to wrap.
+	 * @returns A new callback that replaces the first argument with the
+	 *   player's `PlayerEntity` class.
+	 */
+	public withPlayerEntity<T extends Array<unknown>, R = void>(
+		callback: (playerEntity: PlayerEntity, ...args: T) => R,
+	) {
+		return (player: Player, ...args: T): R | undefined => {
+			const playerEntity = this.getPlayerEntity(player);
+			if (!playerEntity) {
+				this.logger.Error(
+					`Unable to find entity for player ${player}, unable to call callback. Stacktrace: \n` +
+						debug.traceback(),
+				);
+				return;
 			}
 
-			this.playerEntities.delete(player);
-			this.onEntityRemoving.Fire();
-		});
+			return callback(playerEntity, ...args);
+		};
+	}
 
-		return janitor;
+	private bindHoldServerOpen(): void {
+		game.BindToClose(() => {
+			if (IS_DEV) {
+				return;
+			}
+
+			this.logger.Debug(`Game closing, holding open until all player entities are removed.`);
+
+			while (!this.playerEntities.isEmpty()) {
+				this.onEntityRemoving.Wait();
+			}
+
+			this.logger.Debug(`All player entities removed, closing game.`);
+		});
+	}
+
+	/**
+	 * Called internally when a player joins the game.
+	 *
+	 * @param player - The player that joined the game.
+	 */
+	private async onPlayerJoin(player: Player): Promise<void> {
+		const playerDocument = await this.playerDataService.loadPlayerData(player);
+		if (!playerDocument) {
+			this.playerRemovalService.removeForBug(player, KickCode.PlayerInstantiationError);
+			return;
+		}
+
+		const janitor = this.setupPlayerJanitor(player, playerDocument);
+		const playerEntity = new PlayerEntity(player, janitor, playerDocument);
+		this.playerEntities.set(player, playerEntity);
+
+		debug.profilebegin("Lifecycle_Player_Join");
+		for (const { id, event } of this.playerJoinEvents) {
+			janitor
+				.AddPromise(
+					Promise.defer(() => {
+						debug.profilebegin(id);
+						event.onPlayerJoin(playerEntity);
+					}),
+				)
+				.catch((err) => {
+					this.logger.Error(`Error in player lifecycle ${id}: ${err}`);
+				});
+		}
+
+		debug.profileend();
+
+		this.logger.Info(`Player ${player.UserId} joined the game.`);
+		this.onEntityJoined.Fire(playerEntity);
 	}
 
 	/**
@@ -248,19 +245,22 @@ export class PlayerService implements OnStart {
 		});
 	}
 
-	private bindHoldServerOpen(): void {
-		game.BindToClose(() => {
-			if (IS_DEV) {
-				return;
+	private setupPlayerJanitor(player: Player, playerDocument: Document<PlayerData>): Janitor {
+		const janitor = new Janitor();
+
+		janitor.Add(async () => {
+			this.logger.Info(`Player ${player.UserId} leaving game, cleaning up Janitor`);
+
+			try {
+				await playerDocument.close();
+			} catch (err) {
+				this.logger.Error(`Failed to close player document for ${player.UserId}: ${err}`);
 			}
 
-			this.logger.Debug(`Game closing, holding open until all player entities are removed.`);
-
-			while (!this.playerEntities.isEmpty()) {
-				this.onEntityRemoving.Wait();
-			}
-
-			this.logger.Debug(`All player entities removed, closing game.`);
+			this.playerEntities.delete(player);
+			this.onEntityRemoving.Fire();
 		});
+
+		return janitor;
 	}
 }

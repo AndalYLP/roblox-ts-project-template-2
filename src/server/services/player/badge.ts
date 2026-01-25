@@ -11,19 +11,6 @@ import type { PlayerEntity } from "server/services/player/entity";
 export class PlayerBadgeService implements OnPlayerJoin {
 	constructor(private readonly logger: Logger) {}
 
-	/** @ignore */
-	public onPlayerJoin(playerEntity: PlayerEntity): void {
-		const { UserId } = playerEntity;
-
-		this.awardBadge(playerEntity, badge.Welcome).catch((err) => {
-			this.logger.Error(`Failed to check if ${UserId} has badge ${badge.Welcome}: ${err}`);
-		});
-
-		this.awardUnrewardedBadges(playerEntity).catch((err) => {
-			this.logger.Error(`Failed to award unrewarded badges to ${UserId}: ${err}`);
-		});
-	}
-
 	/**
 	 * Awards a badge to a player if they don't already have it.
 	 *
@@ -61,6 +48,38 @@ export class PlayerBadgeService implements OnPlayerJoin {
 		return Promise.try(() => BadgeService.GetBadgeInfoAsync(tonumber(badge)!));
 	}
 
+	/** @ignore */
+	public onPlayerJoin(playerEntity: PlayerEntity): void {
+		const { UserId } = playerEntity;
+
+		this.awardBadge(playerEntity, badge.Welcome).catch((err) => {
+			this.logger.Error(`Failed to check if ${UserId} has badge ${badge.Welcome}: ${err}`);
+		});
+
+		this.awardUnrewardedBadges(playerEntity).catch((err) => {
+			this.logger.Error(`Failed to award unrewarded badges to ${UserId}: ${err}`);
+		});
+	}
+
+	private async awardUnrewardedBadges(playerEntity: PlayerEntity): Promise<void> {
+		const { UserId } = playerEntity;
+
+		const badges = getPlayerAchievements(UserId)?.badges;
+		if (badges === undefined) {
+			return;
+		}
+
+		for (const [badge, hasBadge] of badges) {
+			if (hasBadge) {
+				continue;
+			}
+
+			this.awardBadge(playerEntity, badge).catch((err) => {
+				this.logger.Error(`Failed to check if ${UserId} has badge ${badge}: ${err}`);
+			});
+		}
+	}
+
 	private async giveBadge({ player, UserId }: PlayerEntity, badgeId: Badge): Promise<void> {
 		const badgeInfo = await this.getBadgeInfo(badgeId);
 		if (!badgeInfo.IsEnabled) {
@@ -82,24 +101,5 @@ export class PlayerBadgeService implements OnPlayerJoin {
 		}
 
 		setBadgeStatus(UserId, badgeId, awarded);
-	}
-
-	private async awardUnrewardedBadges(playerEntity: PlayerEntity): Promise<void> {
-		const { UserId } = playerEntity;
-
-		const badges = getPlayerAchievements(UserId)?.badges;
-		if (badges === undefined) {
-			return;
-		}
-
-		for (const [badge, hasBadge] of badges) {
-			if (hasBadge) {
-				continue;
-			}
-
-			this.awardBadge(playerEntity, badge).catch((err) => {
-				this.logger.Error(`Failed to check if ${UserId} has badge ${badge}: ${err}`);
-			});
-		}
 	}
 }

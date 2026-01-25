@@ -6,8 +6,8 @@ import type { PlayerMtx } from "shared/store/atoms/player/mtx";
 import type { PlayerSettings } from "shared/store/atoms/player/settings";
 
 export interface PlayerData {
-	readonly balance: PlayerBalance;
 	readonly achievements: PlayerAchievements;
+	readonly balance: PlayerBalance;
 	readonly mtx: PlayerMtx;
 	readonly settings: PlayerSettings;
 }

@@ -32,6 +32,25 @@ export class AudioController implements OnInit, OnStart {
 
 	constructor(private readonly logger: Logger) {}
 
+	/** @ignore */
+	public onInit(): void {
+		this.soundGroups.set(SoundType.Music, this.makeSoundGroup(SoundType.Music));
+		this.soundGroups.set(SoundType.SoundEffect, this.makeSoundGroup(SoundType.SoundEffect));
+
+		this.logger.Info(`Setup SoundGroup instances`);
+	}
+
+	/** @ignore */
+	public onStart(): void {
+		subscribe(getAllLocalPlayerSettings, (current) => {
+			if (!current) {
+				return;
+			}
+
+			this.onSettingsChanged(current);
+		});
+	}
+
 	public createSound({
 		attachToPoint,
 		debugName,
@@ -80,25 +99,6 @@ export class AudioController implements OnInit, OnStart {
 		TweenService.Create(soundObject, tweenInfo, {
 			Volume: desiredVolume,
 		}).Play();
-	}
-
-	/** @ignore */
-	public onInit(): void {
-		this.soundGroups.set(SoundType.Music, this.makeSoundGroup(SoundType.Music));
-		this.soundGroups.set(SoundType.SoundEffect, this.makeSoundGroup(SoundType.SoundEffect));
-
-		this.logger.Info(`Setup SoundGroup instances`);
-	}
-
-	/** @ignore */
-	public onStart(): void {
-		subscribe(getAllLocalPlayerSettings, (current) => {
-			if (!current) {
-				return;
-			}
-
-			this.onSettingsChanged(current);
-		});
 	}
 
 	/**

@@ -4,9 +4,9 @@ import { Players } from "@rbxts/services";
 import { moderationCommandOptions } from "server/centurion/commands/moderation/moderation.config";
 import { isDeveloper } from "server/centurion/guards/is-developer";
 
-@Register()
-@Guard(isDeveloper)
 @Group("moderation")
+@Guard(isDeveloper)
+@Register()
 export class ModerationCommands {
 	@Command(moderationCommandOptions.ban)
 	public ban(
@@ -29,17 +29,6 @@ export class ModerationCommands {
 		}
 	}
 
-	@Command(moderationCommandOptions.unban)
-	public unban(commandContext: CommandContext, userId: number): void {
-		try {
-			Players.UnbanAsync({ UserIds: [userId] });
-
-			commandContext.reply(`Unbanned ${userId}`);
-		} catch (err) {
-			commandContext.error(`Error unbanning ${userId}: ${err}`);
-		}
-	}
-
 	@Command(moderationCommandOptions.kick)
 	public kick(commandContext: CommandContext, player: Player, reason?: string): void {
 		try {
@@ -48,6 +37,17 @@ export class ModerationCommands {
 			commandContext.reply(`Player ${player.UserId} kicked.`);
 		} catch (err) {
 			commandContext.error(`Error kicking player: ${err}`);
+		}
+	}
+
+	@Command(moderationCommandOptions.unban)
+	public unban(commandContext: CommandContext, userId: number): void {
+		try {
+			Players.UnbanAsync({ UserIds: [userId] });
+
+			commandContext.reply(`Unbanned ${userId}`);
+		} catch (err) {
+			commandContext.error(`Error unbanning ${userId}: ${err}`);
 		}
 	}
 }

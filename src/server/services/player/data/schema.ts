@@ -3,11 +3,11 @@ import { Flamework } from "@flamework/core";
 import type { PlayerData } from "shared/store/atoms/player/datastore";
 
 export const defaultPlayerData: PlayerData = {
-	balance: {
-		money: 0,
-	},
 	achievements: {
 		badges: new Map(),
+	},
+	balance: {
+		money: 0,
 	},
 	mtx: {
 		gamePasses: new Map(),

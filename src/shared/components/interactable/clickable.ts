@@ -98,13 +98,6 @@ export abstract class ClickableInteractable<
 	public onClick?(player: Player): void;
 
 	/**
-	 * Called when the click detector is right clicked by a player.
-	 *
-	 * @param player - The player who right clicked the click detector.
-	 */
-	public onRightClick?(player: Player): void;
-
-	/**
 	 * Called when the player hovers over the click detector's parent.
 	 *
 	 * @param player - The player who triggered the hover event.
@@ -117,6 +110,13 @@ export abstract class ClickableInteractable<
 	 * @param player - The player who triggered the hover leave event.
 	 */
 	public onHoverLeave?(player: Player): void;
+
+	/**
+	 * Called when the click detector is right clicked by a player.
+	 *
+	 * @param player - The player who right clicked the click detector.
+	 */
+	public onRightClick?(player: Player): void;
 
 	/**
 	 * Called when the click detector is triggered by a player. This includes

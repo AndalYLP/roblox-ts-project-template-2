@@ -15,7 +15,7 @@ const jestLua = ReplicatedStorage.WaitForChild("rbxts_include")
 	.FindFirstChild("@rbxts")!
 	.WaitForChild("JestLua");
 const { runCLI } = require(
-	(jestLua as Instance & { Jest: ModuleScript }).Jest,
+	(jestLua as { Jest: ModuleScript } & Instance).Jest,
 ) as typeof JestModule;
 
 const [success, result] = runCLI(script, config, [

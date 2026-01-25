@@ -33,10 +33,10 @@ function callable<T extends Callback, U>(callback: T, object: U): T & U {
  * @returns A number in scaled `px` units.
  */
 export const px = callable((value: number) => math.round(value * scale()), {
-	even: (value: number) => math.round(value * scale() * 0.5) * 2,
-	scale: (value: number) => value * scale(),
-	floor: (value: number) => math.floor(value * scale()),
 	ceil: (value: number) => math.ceil(value * scale()),
+	even: (value: number) => math.round(value * scale() * 0.5) * 2,
+	floor: (value: number) => math.floor(value * scale()),
+	scale: (value: number) => value * scale(),
 });
 
 /**

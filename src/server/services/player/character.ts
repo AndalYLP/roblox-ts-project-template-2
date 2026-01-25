@@ -39,6 +39,12 @@ export class CharacterService implements OnPlayerJoin, OnStart {
 
 	constructor(private readonly logger: Logger) {}
 
+	/** @ignore */
+	public onStart(): void {
+		setupLifecycle<OnCharacterAdded>(this.characterAddedEvents);
+		setupLifecycle<OnCharacterRemoved>(this.characterRemovedEvents);
+	}
+
 	/**
 	 * Returns the character rig associated with the given player, if it exists.
 	 *
@@ -67,12 +73,6 @@ export class CharacterService implements OnPlayerJoin, OnStart {
 					});
 			}),
 		);
-	}
-
-	/** @ignore */
-	public onStart(): void {
-		setupLifecycle<OnCharacterAdded>(this.characterAddedEvents);
-		setupLifecycle<OnCharacterRemoved>(this.characterRemovedEvents);
 	}
 
 	/**
@@ -156,7 +156,7 @@ export class CharacterService implements OnPlayerJoin, OnStart {
 		this.characterRigs.set(player, rig);
 
 		debug.profilebegin("Lifecycle_Character_Added");
-		for (const { event, id } of this.characterAddedEvents) {
+		for (const { id, event } of this.characterAddedEvents) {
 			janitor
 				.AddPromise(
 					Promise.defer(() => {
@@ -188,7 +188,7 @@ export class CharacterService implements OnPlayerJoin, OnStart {
 		const { janitor, player } = playerEntity;
 
 		this.characterRigs.delete(player);
-		for (const { event, id } of this.characterRemovedEvents) {
+		for (const { id, event } of this.characterRemovedEvents) {
 			janitor
 				.AddPromise(
 					Promise.defer(() => {

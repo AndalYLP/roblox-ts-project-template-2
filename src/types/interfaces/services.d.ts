@@ -1,17 +1,17 @@
 interface ServerScriptService {
-	TS: Folder & {
-		centurion: Folder & {
+	TS: {
+		centurion: {
 			commands: Folder;
 			guards: Folder;
 			run: ModuleScript;
-		};
-	};
+		} & Folder;
+	} & Folder;
 }
 
 interface ReplicatedStorage {
-	TS: Folder & {
-		centurion: Folder & {
+	TS: {
+		centurion: {
 			types: Folder;
-		};
-	};
+		} & Folder;
+	} & Folder;
 }

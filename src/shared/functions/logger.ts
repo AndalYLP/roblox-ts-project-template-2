@@ -43,10 +43,6 @@ class LogEventsOutputSink implements ILogEventSink {
 		}
 	}
 
-	private getLogLevelString(level: LogLevel): string {
-		return this.logLevelString[level];
-	}
-
 	private getFileInformation(context: string): string {
 		if (LOG_LEVEL > LogLevel.Verbose) {
 			return "";
@@ -58,6 +54,10 @@ class LogEventsOutputSink implements ILogEventSink {
 				: debug.info(STACK_TRACE_LEVEL_FLAMEWORK, "sl");
 		const [file, line] = source;
 		return ` (${file}:${line})`;
+	}
+
+	private getLogLevelString(level: LogLevel): string {
+		return this.logLevelString[level];
 	}
 }
 

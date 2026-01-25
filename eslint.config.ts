@@ -8,6 +8,15 @@ import unusedImports from "eslint-plugin-unused-imports";
 import { defineConfig } from "eslint/config";
 import tseslint from "typescript-eslint";
 
+const sortedObjectConfig = {
+	customGroups: [
+		{ elementNamePattern: "^id$", groupName: "id" },
+		{ elementNamePattern: "^key$", groupName: "key" },
+		{ elementNamePattern: "^name$", groupName: "name" },
+	],
+	groups: ["id", "key", "name", "unknown"],
+};
+
 export default defineConfig(
 	eslint.configs.recommended,
 	tseslint.configs.recommended,
@@ -45,6 +54,61 @@ export default defineConfig(
 			perfectionist,
 		},
 		rules: {
+			"perfectionist/sort-array-includes": ["error"],
+			"perfectionist/sort-classes": [
+				"warn",
+				{
+					customGroups: [
+						{
+							elementNamePattern: "^(onInit|onPhysics|onRender|onStart|onTick)",
+							groupName: "flamework",
+						},
+					],
+					fallbackSort: { order: "asc", type: "alphabetical" },
+					groups: [
+						"private-static-readonly-property",
+						"private-readonly-property",
+						"private-static-property",
+						"private-property",
+
+						"protected-static-readonly-property",
+						"protected-readonly-property",
+						"protected-static-property",
+						"protected-property",
+
+						"public-static-readonly-property",
+						"public-readonly-property",
+						"public-static-property",
+						"public-property",
+
+						"constructor",
+
+						"flamework",
+
+						["method", "function-property"],
+						["protected-method", "protected-function-property"],
+						["private-method", "private-function-property"],
+
+						"unknown",
+					],
+				},
+			],
+			"perfectionist/sort-decorators": ["error"],
+			"perfectionist/sort-enums": ["error"],
+			"perfectionist/sort-exports": ["error"],
+			"perfectionist/sort-heritage-clauses": [
+				"error",
+				{
+					// customGroups: customClassGroups.reduce<Record<string, string>>(
+					// 	(accumulator, item) => {
+					// 		accumulator[item] = `^${capitalizeFirstLetter(item)}$`;
+					// 		return accumulator;
+					// 	},
+					// 	{},
+					// ),
+					groups: [/*...customClassGroups*/ "unknown"],
+				},
+			],
 			"perfectionist/sort-imports": [
 				"error",
 				{
@@ -84,6 +148,17 @@ export default defineConfig(
 					],
 				},
 			],
+			"perfectionist/sort-interfaces": ["error", { ...sortedObjectConfig }],
+			"perfectionist/sort-intersection-types": ["error"],
+			"perfectionist/sort-jsx-props": "off",
+			"perfectionist/sort-maps": ["error"],
+			"perfectionist/sort-named-imports": ["error"],
+			"perfectionist/sort-object-types": ["error"],
+			"perfectionist/sort-objects": ["error", { ...sortedObjectConfig }],
+			"perfectionist/sort-sets": ["error"],
+			"perfectionist/sort-switch-case": ["error"],
+			"perfectionist/sort-union-types": ["error"],
+			"perfectionist/sort-variable-declarations": ["error"],
 		},
 	},
 	{

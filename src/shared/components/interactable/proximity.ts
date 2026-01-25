@@ -115,19 +115,11 @@ export abstract class ProximityInteractable<
 	}
 
 	/**
-	 * Called when the proximity prompt is triggered by a player.
+	 * Called when the proximity prompt is hidden from the `LocalPlayer`.
 	 *
-	 * @param player - The player who triggered the prompt.
+	 * @client
 	 */
-	public onTrigger?(player: Player): void;
-
-	/**
-	 * Called when the proximity prompt is no longer being triggered by a
-	 * player.
-	 *
-	 * @param player - The player who stopped triggering the prompt.
-	 */
-	public onTriggerEnded?(player: Player): void;
+	public onHidden?(): void;
 
 	/**
 	 * Called when the player begins holding the proximity prompt.
@@ -151,9 +143,17 @@ export abstract class ProximityInteractable<
 	public onShown?(): void;
 
 	/**
-	 * Called when the proximity prompt is hidden from the `LocalPlayer`.
+	 * Called when the proximity prompt is triggered by a player.
 	 *
-	 * @client
+	 * @param player - The player who triggered the prompt.
 	 */
-	public onHidden?(): void;
+	public onTrigger?(player: Player): void;
+
+	/**
+	 * Called when the proximity prompt is no longer being triggered by a
+	 * player.
+	 *
+	 * @param player - The player who stopped triggering the prompt.
+	 */
+	public onTriggerEnded?(player: Player): void;
 }

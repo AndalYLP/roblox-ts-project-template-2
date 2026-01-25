@@ -34,5 +34,5 @@ export declare namespace SoundSystem {
 		id: string,
 		target: CFrame | Instance | Vector3,
 		looped?: boolean,
-	): Attachment & { Sound: Sound };
+	): { Sound: Sound } & Attachment;
 }
