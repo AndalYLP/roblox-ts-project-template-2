@@ -1,5 +1,6 @@
 import { Service } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
+
 import type { KickCode } from "types/enums/kick-reason";
 
 /** This handles removing the player from the game for various reasons. */

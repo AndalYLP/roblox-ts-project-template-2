@@ -3,6 +3,9 @@ import { Service } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
 import { setTimeout } from "@rbxts/set-timeout";
 import { promiseTree } from "@rbxts/validate-tree";
+
+import type { OnPlayerJoin } from "server/services/player";
+import type { PlayerEntity } from "server/services/player/entity";
 import { CollisionGroup } from "types/enums/collision-group";
 import { Tag } from "types/enums/tag";
 import { type ListenerData, setupLifecycle } from "utils/flamework";
@@ -14,9 +17,6 @@ import {
 	loadCharacter,
 	onCharacterAdded,
 } from "utils/player";
-
-import type { OnPlayerJoin } from "server/services/player";
-import type { PlayerEntity } from "server/services/player/entity";
 
 export interface OnCharacterAdded {
 	/** Fires when a character is added to the game. */

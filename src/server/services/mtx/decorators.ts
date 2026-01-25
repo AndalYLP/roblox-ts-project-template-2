@@ -1,4 +1,5 @@
 import { Modding } from "@flamework/core";
+
 import type { GamePass, Product } from "types/enums/mtx";
 
 /** @metadata flamework:implements flamework:parameters injectable */

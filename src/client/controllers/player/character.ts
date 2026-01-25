@@ -5,6 +5,7 @@ import type { Logger } from "@rbxts/log";
 import { setTimeout } from "@rbxts/set-timeout";
 import { promiseTree } from "@rbxts/validate-tree";
 import { LocalPlayer } from "client/constants/player";
+
 import type { ListenerData } from "utils/flamework";
 import { setupLifecycle } from "utils/flamework";
 import type { CharacterRig } from "utils/player";
