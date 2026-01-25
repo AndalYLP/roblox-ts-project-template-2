@@ -48,7 +48,6 @@ export class PlayerBadgeService implements OnPlayerJoin {
 		return Promise.try(() => BadgeService.GetBadgeInfoAsync(tonumber(badge)!));
 	}
 
-	/** @ignore */
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
 		const { UserId } = playerEntity;
 

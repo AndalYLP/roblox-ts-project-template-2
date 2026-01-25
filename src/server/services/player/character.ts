@@ -39,7 +39,6 @@ export class CharacterService implements OnPlayerJoin, OnStart {
 
 	constructor(private readonly logger: Logger) {}
 
-	/** @ignore */
 	public onStart(): void {
 		setupLifecycle<OnCharacterAdded>(this.characterAddedEvents);
 		setupLifecycle<OnCharacterRemoved>(this.characterRemovedEvents);
@@ -56,7 +55,6 @@ export class CharacterService implements OnPlayerJoin, OnStart {
 		return this.characterRigs.get(player);
 	}
 
-	/** @ignore */
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
 		const { janitor, player } = playerEntity;
 

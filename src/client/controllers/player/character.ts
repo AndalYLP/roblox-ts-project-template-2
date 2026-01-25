@@ -41,7 +41,6 @@ export class CharacterController implements OnStart {
 
 	constructor(private readonly logger: Logger) {}
 
-	/** @ignore */
 	public onStart(): void {
 		setupLifecycle<OnCharacterAdded>(this.characterAddedEvents);
 		setupLifecycle<OnCharacterRemoved>(this.characterRemovedEvents);

@@ -42,7 +42,6 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 
 	constructor(private readonly logger: Logger) {}
 
-	/** @ignore */
 	public onInit(): void {
 		this.registerStat("Money", "IntValue", "balance.money");
 	}
@@ -72,7 +71,6 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		return valueMap.get(entry.Name);
 	}
 
-	/** @ignore */
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
 		const { Name, player, UserId } = playerEntity;
 
@@ -106,7 +104,6 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		this.playerToValueMap.set(player, valueMap);
 	}
 
-	/** @ignore */
 	public onPlayerLeave({ player }: PlayerEntity): Promise<void> | void {
 		const valueMap = this.playerToValueMap.get(player);
 		if (valueMap !== undefined) {

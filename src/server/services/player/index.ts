@@ -23,6 +23,7 @@ export interface OnPlayerJoin {
 	 * is considered `fully initialized` once all of their data is loaded and
 	 * their PlayerEntity class is fully setup. At which point, anything that
 	 * implements this lifecycle event will be fired with the class.
+	 * @hideinherited
 	 */
 	onPlayerJoin(playerEntity: PlayerEntity): void;
 }
@@ -32,6 +33,7 @@ export interface OnPlayerLeave {
 	 * Fires when a player leaves the game. This is called before the player is
 	 * removed from the game and their PlayerEntity class is cleaned up. This
 	 * means it is still safe to access player data before it is removed.
+	 * @hideinherited
 	 */
 	onPlayerLeave(playerEntity: PlayerEntity): Promise<void> | void;
 }
@@ -51,7 +53,6 @@ export class PlayerService implements OnStart {
 		private readonly playerRemovalService: PlayerRemovalService,
 	) {}
 
-	/** @ignore */
 	public onStart(): void {
 		setupLifecycle<OnPlayerJoin>(this.playerJoinEvents);
 		setupLifecycle<OnPlayerLeave>(this.playerLeaveEvents);
