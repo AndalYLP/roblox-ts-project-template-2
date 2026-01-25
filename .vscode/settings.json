@@ -1,17 +1,14 @@
 {
 	// TypeScript Configuration
 	"typescript.tsdk": "node_modules/typescript/lib",
-
 	// File Endings and Package Manager
 	"files.eol": "\n",
 	"npm.packageManager": "pnpm",
-
 	// Auto fix & Organize Imports
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": "explicit",
 		"source.organizeImports": "never"
 	},
-
 	// File Explorer Settings
 	"explorer.fileNesting.patterns": {
 		"package.json": ".darklua.json, .gitattributes, .gitignore, .npmrc, asphalt.toml, flamework.build, pnpm-lock.yaml, rokit.toml, .env, testez-companion.toml",
@@ -21,24 +18,19 @@
 		"default.project.json": "game.rbxl",
 		"*.rbxl": "*.rbxl.lock"
 	},
-
 	// File Exclusion
 	"files.exclude": {
 		"patches": true,
-		".husky": true,
-		".github": true,
 		".gitattributes": true,
 		"pnpm-lock.yaml": true,
 		"flamework.build": true,
 		"include": true,
 		"scripts": true
 	},
-
 	// Custom Labels for Index Files
 	"workbench.editor.customLabels.patterns": {
 		"**/index.*": "${dirname}.${extname}"
 	},
-
 	// Typescript configuration
 	"typescript.preferences.importModuleSpecifier": "non-relative",
 }
