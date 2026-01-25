@@ -1,0 +1,95 @@
+{
+	"Flamework Controller": {
+		"prefix": [
+			"controller",
+			"flamework controller"
+		],
+		"description": "Create a Flamework controller",
+		"body": [
+			"import { Controller } from \"@flamework/core\";",
+			"import type { OnStart } from \"@flamework/core\";",
+			"import type { Logger } from \"@rbxts/log\";",
+			"",
+			"@Controller()",
+			"export class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}Controller implements OnStart {",
+			"\tconstructor(private readonly logger: Logger) {}",
+			"",
+			"\tpublic onStart(): void {",
+			"\t\t$0",
+			"\t}",
+			"}",
+			""
+		]
+	},
+	"Flamework Service": {
+		"prefix": [
+			"service",
+			"flamework service"
+		],
+		"description": "Create a Flamework service",
+		"body": [
+			"import { Service } from \"@flamework/core\";",
+			"import type { OnStart } from \"@flamework/core\";",
+			"import type { Logger } from \"@rbxts/log\";",
+			"",
+			"@Service()",
+			"export class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}Service implements OnStart {",
+			"\tconstructor(private readonly logger: Logger) {}",
+			"",
+			"\tpublic onStart(): void {",
+			"\t\t$0",
+			"\t}",
+			"}",
+			""
+		]
+	},
+	"Flamework Component": {
+		"prefix": [
+			"component",
+			"flamework component"
+		],
+		"description": "Create a Flamework component",
+		"body": [
+			"import { Component } from \"@flamework/components\";",
+			"import type { OnStart } from \"@flamework/core\";",
+			"import type { Logger } from \"@rbxts/log\";",
+			"",
+			"import { DestroyableComponent } from \"shared/components/abstract/destroyable\";",
+			"import { Tag } from \"types/enums/tag\";",
+			"import type { ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}Attributes, ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}Model } from \"types/interfaces/components/${TM_FILENAME_BASE/(.*)-component/$1/}\";",
+			"",
+			"@Component({",
+			"\ttag: Tag.${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g},",
+			"})",
+			"export class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}Component",
+			"\textends DestroyableComponent<${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}Attributes, ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}Model>",
+			"\timplements OnStart",
+			"{",
+			"\tconstructor(private readonly logger: Logger) {",
+			"\t\tsuper();",
+			"\t}",
+			"",
+			"\tpublic onStart(): void {",
+			"\t\t$0",
+			"\t}",
+			"}"
+		]
+	},
+	"Flamework Component Types": {
+		"prefix": [
+			"component types",
+			"flamework component types"
+		],
+		"description": "Create attribute and model interfaces for a Flamework component",
+		"body": [
+			"export interface ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}Attributes {",
+			"\t$1",
+			"}",
+			"",
+			"export interface ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}Model extends Model {",
+			"\t$2",
+			"}",
+			""
+		]
+	}
+}
