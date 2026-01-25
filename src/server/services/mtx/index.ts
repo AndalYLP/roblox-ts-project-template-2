@@ -115,7 +115,7 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 			this.playerService.withPlayerEntity((playerEntity, gamePassId, active) => {
 				this.setGamePassActive(playerEntity, gamePassId, active).catch((err) => {
 					this.logger.Error(
-						`Failed to set game pass ${gamePassId} active for ${playerEntity.UserId}: ${err}`,
+						`Failed to set game pass ${gamePassId} active for ${playerEntity.userId}: ${err}`,
 					);
 				});
 			}),
@@ -165,12 +165,12 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 	 * @param gamePassId - The ID of the game pass to check.
 	 * @returns A boolean indicating whether the game pass is active or not.
 	 */
-	public isGamePassActive({ UserId }: PlayerEntity, gamePassId: GamePass): boolean {
+	public isGamePassActive({ userId: UserId }: PlayerEntity, gamePassId: GamePass): boolean {
 		return getPlayerMtx(UserId)?.gamePasses.get(gamePassId)?.active ?? false;
 	}
 
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
-		const { UserId } = playerEntity;
+		const { userId: UserId } = playerEntity;
 
 		const gamePasses = getPlayerMtx(UserId)?.gamePasses;
 		if (gamePasses === undefined) {
@@ -200,7 +200,7 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 	}
 
 	private async checkForGamePassOwned(
-		{ player, UserId }: PlayerEntity,
+		{ player, userId: UserId }: PlayerEntity,
 		gamePassId: GamePass,
 	): Promise<boolean> {
 		if (!gamePassValidator(gamePassId)) {
@@ -216,7 +216,7 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 	}
 
 	private grantGamePass(playerEntity: PlayerEntity, gamePassId: GamePass): void {
-		const { UserId } = playerEntity;
+		const { userId: UserId } = playerEntity;
 
 		if (!gamePassValidator(gamePassId)) {
 			this.logger.Warn(
@@ -235,7 +235,7 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 		productId: Product,
 		currencySpent: number,
 	): boolean {
-		const { UserId } = playerEntity;
+		const { userId: UserId } = playerEntity;
 
 		if (!productValidator(productId)) {
 			this.logger.Warn(
@@ -341,7 +341,7 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 		playerEntity: PlayerEntity,
 		{ CurrencySpent, ProductId, PurchaseId }: ReceiptInfo,
 	): Promise<Enum.ProductPurchaseDecision> {
-		const { document, UserId } = playerEntity;
+		const { document, userId: UserId } = playerEntity;
 
 		if (document.read().mtx.receiptHistory.includes(PurchaseId)) {
 			const [success] = document.save().await();
@@ -391,7 +391,7 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 		active: boolean,
 	): Promise<void> {
 		await this.checkForGamePassOwned(playerEntity, gamePassId).then((owned) => {
-			const { UserId } = playerEntity;
+			const { userId: UserId } = playerEntity;
 			if (!owned) {
 				this.logger.Warn(
 					`Player ${UserId} tried to activate a game pass ${gamePassId} that they do not own.`,

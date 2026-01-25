@@ -157,7 +157,7 @@ export class PlayerDataService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		this.logger.Info(`Registered ordered data ${dataStoreName}`);
 	}
 
-	private savePlayerOrderedData({ UserId }: PlayerEntity): void {
+	private savePlayerOrderedData({ userId: UserId }: PlayerEntity): void {
 		const playerData = getPlayerData(UserId);
 		if (!playerData) {
 			return;

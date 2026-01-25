@@ -33,7 +33,7 @@ export class PlayerBadgeService implements OnPlayerJoin {
 	}
 
 	public async checkIfPlayerHasBadge(
-		{ player, UserId }: PlayerEntity,
+		{ player, userId: UserId }: PlayerEntity,
 		badge: Badge,
 	): Promise<boolean> {
 		const hasBadge = getPlayerAchievements(UserId)?.badges.get(badge);
@@ -49,7 +49,7 @@ export class PlayerBadgeService implements OnPlayerJoin {
 	}
 
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
-		const { UserId } = playerEntity;
+		const { userId: UserId } = playerEntity;
 
 		this.awardBadge(playerEntity, badge.Welcome).catch((err) => {
 			this.logger.Error(`Failed to check if ${UserId} has badge ${badge.Welcome}: ${err}`);
@@ -61,7 +61,7 @@ export class PlayerBadgeService implements OnPlayerJoin {
 	}
 
 	private async awardUnrewardedBadges(playerEntity: PlayerEntity): Promise<void> {
-		const { UserId } = playerEntity;
+		const { userId: UserId } = playerEntity;
 
 		const badges = getPlayerAchievements(UserId)?.badges;
 		if (badges === undefined) {
@@ -79,7 +79,10 @@ export class PlayerBadgeService implements OnPlayerJoin {
 		}
 	}
 
-	private async giveBadge({ player, UserId }: PlayerEntity, badgeId: Badge): Promise<void> {
+	private async giveBadge(
+		{ player, userId: UserId }: PlayerEntity,
+		badgeId: Badge,
+	): Promise<void> {
 		const badgeInfo = await this.getBadgeInfo(badgeId);
 		if (!badgeInfo.IsEnabled) {
 			this.logger.Warn(`Badge ${badgeId} is not enabled.`);

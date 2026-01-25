@@ -66,7 +66,7 @@ export class PlayerService implements OnStart {
 		Players.PlayerRemoving.Connect(
 			this.withPlayerEntity((playerEntity) => {
 				this.onPlayerRemoving(playerEntity).catch((err) => {
-					this.logger.Error(`Failed to close player ${playerEntity.UserId}: ${err}`);
+					this.logger.Error(`Failed to close player ${playerEntity.userId}: ${err}`);
 				});
 			}),
 		);

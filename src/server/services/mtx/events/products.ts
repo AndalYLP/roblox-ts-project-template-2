@@ -10,7 +10,7 @@ export class ProductEventsService {
 
 	@RegisterProductHandler(product.Example)
 	public exampleProduct(playerEntity: PlayerEntity, productId: Product): boolean {
-		this.logger.Debug(`Example product purchased! ${playerEntity.Name} bought ${productId}`);
+		this.logger.Debug(`Example product purchased! ${playerEntity.name} bought ${productId}`);
 		return true;
 	}
 }

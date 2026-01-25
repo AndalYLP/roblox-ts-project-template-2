@@ -147,7 +147,7 @@ export class CharacterService implements OnPlayerJoin, OnStart {
 	}
 
 	private onRigLoaded(playerEntity: PlayerEntity, rig: CharacterRig): void {
-		const { janitor, player, UserId } = playerEntity;
+		const { janitor, player, userId: UserId } = playerEntity;
 
 		janitor.Add(addToCollisionGroup(rig, CollisionGroup.Character, true), true);
 		rig.AddTag(Tag.PlayerCharacter);

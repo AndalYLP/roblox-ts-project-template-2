@@ -5,9 +5,9 @@ import type { PlayerData } from "shared/store/atoms/player/datastore";
 
 export class PlayerEntity {
 	/** The player's username. */
-	public readonly Name: string;
+	public readonly name: string;
 	/** A string representation of the player's UserId. */
-	public readonly UserId: string;
+	public readonly userId: string;
 
 	constructor(
 		/** The player's instance. */
@@ -15,7 +15,7 @@ export class PlayerEntity {
 		public readonly janitor: Janitor,
 		public readonly document: Document<PlayerData>,
 	) {
-		this.Name = player.Name;
-		this.UserId = tostring(player.UserId);
+		this.name = player.Name;
+		this.userId = tostring(player.UserId);
 	}
 }

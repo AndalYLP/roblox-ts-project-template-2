@@ -14,9 +14,9 @@ interface LeaderstatValueTypes {
 }
 
 interface LeaderstatEntry<T extends keyof LeaderstatValueTypes = keyof LeaderstatValueTypes> {
-	Name: Leaderstats;
-	PlayerDataKey?: NestedKeyOf<PlayerData>;
-	ValueType: T;
+	name: Leaderstats;
+	playerDataKey?: NestedKeyOf<PlayerData>;
+	valueType: T;
 }
 
 type Leaderstats = "Money" | "Test";
@@ -62,17 +62,17 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		}
 
 		const entry = this.leaderstats.find(
-			(leaderstatsEntry) => leaderstatsEntry.Name === statName,
+			(leaderstatsEntry) => leaderstatsEntry.name === statName,
 		);
 		if (!entry) {
 			return;
 		}
 
-		return valueMap.get(entry.Name);
+		return valueMap.get(entry.name);
 	}
 
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
-		const { Name, player, UserId } = playerEntity;
+		const { name: Name, player, userId } = playerEntity;
 
 		const leaderstats = new Instance("Folder");
 		leaderstats.Name = "leaderstats";
@@ -82,21 +82,21 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 
 		this.logger.Info(`Assigning leaderboard stats to ${Name}.`);
 
-		const playerData = getPlayerData(UserId);
+		const playerData = getPlayerData(userId);
 		const valueMap = new Map<Leaderstats, LeaderstatValue>();
 
 		for (const entry of this.leaderstats) {
-			const stat = new Instance(entry.ValueType);
-			stat.Name = entry.Name;
+			const stat = new Instance(entry.valueType);
+			stat.Name = entry.name;
 			stat.Parent = leaderstats;
-			valueMap.set(entry.Name, stat);
+			valueMap.set(entry.name, stat);
 
-			if (playerData === undefined || entry.PlayerDataKey === undefined) {
-				stat.Value = entry.ValueType === "IntValue" ? 0 : "N/A";
+			if (playerData === undefined || entry.playerDataKey === undefined) {
+				stat.Value = entry.valueType === "IntValue" ? 0 : "N/A";
 				continue;
 			}
 
-			stat.Value = this.getPlayerData(playerData, entry.PlayerDataKey);
+			stat.Value = this.getPlayerData(playerData, entry.playerDataKey);
 		}
 
 		this.subscribeToPlayerData(playerEntity, valueMap);
@@ -158,14 +158,14 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		playerDataKey?: NestedKeyOf<PlayerData>,
 	): void {
 		assert(
-			this.leaderstats.find((entry) => entry.Name === statName) === undefined,
+			this.leaderstats.find((entry) => entry.name === statName) === undefined,
 			`Stat provided already exists.`,
 		);
 
 		this.leaderstats.push({
-			Name: statName,
-			PlayerDataKey: playerDataKey,
-			ValueType: valueType,
+			name: statName,
+			playerDataKey: playerDataKey,
+			valueType: valueType,
 		});
 
 		this.logger.Info(`Registered leaderboard stat ${statName}`);
@@ -178,11 +178,11 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 	 * @param valueMap - The map of leaderstats to update.
 	 */
 	private subscribeToPlayerData(
-		{ janitor, UserId }: PlayerEntity,
+		{ janitor, userId }: PlayerEntity,
 		valueMap: Map<Leaderstats, LeaderstatValue>,
 	): void {
 		const getData = (): PlayerData | undefined => {
-			return getPlayerData(UserId);
+			return getPlayerData(userId);
 		};
 
 		janitor.Add(
@@ -192,16 +192,16 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 				}
 
 				for (const entry of this.leaderstats) {
-					if (entry.PlayerDataKey === undefined) {
+					if (entry.playerDataKey === undefined) {
 						continue;
 					}
 
-					const stat = valueMap.get(entry.Name);
+					const stat = valueMap.get(entry.name);
 					if (!stat) {
 						continue;
 					}
 
-					stat.Value = this.getPlayerData(save, entry.PlayerDataKey);
+					stat.Value = this.getPlayerData(save, entry.playerDataKey);
 				}
 			}),
 		);

@@ -11,7 +11,7 @@ export class GamePassEventsService {
 	@GamePassStatusChanged(gamePass.Example)
 	public exampleGamePass(playerEntity: PlayerEntity, isActive: boolean): void {
 		if (isActive) {
-			this.logger.Debug(`${playerEntity.Name} has activated example game pass!`);
+			this.logger.Debug(`${playerEntity.name} has activated example game pass!`);
 		}
 	}
 }
