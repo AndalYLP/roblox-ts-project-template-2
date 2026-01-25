@@ -1,6 +1,6 @@
 import Log, { Logger, LogLevel } from "@rbxts/log";
-import type { ILogEventSink, LogEvent } from "@rbxts/log/out/Core";
 import { MessageTemplateParser, PlainTextMessageTemplateRenderer } from "@rbxts/message-templates";
+import type { ILogEventSink, LogEvent } from "@rbxts/log/out/Core";
 
 import { IS_CLIENT, IS_DEV } from "shared/constants/core";
 

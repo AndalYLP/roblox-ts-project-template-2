@@ -1,9 +1,9 @@
-import type { OnInit, OnStart } from "@flamework/core";
 import { Controller } from "@flamework/core";
 import { subscribe } from "@rbxts/charm";
-import type { Logger } from "@rbxts/log";
 import Make from "@rbxts/make";
 import { SoundService, TweenService } from "@rbxts/services";
+import type { OnInit, OnStart } from "@flamework/core";
+import type { Logger } from "@rbxts/log";
 
 import { USER_ID } from "shared/constants/player";
 import { SoundSystem } from "shared/modules/3dSound";
@@ -31,25 +31,6 @@ export class AudioController implements OnInit, OnStart {
 	private readonly soundGroups = new Map<SoundType, SoundGroup>();
 
 	constructor(private readonly logger: Logger) {}
-
-	/** @ignore */
-	public onInit(): void {
-		this.soundGroups.set(SoundType.Music, this.makeSoundGroup(SoundType.Music));
-		this.soundGroups.set(SoundType.SoundEffect, this.makeSoundGroup(SoundType.SoundEffect));
-
-		this.logger.Info(`Setup SoundGroup instances`);
-	}
-
-	/** @ignore */
-	public onStart(): void {
-		subscribe(getAllLocalPlayerSettings, (current) => {
-			if (!current) {
-				return;
-			}
-
-			this.onSettingsChanged(current);
-		});
-	}
 
 	public createSound({
 		attachToPoint,
@@ -80,20 +61,6 @@ export class AudioController implements OnInit, OnStart {
 	}
 
 	/**
-	 * Play a sound!
-	 *
-	 * @param soundObject - The sound's instance to play.
-	 * @param fadeInTime - Duration for the fade-in effect.
-	 */
-	public play(soundObject: Sound, fadeInTime?: number): void {
-		soundObject.Play();
-
-		if (fadeInTime !== undefined) {
-			this.fadeInSound(soundObject, fadeInTime);
-		}
-	}
-
-	/**
 	 * Don't use directly, it won't play the sound, use `AudioController.play`
 	 * with `fadeInTime` instead.
 	 *
@@ -113,6 +80,39 @@ export class AudioController implements OnInit, OnStart {
 		TweenService.Create(soundObject, tweenInfo, {
 			Volume: desiredVolume,
 		}).Play();
+	}
+
+	/** @ignore */
+	public onInit(): void {
+		this.soundGroups.set(SoundType.Music, this.makeSoundGroup(SoundType.Music));
+		this.soundGroups.set(SoundType.SoundEffect, this.makeSoundGroup(SoundType.SoundEffect));
+
+		this.logger.Info(`Setup SoundGroup instances`);
+	}
+
+	/** @ignore */
+	public onStart(): void {
+		subscribe(getAllLocalPlayerSettings, (current) => {
+			if (!current) {
+				return;
+			}
+
+			this.onSettingsChanged(current);
+		});
+	}
+
+	/**
+	 * Play a sound!
+	 *
+	 * @param soundObject - The sound's instance to play.
+	 * @param fadeInTime - Duration for the fade-in effect.
+	 */
+	public play(soundObject: Sound, fadeInTime?: number): void {
+		soundObject.Play();
+
+		if (fadeInTime !== undefined) {
+			this.fadeInSound(soundObject, fadeInTime);
+		}
 	}
 
 	private makeSoundGroup(soundType: SoundType): SoundGroup {

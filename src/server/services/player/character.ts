@@ -1,22 +1,22 @@
-import type { OnStart } from "@flamework/core";
 import { Service } from "@flamework/core";
-import type { Logger } from "@rbxts/log";
 import { setTimeout } from "@rbxts/set-timeout";
 import { promiseTree } from "@rbxts/validate-tree";
+import type { OnStart } from "@flamework/core";
+import type { Logger } from "@rbxts/log";
 
-import type { OnPlayerJoin } from "server/services/player";
-import type { PlayerEntity } from "server/services/player/entity";
 import { CollisionGroup } from "types/enums/collision-group";
 import { Tag } from "types/enums/tag";
 import { type ListenerData, setupLifecycle } from "utils/flamework";
 import { addToCollisionGroup } from "utils/physics";
-import type { CharacterRig } from "utils/player";
 import {
 	CHARACTER_LOAD_TIMEOUT,
 	characterSchema,
 	loadCharacter,
 	onCharacterAdded,
 } from "utils/player";
+import type { OnPlayerJoin } from "server/services/player";
+import type { PlayerEntity } from "server/services/player/entity";
+import type { CharacterRig } from "utils/player";
 
 export interface OnCharacterAdded {
 	/** Fires when a character is added to the game. */
@@ -32,17 +32,22 @@ export interface OnCharacterRemoved {
 }
 
 @Service()
-export class CharacterService implements OnStart, OnPlayerJoin {
+export class CharacterService implements OnPlayerJoin, OnStart {
 	private readonly characterAddedEvents = [] as ListenerData<OnCharacterAdded>[];
 	private readonly characterRemovedEvents = [] as ListenerData<OnCharacterRemoved>[];
 	private readonly characterRigs = new Map<Player, CharacterRig>();
 
 	constructor(private readonly logger: Logger) {}
 
-	/** @ignore */
-	public onStart(): void {
-		setupLifecycle<OnCharacterAdded>(this.characterAddedEvents);
-		setupLifecycle<OnCharacterRemoved>(this.characterRemovedEvents);
+	/**
+	 * Returns the character rig associated with the given player, if it exists.
+	 *
+	 * @param player - The player whose character rig to retrieve.
+	 * @returns The character rig associated with the player, or undefined if it
+	 *   does not exist.
+	 */
+	public getCharacterRig(player: Player): CharacterRig | undefined {
+		return this.characterRigs.get(player);
 	}
 
 	/** @ignore */
@@ -64,15 +69,10 @@ export class CharacterService implements OnStart, OnPlayerJoin {
 		);
 	}
 
-	/**
-	 * Returns the character rig associated with the given player, if it exists.
-	 *
-	 * @param player - The player whose character rig to retrieve.
-	 * @returns The character rig associated with the player, or undefined if it
-	 *   does not exist.
-	 */
-	public getCharacterRig(player: Player): CharacterRig | undefined {
-		return this.characterRigs.get(player);
+	/** @ignore */
+	public onStart(): void {
+		setupLifecycle<OnCharacterAdded>(this.characterAddedEvents);
+		setupLifecycle<OnCharacterRemoved>(this.characterRemovedEvents);
 	}
 
 	/**
@@ -127,6 +127,16 @@ export class CharacterService implements OnStart, OnPlayerJoin {
 		this.onRigLoaded(playerEntity, rig);
 	}
 
+	private async characterAppearanceLoaded(player: Player, rig: CharacterRig): Promise<void> {
+		if (!player.HasAppearanceLoaded()) {
+			await Promise.fromEvent(player.CharacterAppearanceLoaded).timeout(
+				CHARACTER_LOAD_TIMEOUT,
+			);
+		}
+
+		rig.Head.AddTag(Tag.PlayerHead);
+	}
+
 	private listenForCharacterRemoving(playerEntity: PlayerEntity, character: Model): void {
 		const connection = character.AncestryChanged.Connect(() => {
 			if (character.IsDescendantOf(game)) {
@@ -138,16 +148,6 @@ export class CharacterService implements OnStart, OnPlayerJoin {
 		});
 	}
 
-	private async characterAppearanceLoaded(player: Player, rig: CharacterRig): Promise<void> {
-		if (!player.HasAppearanceLoaded()) {
-			await Promise.fromEvent(player.CharacterAppearanceLoaded).timeout(
-				CHARACTER_LOAD_TIMEOUT,
-			);
-		}
-
-		rig.Head.AddTag(Tag.PlayerHead);
-	}
-
 	private onRigLoaded(playerEntity: PlayerEntity, rig: CharacterRig): void {
 		const { janitor, player, UserId } = playerEntity;
 
@@ -156,7 +156,7 @@ export class CharacterService implements OnStart, OnPlayerJoin {
 		this.characterRigs.set(player, rig);
 
 		debug.profilebegin("Lifecycle_Character_Added");
-		for (const { id, event } of this.characterAddedEvents) {
+		for (const { event, id } of this.characterAddedEvents) {
 			janitor
 				.AddPromise(
 					Promise.defer(() => {
@@ -188,7 +188,7 @@ export class CharacterService implements OnStart, OnPlayerJoin {
 		const { janitor, player } = playerEntity;
 
 		this.characterRigs.delete(player);
-		for (const { id, event } of this.characterRemovedEvents) {
+		for (const { event, id } of this.characterRemovedEvents) {
 			janitor
 				.AddPromise(
 					Promise.defer(() => {

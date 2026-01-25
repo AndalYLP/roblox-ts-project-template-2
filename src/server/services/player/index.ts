@@ -1,21 +1,21 @@
-import type { OnStart } from "@flamework/core";
 import { Service } from "@flamework/core";
 import { Janitor } from "@rbxts/janitor";
-import type { Document } from "@rbxts/lapis";
 import Signal from "@rbxts/lemon-signal";
-import type { Logger } from "@rbxts/log";
 import Object from "@rbxts/object-utils";
 import { Players } from "@rbxts/services";
+import type { OnStart } from "@flamework/core";
+import type { Document } from "@rbxts/lapis";
+import type { Logger } from "@rbxts/log";
 
-import type { PlayerDataService } from "server/services/player/data";
 import { PlayerEntity } from "server/services/player/entity";
-import type { PlayerRemovalService } from "server/services/player/removal";
 import { IS_DEV } from "shared/constants/core";
-import type { PlayerData } from "shared/store/atoms/player/datastore";
 import { KickCode } from "types/enums/kick-reason";
-import type { ListenerData } from "utils/flamework";
 import { setupLifecycle } from "utils/flamework";
 import { onPlayerAdded, promisePlayerDisconnected } from "utils/player";
+import type { PlayerDataService } from "server/services/player/data";
+import type { PlayerRemovalService } from "server/services/player/removal";
+import type { PlayerData } from "shared/store/atoms/player/datastore";
+import type { ListenerData } from "utils/flamework";
 
 export interface OnPlayerJoin {
 	/**

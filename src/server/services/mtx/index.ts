@@ -1,18 +1,10 @@
 import { Modding, type OnInit, type OnStart, Service } from "@flamework/core";
-import type { Logger } from "@rbxts/log";
 import { MarketplaceService, Players } from "@rbxts/services";
 import { Array, Dictionary } from "@rbxts/sift";
 import { t } from "@rbxts/t";
+import type { Logger } from "@rbxts/log";
 
 import { events } from "server/network";
-import type {
-	GamePassStatusChanged,
-	MtxEvents,
-	RegisterHandlerForEachProduct,
-	RegisterProductHandler,
-} from "server/services/mtx/decorators";
-import type { OnPlayerJoin, PlayerService } from "server/services/player";
-import type { PlayerEntity } from "server/services/player/entity";
 import {
 	addDeveloperProductPurchase,
 	getPlayerMtx,
@@ -22,6 +14,14 @@ import {
 } from "shared/store/atoms/player/mtx";
 import { type GamePass, gamePass, type Product, product } from "types/enums/mtx";
 import { noYield } from "utils/no-yield";
+import type {
+	GamePassStatusChanged,
+	MtxEvents,
+	RegisterHandlerForEachProduct,
+	RegisterProductHandler,
+} from "server/services/mtx/decorators";
+import type { OnPlayerJoin, PlayerService } from "server/services/player";
+import type { PlayerEntity } from "server/services/player/entity";
 
 const NETWORK_RETRY_ATTEMPTS = 10;
 const NETWORK_RETRY_DELAY = 2;

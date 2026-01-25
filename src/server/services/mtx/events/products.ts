@@ -1,8 +1,8 @@
 import type { Logger } from "@rbxts/log";
 
 import { MtxEvents, RegisterProductHandler } from "server/services/mtx";
-import type { PlayerEntity } from "server/services/player/entity";
 import { type Product, product } from "types/enums/mtx";
+import type { PlayerEntity } from "server/services/player/entity";
 
 @MtxEvents()
 export class ProductEventsService {

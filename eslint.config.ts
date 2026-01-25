@@ -1,10 +1,11 @@
 import eslint from "@eslint/js";
-import { defineConfig } from "eslint/config";
+
+import perfectionist from "eslint-plugin-perfectionist";
 import eslintPluginPrettier from "eslint-plugin-prettier";
 import prettierRecommended from "eslint-plugin-prettier/recommended";
 import roblox from "eslint-plugin-roblox-ts";
-import simpleImportSort from "eslint-plugin-simple-import-sort";
 import unusedImports from "eslint-plugin-unused-imports";
+import { defineConfig } from "eslint/config";
 import tseslint from "typescript-eslint";
 
 export default defineConfig(
@@ -15,12 +16,19 @@ export default defineConfig(
 	{
 		languageOptions: {
 			parserOptions: {
-				projectService: false,
 				project: "./tsconfig.build.json",
+				projectService: false,
 				sourceType: "module",
 			},
 		},
 		rules: {
+			"@typescript-eslint/consistent-type-imports": [
+				"warn",
+				{
+					fixStyle: "separate-type-imports",
+					prefer: "type-imports",
+				},
+			],
 			"@typescript-eslint/explicit-function-return-type": [
 				"error",
 				{
@@ -28,18 +36,56 @@ export default defineConfig(
 					allowTypedFunctionExpressions: true,
 				},
 			],
-			"no-void": ["off"],
 			"@typescript-eslint/no-floating-promises": "error",
-			"@typescript-eslint/consistent-type-imports": [
-				"warn",
+			"no-void": ["off"],
+		},
+	},
+	{
+		plugins: {
+			perfectionist,
+		},
+		rules: {
+			"perfectionist/sort-imports": [
+				"error",
 				{
-					prefer: "type-imports",
-					fixStyle: "separate-type-imports",
+					customGroups: [
+						{
+							elementNamePattern: "^react$",
+							groupName: "react",
+						},
+						{
+							elementNamePattern: "^@",
+							groupName: "type-scoped",
+							selector: "type",
+						},
+						{
+							elementNamePattern: "^@",
+							groupName: "value-scoped",
+						},
+					],
+					groups: [
+						"react",
+						"value-scoped",
+						{ newlinesBetween: 0 },
+						"type-scoped",
+						["value-builtin", "value-external"],
+						{ newlinesBetween: 0 },
+						["type-builtin", "type-external"],
+						["value-parent", "value-sibling", "value-index"],
+						{ newlinesBetween: 0 },
+						[
+							"type-internal",
+							"value-internal",
+							"type-parent",
+							"type-sibling",
+							"type-index",
+						],
+						"unknown",
+					],
 				},
 			],
 		},
 	},
-
 	{
 		plugins: {
 			prettier: eslintPluginPrettier,
@@ -48,34 +94,19 @@ export default defineConfig(
 			"prettier/prettier": [
 				"error",
 				{
-					singleQuote: false,
-					semi: true,
-					trailingComma: "all",
-					printWidth: 100,
-					tabWidth: 4,
-					bracketSpacing: true,
 					arrowParens: "always",
+					bracketSpacing: true,
+					printWidth: 100,
+					semi: true,
+					singleQuote: false,
+					tabWidth: 4,
+					trailingComma: "all",
 					useTabs: true,
 				},
 			],
 		},
 	},
 
-	{
-		plugins: {
-			"simple-import-sort": simpleImportSort,
-		},
-		rules: {
-			"simple-import-sort/exports": "error",
-
-			"simple-import-sort/imports": [
-				"error",
-				{
-					groups: [["^@?\\w"], ["^(src|server|shared|test)(/.*|$)"], ["^\\."]],
-				},
-			],
-		},
-	},
 	{
 		plugins: {
 			"unused-imports": unusedImports,
@@ -85,8 +116,8 @@ export default defineConfig(
 			"unused-imports/no-unused-vars": [
 				"warn",
 				{
-					varsIgnorePattern: "^_",
 					argsIgnorePattern: "^_",
+					varsIgnorePattern: "^_",
 				},
 			],
 		},

@@ -1,7 +1,7 @@
-import type { CenturionClient } from "@rbxts/centurion";
 import { Centurion } from "@rbxts/centurion";
 import { CenturionUI } from "@rbxts/centurion-ui";
 import { ReplicatedStorage } from "@rbxts/services";
+import type { CenturionClient } from "@rbxts/centurion";
 
 const replicatedCenturion = ReplicatedStorage.TS.centurion;
 

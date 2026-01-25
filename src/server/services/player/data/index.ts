@@ -1,13 +1,12 @@
 import { Service } from "@flamework/core";
 import { effect } from "@rbxts/charm";
-import type { Collection, Document } from "@rbxts/lapis";
 import { createCollection, setConfig } from "@rbxts/lapis";
 import DataStoreServiceMock from "@rbxts/lapis-mockdatastore";
-import type { Logger } from "@rbxts/log";
 import { Players } from "@rbxts/services";
+import type { Collection, Document } from "@rbxts/lapis";
+import type { Logger } from "@rbxts/log";
 
 import { defaultPlayerData, validate } from "server/services/player/data/schema";
-import type { PlayerRemovalService } from "server/services/player/removal";
 import { IS_DEV, IS_STUDIO } from "shared/constants/core";
 import {
 	deletePlayerData,
@@ -16,6 +15,7 @@ import {
 	setPlayerData,
 } from "shared/store/atoms/player/datastore";
 import { KickCode } from "types/enums/kick-reason";
+import type { PlayerRemovalService } from "server/services/player/removal";
 
 /**
  * Service for loading and saving player data. This service is responsible for
