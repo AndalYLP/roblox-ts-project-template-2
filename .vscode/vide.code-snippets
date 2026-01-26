@@ -1,0 +1,23 @@
+{
+	"Vide Story": {
+		"description": "create a vide story",
+		"prefix": [
+			"story",
+			"vide story"
+		],
+		"body": [
+			"import { CreateVideStory } from \"@rbxts/ui-labs\";",
+			"import Vide from \"@rbxts/vide\";",
+			"",
+			"export = CreateVideStory(",
+			"\t{",
+			"\t\tvide: Vide,",
+			"\t},",
+			"\t() => {",
+			"\t\treturn <$0></>;",
+			"\t},",
+			");",
+			""
+		]
+	}
+}
