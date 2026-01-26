@@ -3,7 +3,8 @@ import { RunService } from "@rbxts/services";
 
 import { $NODE_ENV } from "rbxts-transform-env";
 
-/** Game's name, `//NOTE:` define before use. */
+//NOTE: define before use.
+/** Game's name */
 export const GAME_NAME = "Template for roblox-ts";
 /** Array of userIds from the developers. */
 export const DEVELOPERS = [game.CreatorId];
