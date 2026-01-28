@@ -28,8 +28,14 @@ local function main()
     local ci = hasArg("--ci")
 
     local jestScript = fs.readFile("out/test/runtime.server.luau")
-    jestScript = jestScript:gsub("_G.__VERBOSE__", if verbose then "_G.__VERBOSE__ = true" else "_G.__VERBOSE__ = false")
-    jestScript = jestScript:gsub("_G.__CI__", if ci then "_G.__VERBOSE__ = true" else "_G.__VERBOSE__ = false")
+    jestScript = jestScript:gsub(
+        "(_G%.__VERBOSE__%s*=%s*)[^\n]*",
+        "%1" .. (verbose and "true" or "false")
+    )
+    jestScript = jestScript:gsub(
+        "(_G%.__CI__%s*=%s*)[^\n]*",
+        "%1" .. (ci and "true" or "false")
+    )
 
     local uploadResult = buildUploadPlaceAsync({
         universeId = envFile.ROBLOX_UNIVERSE_ID,
