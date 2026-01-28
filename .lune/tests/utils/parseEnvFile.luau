@@ -2,6 +2,14 @@ local fs = require("@lune/fs")
 
 local function parseEnvFile(path)
     local env = {}
+	local keyInEnv = process.env.ROBLOX_OC_API_KEY
+	if keyInEnv then
+		env.ROBLOX_OC_API_KEY = process.env.ROBLOX_OC_API_KEY
+		env.ROBLOX_UNIVERSE_ID = process.env.ROBLOX_UNIVERSE_ID
+		env.ROBLOX_PLACE_ID = process.env.ROBLOX_PLACE_ID
+		return env
+	end
+
     local content = fs.readFile(path)
     if not content then return env end
 
