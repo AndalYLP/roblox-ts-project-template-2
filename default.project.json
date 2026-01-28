@@ -13,6 +13,9 @@
 				"__test__": {
 					"$path": "out/test/server"
 				}
+			},
+			"$properties": {
+				"LoadStringEnabled": true
 			}
 		},
 		"ReplicatedStorage": {
