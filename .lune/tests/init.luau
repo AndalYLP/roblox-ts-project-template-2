@@ -8,17 +8,8 @@ local parseEnvFile = require("@test/utils/parseEnvFile")
 local success, envFile = pcall(parseEnvFile, ".env")
 if not success then
     error(
-        "No environment variable set for ROBLOX_OC_API_KEY. Please set it in the environment or in the .env.luau file."
+        "No environment variable set for ROBLOX_OC_API_KEY. Please set it in the environment or in the .env file.", envFile
     )
-end
-
-local function getApiKey(): string
-    local keyInEnv = process.env.ROBLOX_OC_API_KEY
-    if keyInEnv then
-        return keyInEnv
-    end
-
-    return envFile.ROBLOX_OC_API_KEY
 end
 
 local function hasArg(requiredArg: string)
@@ -31,14 +22,14 @@ local function hasArg(requiredArg: string)
 end
 
 local function main()
-    local apiKey = getApiKey()
+    local apiKey = envFile.ROBLOX_OC_API_KEY
 
     local verbose = hasArg("--verbose")
     local ci = hasArg("--ci")
 
     local jestScript = fs.readFile("out/test/runtime.server.luau")
-    jestScript = jestScript:gsub("_G.__VERBOSE__", if verbose then "true" else "false")
-    jestScript = jestScript:gsub("_G.__CI__", if ci then "true" else "false")
+    jestScript = jestScript:gsub("_G.__VERBOSE__", if verbose then "_G.__VERBOSE__ = true" else "_G.__VERBOSE__ = false")
+    jestScript = jestScript:gsub("_G.__CI__", if ci then "_G.__VERBOSE__ = true" else "_G.__VERBOSE__ = false")
 
     local uploadResult = buildUploadPlaceAsync({
         universeId = envFile.ROBLOX_UNIVERSE_ID,
