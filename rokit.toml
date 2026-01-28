@@ -7,3 +7,4 @@
 rojo = "rojo-rbx/rojo@7.6.1"
 asphalt = "jacktabscode/asphalt@1.2.0"
 darklua = "seaofvoices/darklua@0.17.3"
+run-in-roblox = "rojo-rbx/run-in-roblox@0.3.0"
