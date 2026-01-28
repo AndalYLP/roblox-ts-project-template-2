@@ -1,8 +1,7 @@
 {
     "languageMode": "strict",
     "aliases": {
-        "lune": "~/.lune/.typedefs/0.10.4/",
         "root": "../",
-        "test": "./test"
+        "test": "./tests"
     }
 }
