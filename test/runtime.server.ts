@@ -4,9 +4,7 @@ _G.__VERBOSE__ = true;
 const ReplicatedStorage = game.GetService("ReplicatedStorage");
 const ServerScriptService = game.GetService("ServerScriptService");
 const TestService = game.GetService("TestService");
-const { runCLI } = require(
-	ReplicatedStorage.WaitForChild("rbxts_include").node_modules["@rbxts"].WaitForChild("jest").src,
-);
+const { runCLI } = require(ReplicatedStorage.rbxts_include.node_modules["@rbxts"].jest.src);
 
 const { config } = require(TestService["jest.config"]);
 

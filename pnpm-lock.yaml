@@ -124,8 +124,8 @@ importers:
         specifier: 4.3.0
         version: 4.3.0(@typescript-eslint/eslint-plugin@8.53.1(@typescript-eslint/parser@8.53.1(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))
       rbxts-build:
-        specifier: 2.4.3
-        version: 2.4.3
+        specifier: github:AndalYLP/rbxts-build#add-custom-definition-for-sync-command
+        version: https://codeload.github.com/AndalYLP/rbxts-build/tar.gz/fae3c8abfe35c0dbca782811d176e355d9132b8c
       rbxts-transform-env:
         specifier: 3.0.0
         version: 3.0.0
@@ -1164,8 +1164,9 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  rbxts-build@2.4.3:
-    resolution: {integrity: sha512-p/v2kzGe6XcIVHU8JYoYDx7eIkrPocoNgojDNidfRDGiczGP6tAdN+jad/vvJXIg4wlr5pIBWGbffCkQE6EKmQ==}
+  rbxts-build@https://codeload.github.com/AndalYLP/rbxts-build/tar.gz/fae3c8abfe35c0dbca782811d176e355d9132b8c:
+    resolution: {tarball: https://codeload.github.com/AndalYLP/rbxts-build/tar.gz/fae3c8abfe35c0dbca782811d176e355d9132b8c}
+    version: 2.4.3
     hasBin: true
 
   rbxts-transform-env@3.0.0:
@@ -2616,7 +2617,7 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  rbxts-build@2.4.3:
+  rbxts-build@https://codeload.github.com/AndalYLP/rbxts-build/tar.gz/fae3c8abfe35c0dbca782811d176e355d9132b8c:
     dependencies:
       kleur: 4.1.5
       yargs: 17.7.2
