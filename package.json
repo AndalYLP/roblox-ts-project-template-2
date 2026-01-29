@@ -16,11 +16,12 @@
     "dev:stop": "rbxts-build stop",
     "dev:sync": "rbxts-build sync && eslint src/types/interfaces/services.d.ts --fix",
     "dev:test": "pnpm dev:build && run-in-roblox --place game.rbxl --script out/test/runtime.server.luau",
+    "dev:cloud_test": "lune run tests/init.luau",
     "dev:watch": "rbxts-build watch",
     "lint": "eslint src",
+    "prepare": "cp patches/TestEZ_Companion.rbxm $LOCALAPPDATA/Roblox/Plugins/",
     "prod:build": "pnpm clean && NODE_ENV=production && rbxtsc --verbose && pnpm darklua",
-    "prod:sync": "rojo serve ./build.project.json",
-    "testez:install": "cp patches/TestEZ_Companion.rbxm $LOCALAPPDATA/Roblox/Plugins"
+    "prod:sync": "rojo serve ./build.project.json"
   },
   "keywords": [],
   "author": "",

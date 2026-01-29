@@ -1,3 +1,6 @@
+_G.__CI__ = false;
+_G.__VERBOSE__ = true;
+
 const ReplicatedStorage = game.GetService("ReplicatedStorage");
 const ServerScriptService = game.GetService("ServerScriptService");
 const TestService = game.GetService("TestService");

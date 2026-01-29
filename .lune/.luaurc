@@ -1,0 +1,7 @@
+{
+    "languageMode": "strict",
+    "aliases": {
+        "root": "../",
+        "test": "./tests"
+    }
+}
