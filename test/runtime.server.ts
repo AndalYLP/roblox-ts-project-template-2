@@ -1,26 +1,16 @@
-import type JestModule from "@rbxts/jest";
-
-import type * as ConfigModule from "test/jest.config";
+_G.__CI__ = false;
+_G.__VERBOSE__ = true;
 
 const ReplicatedStorage = game.GetService("ReplicatedStorage");
 const ServerScriptService = game.GetService("ServerScriptService");
 const TestService = game.GetService("TestService");
+const { runCLI } = require(ReplicatedStorage.rbxts_include.node_modules["@rbxts"].jest.src);
 
-const { config } = require(
-	TestService.FindFirstChild("jest.config") as ModuleScript,
-) as typeof ConfigModule;
-
-const jestLua = ReplicatedStorage.WaitForChild("rbxts_include")
-	.FindFirstChild("node_modules")!
-	.FindFirstChild("@rbxts")!
-	.WaitForChild("JestLua");
-const { runCLI } = require(
-	(jestLua as { Jest: ModuleScript } & Instance).Jest,
-) as typeof JestModule;
+const { config } = require(TestService["jest.config"]);
 
 const [success, result] = runCLI(script, config, [
-	ServerScriptService.FindFirstChild("TS")!.FindFirstChild("__test__")!,
-	ReplicatedStorage.FindFirstChild("TS")!.FindFirstChild("__test__")!,
+	ServerScriptService.TS.__test__!,
+	ReplicatedStorage.TS.__test__!,
 ]).await();
 
 if (!success) {

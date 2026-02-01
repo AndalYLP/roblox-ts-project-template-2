@@ -13,6 +13,9 @@
 				"__test__": {
 					"$path": "out/test/server"
 				}
+			},
+			"$properties": {
+				"LoadStringEnabled": true
 			}
 		},
 		"ReplicatedStorage": {
@@ -23,6 +26,9 @@
 					"$className": "Folder",
 					"@rbxts": {
 						"$path": "node_modules/@rbxts"
+					},
+					"@rbxts-js": {
+						"$path": "node_modules/@rbxts-js"
 					},
 					"@flamework": {
 						"$path": "node_modules/@flamework"
