@@ -21,8 +21,8 @@ async function run(): Promise<void> {
 		Log.Fatal(`Error while running centurion: ${err}`);
 	});
 
-	mountApp().catch(() => {
-		Log.Fatal("Failed to create Vide app!");
+	mountApp().catch((err) => {
+		Log.Fatal(`Failed to create Vide app: ${err}`);
 	});
 }
 
