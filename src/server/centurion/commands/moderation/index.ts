@@ -2,11 +2,12 @@ import { Command, type CommandContext, Group, Guard, Register } from "@rbxts/cen
 import { Players } from "@rbxts/services";
 
 import { moderationCommandOptions } from "server/centurion/commands/moderation/moderation.config";
+import { groupRegisterOptions } from "server/centurion/commands/register.config";
 import { isDeveloper } from "server/centurion/guards/is-developer";
 
 @Group("moderation")
 @Guard(isDeveloper)
-@Register()
+@Register(groupRegisterOptions.moderation)
 export class ModerationCommands {
 	@Command(moderationCommandOptions.ban)
 	public ban(
