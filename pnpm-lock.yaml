@@ -78,14 +78,14 @@ importers:
         specifier: 2.0.2
         version: 2.0.2
       '@rbxts/vide':
-        specifier: 0.6.0
-        version: 0.6.0
+        specifier: 0.5.7
+        version: 0.5.7
       '@rbxts/vide-charm':
         specifier: 0.3.0
-        version: 0.3.0(@rbxts/charm@0.10.0)(@rbxts/vide@0.6.0)
+        version: 0.3.0(@rbxts/charm@0.10.0)(@rbxts/vide@0.5.7)
       '@rbxts/vide-ripple':
         specifier: 0.10.1
-        version: 0.10.1(@rbxts/vide@0.6.0)
+        version: 0.10.1(@rbxts/vide@0.5.7)
       '@rbxts/zone-plus':
         specifier: 3.2.0
         version: 3.2.0
@@ -521,9 +521,6 @@ packages:
 
   '@rbxts/vide@0.5.7':
     resolution: {integrity: sha512-Q9R7ybzuHK1phtLicBHgAjQnlJ/dMsXDs2k296PIMLgLqK9aX/f1skOP7F1K/vo7IrSE0jCG3B3XTOtQL1Sb0Q==}
-
-  '@rbxts/vide@0.6.0':
-    resolution: {integrity: sha512-OLfs4kqV2IP79xS+gZAprMujuYEc+n0JwMhJF+puNVoxBXSzOv2kKlgeLJhscCy7Jdhr9TbqsaRNLJP5akbfog==}
 
   '@rbxts/zone-plus@3.2.0':
     resolution: {integrity: sha512-myxs7QXMVCCPhOpUzaoA/01ZCEG/6TBYRNk6LwksUvSp9bONnIpvEZYEazuWnIDwiOEIw/T9kCPY/7FGjMOvsA==}
@@ -1970,19 +1967,17 @@ snapshots:
 
   '@rbxts/validate-tree@2.0.2': {}
 
-  '@rbxts/vide-charm@0.3.0(@rbxts/charm@0.10.0)(@rbxts/vide@0.6.0)':
+  '@rbxts/vide-charm@0.3.0(@rbxts/charm@0.10.0)(@rbxts/vide@0.5.7)':
     dependencies:
       '@rbxts/charm': 0.10.0
-      '@rbxts/vide': 0.6.0
+      '@rbxts/vide': 0.5.7
 
-  '@rbxts/vide-ripple@0.10.1(@rbxts/vide@0.6.0)':
+  '@rbxts/vide-ripple@0.10.1(@rbxts/vide@0.5.7)':
     dependencies:
       '@rbxts/ripple': 0.10.1
-      '@rbxts/vide': 0.6.0
+      '@rbxts/vide': 0.5.7
 
   '@rbxts/vide@0.5.7': {}
-
-  '@rbxts/vide@0.6.0': {}
 
   '@rbxts/zone-plus@3.2.0': {}
 
