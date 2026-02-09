@@ -11,7 +11,7 @@
 	},
 	// File Explorer Settings
 	"explorer.fileNesting.patterns": {
-		"package.json": ".darklua.json, .gitattributes, .gitignore, .npmrc, asphalt.toml, flamework.build, pnpm-lock.yaml, rokit.toml, .env, testez-companion.toml",
+		"package.json": ".darklua.json, .gitattributes, .gitignore, .npmrc, asphalt.toml, flamework.build, pnpm-lock.yaml, pnpm-workspace.yaml, rokit.toml, .env, testez-companion.toml",
 		"README.md": "LICENSE",
 		"asphalt.toml": "asphalt.lock.toml",
 		"eslint.config.ts": "commitlint.config.ts, cspell.config.yaml, renovate.json",
