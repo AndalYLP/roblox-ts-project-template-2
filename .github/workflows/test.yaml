@@ -1,19 +1,19 @@
-name: CI
+name: Test
 
 on:
   pull_request:
     branches:
       - main
-      - develop
   workflow_dispatch:
 
 permissions:
   contents: write
   packages: write
 
-env:
-  CI: true
-
+concurrency:
+  group: luau-execution
+  cancel-in-progress: false
+  
 jobs:
   build:
     runs-on: ubuntu-latest
