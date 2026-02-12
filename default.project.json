@@ -107,6 +107,9 @@
 			},
 			"runtime": {
 				"$path": "out/test/runtime.server.luau"
+			},
+			"setup": {
+				"$path": "out/test/setup.luau"
 			}
 		},
 		"TextChatService": {

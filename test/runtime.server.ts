@@ -6,7 +6,7 @@ const ServerScriptService = game.GetService("ServerScriptService");
 const TestService = game.GetService("TestService");
 const { runCLI } = require(ReplicatedStorage.rbxts_include.node_modules["@rbxts"].jest.src);
 
-const { config } = require(TestService["jest.config"]);
+const config = require(TestService["jest.config"]);
 
 const [success, result] = runCLI(script, config, [
 	ServerScriptService.TS.__test__!,

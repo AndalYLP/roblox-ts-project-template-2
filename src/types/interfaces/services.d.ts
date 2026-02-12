@@ -93,9 +93,8 @@ declare global {
 			centurion: {
 				commands: {
 					moderation: {
-						moderation: ModuleScript;
 						"moderation.config": ModuleScript;
-					} & Folder;
+					} & ModuleScript;
 					"register.config": ModuleScript;
 				} & Folder;
 				guards: {
@@ -106,6 +105,7 @@ declare global {
 			network: ModuleScript;
 			runtime: Script;
 			services: {
+				core: Folder;
 				mtx: {
 					decorators: ModuleScript;
 					events: {
@@ -135,6 +135,7 @@ declare global {
 			__ID__: "TEST_SERVICE/jest.config";
 		} & ModuleScript;
 		runtime: Script;
+		setup: ModuleScript;
 	}
 	interface Workspace {
 		Baseplate: Part;

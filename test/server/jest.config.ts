@@ -1,6 +1,6 @@
 import type { Config } from "@rbxts/jest";
 
-import { config } from "test/jest.config";
+import config from "test/jest.config";
 
 export default {
 	...config,
