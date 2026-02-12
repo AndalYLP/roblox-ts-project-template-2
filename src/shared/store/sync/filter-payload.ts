@@ -13,7 +13,7 @@ export function filterPayload(
 	player: Player,
 	payload: SyncPayload<GlobalAtoms>,
 ): SyncPayload<GlobalAtoms> {
-	const userId = player.UserId;
+	const userId = tostring(player.UserId);
 
 	if (payload.type === "init") {
 		return {
