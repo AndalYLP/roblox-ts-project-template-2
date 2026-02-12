@@ -5,8 +5,8 @@ export interface PlayerAchievements {
 	badges: Map<Badge, boolean>;
 }
 
-export function setBadgeStatus(id: string, badge: Badge, status: boolean): void {
-	updatePlayerData(id, (data) => {
+export function setBadgeStatus(userId: string, badge: Badge, status: boolean): void {
+	updatePlayerData(userId, (data) => {
 		const { achievements } = data;
 
 		return {
@@ -19,6 +19,6 @@ export function setBadgeStatus(id: string, badge: Badge, status: boolean): void 
 	});
 }
 
-export function getPlayerAchievements(id: string): PlayerAchievements | undefined {
-	return getPlayerData(id)?.achievements;
+export function getPlayerAchievements(userId: string): PlayerAchievements | undefined {
+	return getPlayerData(userId)?.achievements;
 }

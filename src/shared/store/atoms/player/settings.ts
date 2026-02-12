@@ -19,12 +19,12 @@ export function changeSetting<
 	Category extends keyof PlayerSettings,
 	SettingType extends keyof PlayerSettings[Category],
 >(
-	id: string,
+	userId: string,
 	settingCategory: Category,
 	settingType: SettingType,
 	value: PlayerSettings[Category][SettingType],
 ): void {
-	updatePlayerData(id, (data) => {
+	updatePlayerData(userId, (data) => {
 		const { settings } = data;
 
 		return {
@@ -39,17 +39,17 @@ export function changeSetting<
 	});
 }
 
-export function getAllPlayerSettings(id: string): PlayerSettings | undefined {
-	return getPlayerData(id)?.settings;
+export function getAllPlayerSettings(userId: string): PlayerSettings | undefined {
+	return getPlayerData(userId)?.settings;
 }
 
 export function getPlayerSetting<
 	Category extends keyof PlayerSettings,
 	SettingType extends keyof PlayerSettings[Category],
 >(
-	id: string,
+	userId: string,
 	settingCategory: Category,
 	settingType: SettingType,
 ): PlayerSettings[Category][SettingType] | undefined {
-	return getAllPlayerSettings(id)?.[settingCategory][settingType];
+	return getAllPlayerSettings(userId)?.[settingCategory][settingType];
 }

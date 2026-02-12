@@ -8,11 +8,11 @@ export interface PlayerMtx {
 }
 
 export function addDeveloperProductPurchase(
-	id: string,
+	userId: string,
 	product: Product,
 	currencySpent: number,
 ): void {
-	updatePlayerData(id, (data) => {
+	updatePlayerData(userId, (data) => {
 		const { mtx } = data;
 
 		const purchaseInfo = {
@@ -36,8 +36,8 @@ export function addDeveloperProductPurchase(
 	});
 }
 
-export function setGamePassActive(id: string, gamePass: GamePass, active: boolean): void {
-	updatePlayerData(id, (data) => {
+export function setGamePassActive(userId: string, gamePass: GamePass, active: boolean): void {
+	updatePlayerData(userId, (data) => {
 		const { mtx } = data;
 
 		return {
@@ -50,8 +50,8 @@ export function setGamePassActive(id: string, gamePass: GamePass, active: boolea
 	});
 }
 
-export function updateReceiptHistory(id: string, receiptHistory: Array<string>): void {
-	updatePlayerData(id, (data) => {
+export function updateReceiptHistory(userId: string, receiptHistory: Array<string>): void {
+	updatePlayerData(userId, (data) => {
 		const { mtx } = data;
 
 		return {
@@ -64,6 +64,6 @@ export function updateReceiptHistory(id: string, receiptHistory: Array<string>):
 	});
 }
 
-export function getPlayerMtx(id: string): PlayerMtx | undefined {
-	return getPlayerData(id)?.mtx;
+export function getPlayerMtx(userId: string): PlayerMtx | undefined {
+	return getPlayerData(userId)?.mtx;
 }

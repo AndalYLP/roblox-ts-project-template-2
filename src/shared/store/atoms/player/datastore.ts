@@ -20,27 +20,27 @@ export const datastore = {
 	players: atom<PlayerDataMap>({}),
 };
 
-export function getPlayerData(id: string): PlayerData | undefined {
-	return datastore.players()[id];
+export function getPlayerData(userId: string): PlayerData | undefined {
+	return datastore.players()[userId];
 }
 
-export function setPlayerData(id: string, playerData: PlayerData): void {
+export function setPlayerData(userId: string, playerData: PlayerData): void {
 	datastore.players((state) => ({
 		...state,
-		[id]: playerData,
+		[userId]: playerData,
 	}));
 }
 
-export function deletePlayerData(id: string): void {
+export function deletePlayerData(userId: string): void {
 	datastore.players((state) => ({
 		...state,
-		[id]: undefined,
+		[userId]: undefined,
 	}));
 }
 
-export function updatePlayerData(id: string, updater: (data: PlayerData) => PlayerData): void {
+export function updatePlayerData(userId: string, updater: (data: PlayerData) => PlayerData): void {
 	datastore.players((state) => ({
 		...state,
-		[id]: state[id] && updater(state[id]),
+		[userId]: state[userId] && updater(state[userId]),
 	}));
 }
