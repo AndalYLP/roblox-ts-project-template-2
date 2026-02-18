@@ -86,16 +86,16 @@ export class PlayerDataService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 	 */
 	public async loadPlayerData(player: Player): Promise<Document<PlayerData> | void> {
 		try {
-			const playerId = tostring(player.UserId);
+			const userId = tostring(player.UserId);
 
-			const document = await this.collection.load(playerId, [player.UserId]);
+			const document = await this.collection.load(userId, [player.UserId]);
 
 			if (!player.IsDescendantOf(Players)) {
 				return;
 			}
 
 			const unsubscribe = effect(() => {
-				const data = getPlayerData(player.Name);
+				const data = getPlayerData(userId);
 
 				if (data) {
 					document.write(data);
@@ -104,10 +104,10 @@ export class PlayerDataService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 
 			document.beforeClose(() => {
 				unsubscribe();
-				deletePlayerData(playerId);
+				deletePlayerData(userId);
 			});
 
-			setPlayerData(playerId, document.read());
+			setPlayerData(userId, document.read());
 
 			return document;
 		} catch (err) {
