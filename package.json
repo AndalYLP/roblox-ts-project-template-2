@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "assets:upload": "asphalt sync && eslint src/shared/assets.d.ts --fix",
+    "assets:upload": "asphalt sync && eslint src/shared/constants/images/index.d.ts --fix",
     "clean": "rimraf out/ && rimraf dist && rimraf flamework.build",
     "darklua": "darklua process out dist --verbose",
     "dev:build": "rbxts-build build",
