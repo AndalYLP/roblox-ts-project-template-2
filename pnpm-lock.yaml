@@ -78,14 +78,14 @@ importers:
         specifier: 2.0.2
         version: 2.0.2
       '@rbxts/vide':
-        specifier: 0.5.7
-        version: 0.5.7
+        specifier: 0.6.1
+        version: 0.6.1
       '@rbxts/vide-charm':
         specifier: 0.3.0
-        version: 0.3.0(@rbxts/charm@0.10.0)(@rbxts/vide@0.5.7)
+        version: 0.3.0(@rbxts/charm@0.10.0)(@rbxts/vide@0.6.1)
       '@rbxts/vide-ripple':
         specifier: 0.10.1
-        version: 0.10.1(@rbxts/vide@0.5.7)
+        version: 0.10.1(@rbxts/vide@0.6.1)
       '@rbxts/zone-plus':
         specifier: 3.2.0
         version: 3.2.0
@@ -125,7 +125,7 @@ importers:
         version: 4.3.0(@typescript-eslint/eslint-plugin@8.54.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))
       rbxts-build:
         specifier: github:AndalYLP/rbxts-build#add-custom-definition-for-sync-command
-        version: https://codeload.github.com/AndalYLP/rbxts-build/tar.gz/fae3c8abfe35c0dbca782811d176e355d9132b8c
+        version: https://codeload.github.com/AndalYLP/rbxts-build/tar.gz/239f41fb3ecbbf5d18c1efc3138a6b147b700669
       rbxts-transform-env:
         specifier: 3.0.0
         version: 3.0.0
@@ -522,6 +522,9 @@ packages:
   '@rbxts/vide@0.5.7':
     resolution: {integrity: sha512-Q9R7ybzuHK1phtLicBHgAjQnlJ/dMsXDs2k296PIMLgLqK9aX/f1skOP7F1K/vo7IrSE0jCG3B3XTOtQL1Sb0Q==}
 
+  '@rbxts/vide@0.6.1':
+    resolution: {integrity: sha512-syFqx+HYXy0TauDCGLhc68K2cAlfgYookIJSRtJZ01W7mUI+EKyj80x2L91dQxos3BwAAGJqBD/ovWU4M//+Lg==}
+
   '@rbxts/zone-plus@3.2.0':
     resolution: {integrity: sha512-myxs7QXMVCCPhOpUzaoA/01ZCEG/6TBYRNk6LwksUvSp9bONnIpvEZYEazuWnIDwiOEIw/T9kCPY/7FGjMOvsA==}
 
@@ -564,12 +567,6 @@ packages:
     peerDependencies:
       typescript: '>=4.8.4 <6.0.0'
 
-  '@typescript-eslint/project-service@8.53.1':
-    resolution: {integrity: sha512-WYC4FB5Ra0xidsmlPb+1SsnaSKPmS3gsjIARwbEkHkoWloQmuzcfypljaJcR78uyLA1h8sHdWWPHSLDI+MtNog==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      typescript: '>=4.8.4 <6.0.0'
-
   '@typescript-eslint/project-service@8.54.0':
     resolution: {integrity: sha512-YPf+rvJ1s7MyiWM4uTRhE4DvBXrEV+d8oC3P9Y2eT7S+HBS0clybdMIPnhiATi9vZOYDc7OQ1L/i6ga6NFYK/g==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -578,10 +575,6 @@ packages:
 
   '@typescript-eslint/scope-manager@8.46.4':
     resolution: {integrity: sha512-tMDbLGXb1wC+McN1M6QeDx7P7c0UWO5z9CXqp7J8E+xGcJuUuevWKxuG8j41FoweS3+L41SkyKKkia16jpX7CA==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@typescript-eslint/scope-manager@8.53.1':
-    resolution: {integrity: sha512-Lu23yw1uJMFY8cUeq7JlrizAgeQvWugNQzJp8C3x8Eo5Jw5Q2ykMdiiTB9vBVOOUBysMzmRRmUfwFrZuI2C4SQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@typescript-eslint/scope-manager@8.54.0':
@@ -638,12 +631,6 @@ packages:
     peerDependencies:
       typescript: '>=4.8.4 <6.0.0'
 
-  '@typescript-eslint/typescript-estree@8.53.1':
-    resolution: {integrity: sha512-RGlVipGhQAG4GxV1s34O91cxQ/vWiHJTDHbXRr0li2q/BGg3RR/7NM8QDWgkEgrwQYCvmJV9ichIwyoKCQ+DTg==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      typescript: '>=4.8.4 <6.0.0'
-
   '@typescript-eslint/typescript-estree@8.54.0':
     resolution: {integrity: sha512-BUwcskRaPvTk6fzVWgDPdUndLjB87KYDrN5EYGetnktoeAvPtO4ONHlAZDnj5VFnUANg0Sjm7j4usBlnoVMHwA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -652,13 +639,6 @@ packages:
 
   '@typescript-eslint/utils@8.46.4':
     resolution: {integrity: sha512-AbSv11fklGXV6T28dp2Me04Uw90R2iJ30g2bgLz529Koehrmkbs1r7paFqr1vPCZi7hHwYxYtxfyQMRC8QaVSg==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      eslint: ^8.57.0 || ^9.0.0
-      typescript: '>=4.8.4 <6.0.0'
-
-  '@typescript-eslint/utils@8.53.1':
-    resolution: {integrity: sha512-c4bMvGVWW4hv6JmDUEG7fSYlWOl3II2I4ylt0NM+seinYQlZMQIaKaXIIVJWt9Ofh6whrpM+EdDQXKXjNovvrg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
@@ -673,10 +653,6 @@ packages:
 
   '@typescript-eslint/visitor-keys@8.46.4':
     resolution: {integrity: sha512-/++5CYLQqsO9HFGLI7APrxBJYo+5OCMpViuhV8q5/Qa3o5mMrF//eQHks+PXcsAVaLdn817fMuS7zqoXNNZGaw==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@typescript-eslint/visitor-keys@8.53.1':
-    resolution: {integrity: sha512-oy+wV7xDKFPRyNggmXuZQSBzvoLnpmJs+GhzRhPjrxl2b/jIlyjVokzm47CZCDUdXKr2zd7ZLodPfOBpOPyPlg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@typescript-eslint/visitor-keys@8.54.0':
@@ -1199,8 +1175,8 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  rbxts-build@https://codeload.github.com/AndalYLP/rbxts-build/tar.gz/fae3c8abfe35c0dbca782811d176e355d9132b8c:
-    resolution: {tarball: https://codeload.github.com/AndalYLP/rbxts-build/tar.gz/fae3c8abfe35c0dbca782811d176e355d9132b8c}
+  rbxts-build@https://codeload.github.com/AndalYLP/rbxts-build/tar.gz/239f41fb3ecbbf5d18c1efc3138a6b147b700669:
+    resolution: {tarball: https://codeload.github.com/AndalYLP/rbxts-build/tar.gz/239f41fb3ecbbf5d18c1efc3138a6b147b700669}
     version: 2.4.3
     hasBin: true
 
@@ -1967,17 +1943,19 @@ snapshots:
 
   '@rbxts/validate-tree@2.0.2': {}
 
-  '@rbxts/vide-charm@0.3.0(@rbxts/charm@0.10.0)(@rbxts/vide@0.5.7)':
+  '@rbxts/vide-charm@0.3.0(@rbxts/charm@0.10.0)(@rbxts/vide@0.6.1)':
     dependencies:
       '@rbxts/charm': 0.10.0
-      '@rbxts/vide': 0.5.7
+      '@rbxts/vide': 0.6.1
 
-  '@rbxts/vide-ripple@0.10.1(@rbxts/vide@0.5.7)':
+  '@rbxts/vide-ripple@0.10.1(@rbxts/vide@0.6.1)':
     dependencies:
       '@rbxts/ripple': 0.10.1
-      '@rbxts/vide': 0.5.7
+      '@rbxts/vide': 0.6.1
 
   '@rbxts/vide@0.5.7': {}
+
+  '@rbxts/vide@0.6.1': {}
 
   '@rbxts/zone-plus@3.2.0': {}
 
@@ -2036,15 +2014,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/project-service@8.53.1(typescript@5.9.3)':
-    dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.53.1(typescript@5.9.3)
-      '@typescript-eslint/types': 8.53.1
-      debug: 4.4.3
-      typescript: 5.9.3
-    transitivePeerDependencies:
-      - supports-color
-
   '@typescript-eslint/project-service@8.54.0(typescript@5.9.3)':
     dependencies:
       '@typescript-eslint/tsconfig-utils': 8.54.0(typescript@5.9.3)
@@ -2058,11 +2027,6 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.46.4
       '@typescript-eslint/visitor-keys': 8.46.4
-
-  '@typescript-eslint/scope-manager@8.53.1':
-    dependencies:
-      '@typescript-eslint/types': 8.53.1
-      '@typescript-eslint/visitor-keys': 8.53.1
 
   '@typescript-eslint/scope-manager@8.54.0':
     dependencies:
@@ -2127,21 +2091,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/typescript-estree@8.53.1(typescript@5.9.3)':
-    dependencies:
-      '@typescript-eslint/project-service': 8.53.1(typescript@5.9.3)
-      '@typescript-eslint/tsconfig-utils': 8.53.1(typescript@5.9.3)
-      '@typescript-eslint/types': 8.53.1
-      '@typescript-eslint/visitor-keys': 8.53.1
-      debug: 4.4.3
-      minimatch: 9.0.5
-      semver: 7.7.3
-      tinyglobby: 0.2.15
-      ts-api-utils: 2.4.0(typescript@5.9.3)
-      typescript: 5.9.3
-    transitivePeerDependencies:
-      - supports-color
-
   '@typescript-eslint/typescript-estree@8.54.0(typescript@5.9.3)':
     dependencies:
       '@typescript-eslint/project-service': 8.54.0(typescript@5.9.3)
@@ -2168,17 +2117,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/utils@8.53.1(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)':
-    dependencies:
-      '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.2(jiti@2.6.1))
-      '@typescript-eslint/scope-manager': 8.53.1
-      '@typescript-eslint/types': 8.53.1
-      '@typescript-eslint/typescript-estree': 8.53.1(typescript@5.9.3)
-      eslint: 9.39.2(jiti@2.6.1)
-      typescript: 5.9.3
-    transitivePeerDependencies:
-      - supports-color
-
   '@typescript-eslint/utils@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)':
     dependencies:
       '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.2(jiti@2.6.1))
@@ -2193,11 +2131,6 @@ snapshots:
   '@typescript-eslint/visitor-keys@8.46.4':
     dependencies:
       '@typescript-eslint/types': 8.46.4
-      eslint-visitor-keys: 4.2.1
-
-  '@typescript-eslint/visitor-keys@8.53.1':
-    dependencies:
-      '@typescript-eslint/types': 8.53.1
       eslint-visitor-keys: 4.2.1
 
   '@typescript-eslint/visitor-keys@8.54.0':
@@ -2695,7 +2628,7 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  rbxts-build@https://codeload.github.com/AndalYLP/rbxts-build/tar.gz/fae3c8abfe35c0dbca782811d176e355d9132b8c:
+  rbxts-build@https://codeload.github.com/AndalYLP/rbxts-build/tar.gz/239f41fb3ecbbf5d18c1efc3138a6b147b700669:
     dependencies:
       kleur: 4.1.5
       yargs: 17.7.2
