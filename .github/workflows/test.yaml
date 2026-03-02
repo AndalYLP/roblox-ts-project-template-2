@@ -10,6 +10,9 @@ permissions:
   contents: write
   packages: write
 
+env:
+  CI: true
+
 concurrency:
   group: luau-execution
   cancel-in-progress: false
@@ -44,7 +47,7 @@ jobs:
         run: pnpm prod:build
 
       - name: Run tests
-        run: lune run tests/init.luau
+        run: lune run tests/init.luau --ci
         env:
           ROBLOX_OC_API_KEY: ${{ secrets.JEST_TEST_API_KEY}}
           ROBLOX_UNIVERSE_ID: ${{ vars.ROBLOX_TEST_UNIVERSE_ID }}
