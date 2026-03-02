@@ -1,3 +1,4 @@
 export const customCenturionType = {
-	username: "Username",
+	/** Get userId from username */
+	userId: "Username",
 };

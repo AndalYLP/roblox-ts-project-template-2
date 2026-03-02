@@ -3,7 +3,7 @@ import { Players } from "@rbxts/services";
 
 import { customCenturionType } from "shared/centurion/types";
 
-export const username = TypeBuilder.create<number>(customCenturionType.username)
+export const userId = TypeBuilder.create<number>(customCenturionType.userId)
 	.transform((name) => {
 		try {
 			const userId = Players.GetUserIdFromNameAsync(name);

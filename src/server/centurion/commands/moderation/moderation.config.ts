@@ -9,7 +9,7 @@ export const moderationCommandOptions = {
 			{
 				name: "Username",
 				description: "Player's username to ban from the game.",
-				type: customCenturionType.username,
+				type: customCenturionType.userId,
 			},
 			{
 				name: "Reason",
@@ -49,7 +49,7 @@ export const moderationCommandOptions = {
 			{
 				name: "Username",
 				description: "Player's username to unban from the game.",
-				type: customCenturionType.username,
+				type: customCenturionType.userId,
 			},
 		],
 		description: "Unban a player from the game.",
