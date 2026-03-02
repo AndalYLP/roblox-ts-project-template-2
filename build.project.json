@@ -58,6 +58,18 @@
 			"$properties": {
 				"RespectFilteringEnabled": true
 			}
+		},
+		"TextChatService": {
+			"$className": "TextChatService",
+			"$properties": {
+				"ChatVersion": "TextChatService"
+			},
+			"ChannelTabsConfiguration": {
+				"$className": "ChannelTabsConfiguration",
+				"$properties": {
+					"Enabled": true	
+				}
+			}
 		}
 	}
 }
