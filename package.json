@@ -77,6 +77,11 @@
     "@rbxts/vide-ripple": "0.10.1",
     "@rbxts/zone-plus": "3.2.0"
   },
+  "pnpm": {
+    "overrides": {
+      "@rbxts/vide": "0.6.1"
+    }
+  },
   "rbxts-build": {
     "syncLocation": "src/types/interfaces/services.d.ts",
     "customDefinitionsLocation": "src/types/interfaces/custom-definitions.d.ts",
