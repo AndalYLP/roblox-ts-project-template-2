@@ -71,8 +71,7 @@ export abstract class ClickableInteractable<
 			);
 		}
 
-		// Prevents compilation error.
-		if (this.onHoverEnter as unknown as boolean) {
+		if (this.onHoverEnter !== undefined) {
 			this.janitor.Add(
 				this.interactable.MouseHoverEnter.Connect((player) => {
 					this.onHoverEnter?.(player);
@@ -80,8 +79,7 @@ export abstract class ClickableInteractable<
 			);
 		}
 
-		// Prevents compilation error.
-		if (this.onHoverLeave as unknown as boolean) {
+		if (this.onHoverLeave !== undefined) {
 			this.janitor.Add(
 				this.interactable.MouseHoverLeave.Connect((player) => {
 					this.onHoverLeave?.(player);
