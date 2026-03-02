@@ -44,8 +44,8 @@ export class PlayerService implements OnStart {
 	private readonly onEntityJoined = new Signal<(playerEntity: PlayerEntity) => void>();
 	private readonly onEntityRemoving = new Signal();
 	private readonly playerEntities = new Map<Player, PlayerEntity>();
-	private readonly playerJoinEvents = [] as ListenerData<OnPlayerJoin>[];
-	private readonly playerLeaveEvents = [] as ListenerData<OnPlayerLeave>[];
+	private readonly playerJoinEvents: ListenerData<OnPlayerJoin>[] = [];
+	private readonly playerLeaveEvents: ListenerData<OnPlayerLeave>[] = [];
 
 	constructor(
 		private readonly logger: Logger,

@@ -36,7 +36,7 @@ type LeaderstatValue = Instances[keyof LeaderstatValueTypes];
  */
 @Service()
 export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
-	private readonly leaderstats = [] as LeaderstatEntry[];
+	private readonly leaderstats: LeaderstatEntry[] = [];
 	private readonly playerToLeaderstatsMap = new Map<Player, Folder>();
 	private readonly playerToValueMap = new Map<Player, Map<string, LeaderstatValue>>();
 
