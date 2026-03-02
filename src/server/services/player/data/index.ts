@@ -36,7 +36,7 @@ interface OrderedDataConfig {
 
 type OrderedData = "Money" | "Test";
 
-const ORDERED_DATA_UPDATE_TIME = 5 * 60;
+const ORDERED_DATA_UPDATE_TIME = 3 * 60;
 
 /**
  * Service for loading and saving player data. This service is responsible for
@@ -157,8 +157,8 @@ export class PlayerDataService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		this.logger.Info(`Registered ordered data ${dataStoreName}`);
 	}
 
-	private savePlayerOrderedData({ userId: UserId }: PlayerEntity): void {
-		const playerData = getPlayerData(UserId);
+	private savePlayerOrderedData({ userId }: PlayerEntity): void {
+		const playerData = getPlayerData(userId);
 		if (!playerData) {
 			return;
 		}
@@ -169,12 +169,12 @@ export class PlayerDataService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 			}
 
 			try {
-				DataStoreService.GetOrderedDataStore(
-					IS_STUDIO ? "Development" : "Production",
-					entry.name,
-				).SetAsync(UserId, this.getPlayerData(playerData, entry.playerDataKey));
+				DataStoreService.GetOrderedDataStore(this.dataStoreName, entry.name).SetAsync(
+					userId,
+					this.getPlayerData(playerData, entry.playerDataKey),
+				);
 			} catch (err) {
-				this.logger.Warn(`Failed to save ordered data ${entry.name} for ${UserId}: ${err}`);
+				this.logger.Warn(`Failed to save ordered data ${entry.name} for ${userId}: ${err}`);
 			}
 		}
 	}
