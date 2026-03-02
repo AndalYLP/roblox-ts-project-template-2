@@ -51,15 +51,13 @@ export abstract class TouchInteractable<
 
 		this.zone.autoUpdate = autoUpdate;
 
-		// Prevents compilation error.
-		if (this.onPlayerEntered as unknown as boolean) {
+		if (this.onPlayerEntered !== undefined) {
 			this.zone.playerEntered.Connect((player) => {
 				this.onPlayerEntered?.(player);
 			});
 		}
 
-		// Prevents compilation error.
-		if (this.onPlayerExited as unknown as boolean) {
+		if (this.onPlayerExited !== undefined) {
 			this.zone.playerExited.Connect((player) => {
 				this.onPlayerExited?.(player);
 			});
