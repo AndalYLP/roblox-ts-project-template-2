@@ -7,7 +7,7 @@ import type { Logger } from "@rbxts/log";
 
 import { USER_ID } from "shared/constants/player";
 import { SoundSystem } from "shared/modules/3dSound";
-import { getAllPlayerSettings, type PlayerSettings } from "shared/store/atoms/player/settings";
+import { getAllPlayerSettings, type PlayerSettingsData } from "shared/store/atoms/player/settings";
 
 export enum SoundType {
 	Music = "Music",
@@ -22,7 +22,7 @@ interface PlaySoundOptions {
 	soundType: SoundType;
 }
 
-function getAllLocalPlayerSettings(): PlayerSettings | undefined {
+function getAllLocalPlayerSettings(): PlayerSettingsData | undefined {
 	return getAllPlayerSettings(USER_ID);
 }
 
@@ -126,7 +126,7 @@ export class AudioController implements OnInit, OnStart {
 		});
 	}
 
-	private onSettingsChanged(current: PlayerSettings): void {
+	private onSettingsChanged(current: PlayerSettingsData): void {
 		const musicGroup = this.soundGroups.get(SoundType.Music);
 		assert(musicGroup, `Music SoundGroup not found`);
 		musicGroup.Volume = current.audio.musicVolume;

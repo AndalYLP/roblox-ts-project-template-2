@@ -1,7 +1,7 @@
 import { getPlayerData, updatePlayerData } from "shared/store/atoms/player/datastore";
 import type { GamePass, GamePassData, Product, ProductData } from "types/enums/mtx";
 
-export interface PlayerMtx {
+export interface PlayerMtxData {
 	gamePasses: Map<GamePass, GamePassData>;
 	products: Map<Product, ProductData>;
 	receiptHistory: Array<string>;
@@ -68,6 +68,6 @@ export function updateReceiptHistory(userId: string, receiptHistory: Array<strin
 	});
 }
 
-export function getPlayerMtx(userId: string): PlayerMtx | undefined {
+export function getPlayerMtx(userId: string): PlayerMtxData | undefined {
 	return getPlayerData(userId)?.mtx;
 }

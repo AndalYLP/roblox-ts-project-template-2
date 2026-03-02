@@ -1,7 +1,7 @@
 import { getPlayerData, updatePlayerData } from "shared/store/atoms/player/datastore";
 import type { Badge } from "types/enums/badge";
 
-export interface PlayerAchievements {
+export interface PlayerAchievementsData {
 	badges: Map<Badge, boolean>;
 }
 
@@ -19,6 +19,6 @@ export function setBadgeStatus(userId: string, badge: Badge, status: boolean): v
 	});
 }
 
-export function getPlayerAchievements(userId: string): PlayerAchievements | undefined {
+export function getPlayerAchievements(userId: string): PlayerAchievementsData | undefined {
 	return getPlayerData(userId)?.achievements;
 }

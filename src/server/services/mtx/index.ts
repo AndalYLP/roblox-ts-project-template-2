@@ -8,7 +8,7 @@ import { events } from "server/network";
 import {
 	addDeveloperProductPurchase,
 	getPlayerMtx,
-	type PlayerMtx,
+	type PlayerMtxData,
 	setGamePassActive,
 	updateReceiptHistory,
 } from "shared/store/atoms/player/mtx";
@@ -392,7 +392,7 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 		});
 	}
 
-	private updateReceiptHistory(userId: string, data: PlayerMtx, purchaseId: string): void {
+	private updateReceiptHistory(userId: string, data: PlayerMtxData, purchaseId: string): void {
 		const { receiptHistory } = data;
 
 		let updatedReceiptHistory = Array.push(receiptHistory, purchaseId);

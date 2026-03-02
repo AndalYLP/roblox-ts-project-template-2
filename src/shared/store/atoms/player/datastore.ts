@@ -1,15 +1,15 @@
 import { atom } from "@rbxts/charm";
 
-import type { PlayerAchievements } from "shared/store/atoms/player/achievements";
-import type { PlayerBalance } from "shared/store/atoms/player/balance";
-import type { PlayerMtx } from "shared/store/atoms/player/mtx";
-import type { PlayerSettings } from "shared/store/atoms/player/settings";
+import type { PlayerAchievementsData } from "shared/store/atoms/player/achievements";
+import type { PlayerBalanceData } from "shared/store/atoms/player/balance";
+import type { PlayerMtxData } from "shared/store/atoms/player/mtx";
+import type { PlayerSettingsData } from "shared/store/atoms/player/settings";
 
 export interface PlayerData {
-	readonly achievements: PlayerAchievements;
-	readonly balance: PlayerBalance;
-	readonly mtx: PlayerMtx;
-	readonly settings: PlayerSettings;
+	readonly achievements: PlayerAchievementsData;
+	readonly balance: PlayerBalanceData;
+	readonly mtx: PlayerMtxData;
+	readonly settings: PlayerSettingsData;
 }
 
 type PlayerDataMap = {
@@ -24,10 +24,10 @@ export function getPlayerData(userId: string): PlayerData | undefined {
 	return datastore.players()[userId];
 }
 
-export function setPlayerData(userId: string, playerData: PlayerData): void {
+export function setPlayerData(userId: string, data: PlayerData): void {
 	datastore.players((state) => ({
 		...state,
-		[userId]: playerData,
+		[userId]: data,
 	}));
 }
 
@@ -38,7 +38,7 @@ export function deletePlayerData(userId: string): void {
 	}));
 }
 
-export function updatePlayerData(userId: string, updater: (data: PlayerData) => PlayerData): void {
+export function updatePlayerData(userId: string, updater: (state: PlayerData) => PlayerData): void {
 	datastore.players((state) => ({
 		...state,
 		[userId]: state[userId] && updater(state[userId]),

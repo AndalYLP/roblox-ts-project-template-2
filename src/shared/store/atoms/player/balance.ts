@@ -1,6 +1,6 @@
 import { getPlayerData, updatePlayerData } from "shared/store/atoms/player/datastore";
 
-export interface PlayerBalance {
+export interface PlayerBalanceData {
 	money: number;
 }
 
@@ -18,6 +18,6 @@ export function addBalance(userId: string, amount: number): void {
 	});
 }
 
-export function getPlayerBalance(userId: string): PlayerBalance | undefined {
+export function getPlayerBalance(userId: string): PlayerBalanceData | undefined {
 	return getPlayerData(userId)?.balance;
 }

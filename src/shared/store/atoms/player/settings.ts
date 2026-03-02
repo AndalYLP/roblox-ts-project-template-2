@@ -1,6 +1,6 @@
 import { getPlayerData, updatePlayerData } from "shared/store/atoms/player/datastore";
 
-export interface PlayerSettings {
+export interface PlayerSettingsData {
 	readonly audio: {
 		musicVolume: number;
 		sfxVolume: number;
@@ -16,13 +16,13 @@ export interface PlayerSettings {
  * @param value - The new value.
  */
 export function changeSetting<
-	Category extends keyof PlayerSettings,
-	SettingType extends keyof PlayerSettings[Category],
+	Category extends keyof PlayerSettingsData,
+	SettingType extends keyof PlayerSettingsData[Category],
 >(
 	userId: string,
 	settingCategory: Category,
 	settingType: SettingType,
-	value: PlayerSettings[Category][SettingType],
+	value: PlayerSettingsData[Category][SettingType],
 ): void {
 	updatePlayerData(userId, (data) => {
 		const { settings } = data;
@@ -39,17 +39,17 @@ export function changeSetting<
 	});
 }
 
-export function getAllPlayerSettings(userId: string): PlayerSettings | undefined {
+export function getAllPlayerSettings(userId: string): PlayerSettingsData | undefined {
 	return getPlayerData(userId)?.settings;
 }
 
 export function getPlayerSetting<
-	Category extends keyof PlayerSettings,
-	SettingType extends keyof PlayerSettings[Category],
+	Category extends keyof PlayerSettingsData,
+	SettingType extends keyof PlayerSettingsData[Category],
 >(
 	userId: string,
 	settingCategory: Category,
 	settingType: SettingType,
-): PlayerSettings[Category][SettingType] | undefined {
+): PlayerSettingsData[Category][SettingType] | undefined {
 	return getAllPlayerSettings(userId)?.[settingCategory][settingType];
 }
