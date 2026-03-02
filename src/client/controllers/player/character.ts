@@ -5,7 +5,7 @@ import { promiseTree } from "@rbxts/validate-tree";
 import type { OnStart } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
 
-import { LocalPlayer } from "client/constants/player";
+import { LOCAL_PLAYER } from "client/constants/player";
 import { setupLifecycle } from "utils/flamework";
 import { CHARACTER_LOAD_TIMEOUT, characterSchema, onCharacterAdded } from "utils/player";
 import type { ListenerData } from "utils/flamework";
@@ -45,7 +45,7 @@ export class CharacterController implements OnStart {
 		setupLifecycle<OnCharacterAdded>(this.characterAddedEvents);
 		setupLifecycle<OnCharacterRemoved>(this.characterRemovedEvents);
 
-		onCharacterAdded(LocalPlayer, (character) => {
+		onCharacterAdded(LOCAL_PLAYER, (character) => {
 			this.characterAdded(character).catch((err) => {
 				this.logger.Fatal(`Could not get character rig because:\n${err}`);
 			});
