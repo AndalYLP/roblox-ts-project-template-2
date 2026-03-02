@@ -90,7 +90,7 @@ export abstract class ProximityInteractable<
 			}
 		}
 
-		if (this.onHoldBegan || !this.onHoldEnded) {
+		if (this.onHoldBegan || this.onHoldEnded) {
 			const { HoldDuration } = proximitySettings;
 			if (HoldDuration !== undefined && HoldDuration > 0) {
 				this.janitor.Add(
