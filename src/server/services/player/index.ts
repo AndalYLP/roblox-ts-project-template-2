@@ -14,7 +14,7 @@ import { setupLifecycle } from "utils/flamework";
 import { onPlayerAdded, promisePlayerDisconnected } from "utils/player";
 import type { PlayerDataService } from "server/services/player/data";
 import type { PlayerRemovalService } from "server/services/player/removal";
-import type { PlayerData } from "shared/store/atoms/player/datastore";
+import type { PlayerData } from "shared/store/atoms/player/atom";
 import type { ListenerData } from "utils/flamework";
 
 export interface OnPlayerJoin {

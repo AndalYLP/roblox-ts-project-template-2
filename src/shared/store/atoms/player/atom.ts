@@ -16,30 +16,30 @@ type PlayerDataMap = {
 	readonly [K in string]?: PlayerData;
 };
 
-export const datastore = {
-	players: atom<PlayerDataMap>({}),
+export const playersAtom = {
+	datastore: atom<PlayerDataMap>({}),
 };
 
 export function getPlayerData(userId: string): PlayerData | undefined {
-	return datastore.players()[userId];
+	return playersAtom.datastore()[userId];
 }
 
 export function setPlayerData(userId: string, data: PlayerData): void {
-	datastore.players((state) => ({
+	playersAtom.datastore((state) => ({
 		...state,
 		[userId]: data,
 	}));
 }
 
 export function deletePlayerData(userId: string): void {
-	datastore.players((state) => ({
+	playersAtom.datastore((state) => ({
 		...state,
 		[userId]: undefined,
 	}));
 }
 
 export function updatePlayerData(userId: string, updater: (state: PlayerData) => PlayerData): void {
-	datastore.players((state) => ({
+	playersAtom.datastore((state) => ({
 		...state,
 		[userId]: state[userId] && updater(state[userId]),
 	}));
