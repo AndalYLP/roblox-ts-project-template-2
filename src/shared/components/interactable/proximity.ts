@@ -54,8 +54,7 @@ export abstract class ProximityInteractable<
 			}
 		});
 
-		// Prevents compilation error.
-		if (this.onTrigger as unknown as boolean) {
+		if (this.onTrigger !== undefined) {
 			this.janitor.Add(
 				this.interactable.Triggered.Connect((player) => {
 					this.onTrigger?.(player);
@@ -63,8 +62,7 @@ export abstract class ProximityInteractable<
 			);
 		}
 
-		// Prevents compilation error.
-		if (this.onTriggerEnded as unknown as boolean) {
+		if (this.onTriggerEnded !== undefined) {
 			this.janitor.Add(
 				this.interactable.TriggerEnded.Connect((player) => {
 					this.onTriggerEnded?.(player);
