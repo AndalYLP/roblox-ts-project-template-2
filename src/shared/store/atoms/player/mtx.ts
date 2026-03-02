@@ -50,6 +50,10 @@ export function setGamePassActive(userId: string, gamePass: GamePass, active: bo
 	});
 }
 
+export function getGamePassActive(userId: string, gamePass: GamePass): boolean | undefined {
+	return getPlayerMtx(userId)?.gamePasses.get(gamePass)?.active;
+}
+
 export function updateReceiptHistory(userId: string, receiptHistory: Array<string>): void {
 	updatePlayerData(userId, (data) => {
 		const { mtx } = data;

@@ -156,19 +156,6 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 		return productInfo;
 	}
 
-	/**
-	 * Checks if a game pass is active for a specific player. This method will
-	 * return false if the game pass is not owned by the player.
-	 *
-	 * @param playerEntity - The player entity for whom to check the game pass.
-	 * @param playerEntity.player - The player's instance.
-	 * @param gamePassId - The ID of the game pass to check.
-	 * @returns A boolean indicating whether the game pass is active or not.
-	 */
-	public isGamePassActive({ userId: UserId }: PlayerEntity, gamePassId: GamePass): boolean {
-		return getPlayerMtx(UserId)?.gamePasses.get(gamePassId)?.active ?? false;
-	}
-
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
 		const { userId: UserId } = playerEntity;
 
