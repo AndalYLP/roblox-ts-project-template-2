@@ -6,8 +6,8 @@ import { useEventListener } from "@rbxts/pretty-vide-utils";
 import { Workspace } from "@rbxts/services";
 import { source } from "@rbxts/vide";
 
-const BASE_RESOLUTION = new Vector2(1280, 832);
-const MIN_SCALE = 0.5;
+const BASE_RESOLUTION = new Vector2(1920, 1080);
+const MIN_SCALE = 0.1;
 const DOMINANT_AXIS = 0.5;
 
 const scale = source(1);
