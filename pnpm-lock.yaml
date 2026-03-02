@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@rbxts/vide': 0.6.1
+
 importers:
 
   .:
@@ -512,15 +515,12 @@ packages:
     resolution: {integrity: sha512-leefLurc48uaJ72HAUBe0JsDcdvr4qib+XWC5196hkbDAOqdjqyjt8e1qY7WK8myG+QKOrU4U3M1hGFVJKdbKg==}
     peerDependencies:
       '@rbxts/charm': 0.10.0
-      '@rbxts/vide': '*'
+      '@rbxts/vide': 0.6.1
 
   '@rbxts/vide-ripple@0.10.1':
     resolution: {integrity: sha512-QkgAdKxnIyTt0IkbH7E9HcTuBxAuyofECWm2MFQ5aMtUqv67ABxeZCj7Wo1omMTys8iR+i6c9xz/m+tdFtFGrg==}
     peerDependencies:
-      '@rbxts/vide': '*'
-
-  '@rbxts/vide@0.5.7':
-    resolution: {integrity: sha512-Q9R7ybzuHK1phtLicBHgAjQnlJ/dMsXDs2k296PIMLgLqK9aX/f1skOP7F1K/vo7IrSE0jCG3B3XTOtQL1Sb0Q==}
+      '@rbxts/vide': 0.6.1
 
   '@rbxts/vide@0.6.1':
     resolution: {integrity: sha512-syFqx+HYXy0TauDCGLhc68K2cAlfgYookIJSRtJZ01W7mUI+EKyj80x2L91dQxos3BwAAGJqBD/ovWU4M//+Lg==}
@@ -1843,7 +1843,7 @@ snapshots:
       '@rbxts/centurion': 1.0.1
       '@rbxts/services': 1.6.0
       '@rbxts/set-timeout': 1.1.2
-      '@rbxts/vide': 0.5.7
+      '@rbxts/vide': 0.6.1
 
   '@rbxts/centurion@1.0.1':
     dependencies:
@@ -1917,7 +1917,7 @@ snapshots:
       '@rbxts/ripple': 0.9.3
       '@rbxts/services': 1.6.0
       '@rbxts/set-timeout': 1.1.2
-      '@rbxts/vide': 0.5.7
+      '@rbxts/vide': 0.6.1
 
   '@rbxts/ripple@0.10.1': {}
 
@@ -1952,8 +1952,6 @@ snapshots:
     dependencies:
       '@rbxts/ripple': 0.10.1
       '@rbxts/vide': 0.6.1
-
-  '@rbxts/vide@0.5.7': {}
 
   '@rbxts/vide@0.6.1': {}
 

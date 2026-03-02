@@ -16,7 +16,7 @@ import {
 	getPlayerData,
 	type PlayerData,
 	setPlayerData,
-} from "shared/store/atoms/player/datastore";
+} from "shared/store/atoms/player/atom";
 import { KickCode } from "types/enums/kick-reason";
 import type { OnPlayerJoin, OnPlayerLeave } from "server/services/player";
 import type { PlayerEntity } from "server/services/player/entity";

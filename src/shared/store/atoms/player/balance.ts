@@ -1,4 +1,4 @@
-import { getPlayerData, updatePlayerData } from "shared/store/atoms/player/datastore";
+import { getPlayerData, updatePlayerData } from "shared/store/atoms/player/atom";
 
 export interface PlayerBalanceData {
 	money: number;

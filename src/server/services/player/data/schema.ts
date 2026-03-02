@@ -1,6 +1,6 @@
 import { Flamework } from "@flamework/core";
 
-import type { PlayerData } from "shared/store/atoms/player/datastore";
+import type { PlayerData } from "shared/store/atoms/player/atom";
 
 export const defaultPlayerData: PlayerData = {
 	achievements: {

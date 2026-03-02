@@ -20,8 +20,8 @@ export function filterPayload(
 			...payload,
 			data: {
 				...payload.data,
-				"datastore/players": {
-					[userId]: payload.data["datastore/players"][userId],
+				"playersAtom/datastore": {
+					[userId]: payload.data["playersAtom/datastore"][userId],
 				},
 			},
 		};
@@ -31,8 +31,8 @@ export function filterPayload(
 		...payload,
 		data: {
 			...payload.data,
-			"datastore/players": payload.data["datastore/players"] && {
-				[userId]: payload.data["datastore/players"][userId],
+			"playersAtom/datastore": payload.data["playersAtom/datastore"] && {
+				[userId]: payload.data["playersAtom/datastore"][userId],
 			},
 		},
 	};

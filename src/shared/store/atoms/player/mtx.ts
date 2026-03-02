@@ -1,4 +1,4 @@
-import { getPlayerData, updatePlayerData } from "shared/store/atoms/player/datastore";
+import { getPlayerData, updatePlayerData } from "shared/store/atoms/player/atom";
 import type { GamePass, GamePassData, Product, ProductData } from "types/enums/mtx";
 
 export interface PlayerMtxData {
