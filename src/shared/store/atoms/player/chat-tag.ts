@@ -12,3 +12,10 @@ export function getPlayerChatTag(userId: string): PlayerChatTagData | undefined 
 export function setPlayerChatTag(userId: string, chatTagData: PlayerChatTagData): void {
 	playersAtom.chatTag((state) => ({ ...state, [userId]: chatTagData }));
 }
+
+export function deletePlayerTagData(userId: string): void {
+	playersAtom.chatTag((state) => ({
+		...state,
+		[userId]: undefined,
+	}));
+}
