@@ -2,6 +2,10 @@ import type * as JestFile from "@rbxts/jest";
 
 import type * as ConfigFile from "test/jest.config";
 
+type InstanceKeys<T> = {
+	[K in keyof T]: T[K] extends Instance ? K : never;
+}[keyof T];
+
 interface ReplicatedStorage {
 	rbxts_include: {
 		node_modules: {
@@ -22,6 +26,14 @@ interface TestService {
 		/** @hidden */
 		__ID__: "TEST_SERVICE/jest.config";
 	} & ModuleScript;
+}
+
+interface TextChatService {
+	TextChannels: {
+		RBXGeneral: TextChannel;
+		RBXSystem: TextChannel;
+	} & Folder;
+	WaitForChild<T extends InstanceKeys<TextChatService>>(childName: T): TextChatService[T];
 }
 
 declare function require(moduleScript: TestService["jest.config"]): typeof ConfigFile;
