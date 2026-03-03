@@ -23,7 +23,7 @@ declare global {
 			} & Folder;
 			centurion: {
 				types: {
-					username: ModuleScript;
+					"user-id": ModuleScript;
 				} & ModuleScript;
 			} & Folder;
 			components: {
@@ -54,8 +54,9 @@ declare global {
 				atoms: {
 					player: {
 						achievements: ModuleScript;
+						atom: ModuleScript;
 						balance: ModuleScript;
-						datastore: ModuleScript;
+						"chat-tag": ModuleScript;
 						mtx: ModuleScript;
 						settings: ModuleScript;
 					} & Folder;
@@ -100,12 +101,11 @@ declare global {
 				guards: {
 					"is-developer": ModuleScript;
 				} & Folder;
-				run: ModuleScript;
+				runtime: ModuleScript;
 			} & Folder;
 			network: ModuleScript;
 			runtime: Script;
 			services: {
-				core: Folder;
 				mtx: {
 					decorators: ModuleScript;
 					events: {
@@ -123,6 +123,7 @@ declare global {
 					leaderstats: ModuleScript;
 					removal: ModuleScript;
 				} & ModuleScript;
+				"text-channel": ModuleScript;
 			} & Folder;
 			store: {
 				sync: Script;
@@ -137,9 +138,20 @@ declare global {
 		runtime: Script;
 		setup: ModuleScript;
 	}
+	interface TextChatService {
+		ChannelTabsConfiguration: ChannelTabsConfiguration;
+		TextChannels: {
+			RBXGeneral: TextChannel;
+			RBXSystem: TextChannel;
+		} & Folder;
+		WaitForChild<T extends InstanceKeys<TextChatService>>(childName: T): TextChatService[T];
+	}
 	interface Workspace {
 		Baseplate: Part;
 	}
+	type InstanceKeys<T> = {
+		[K in keyof T]: T[K] extends Instance ? K : never;
+	}[keyof T];
 	function require(moduleScript: TestService["jest.config"]): typeof ConfigFile;
 	function require(
 		moduleScript: ReplicatedStorage["rbxts_include"]["node_modules"]["@rbxts"]["jest"]["src"],
