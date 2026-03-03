@@ -2,8 +2,8 @@ import { IS_DEV, PLACE_ID } from "shared/constants/core";
 
 // NOTE: define before use.
 export enum GameId {
-	Development = 1,
-	Production = 2,
+	Production = 1,
+	Development = 6295739903,
 }
 
 function isGameId(value: number): value is GameId {
