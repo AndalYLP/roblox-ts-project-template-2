@@ -5,6 +5,7 @@ import type {
 	StoreClientToServerEvents,
 	StoreServerToClientEvents,
 } from "shared/network/remotes/store";
+import type { TextChannelServerToClientEvents } from "shared/network/remotes/text-channel";
 
 /** Fired by client to server. */
 interface ClientToServerEvents {
@@ -15,6 +16,7 @@ interface ClientToServerEvents {
 /** Fired by server to client. */
 interface ServerToClientEvents {
 	store: StoreServerToClientEvents;
+	textChannel: TextChannelServerToClientEvents;
 }
 
 /** Fired by client to server. */
