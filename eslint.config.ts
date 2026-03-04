@@ -102,8 +102,8 @@ export default defineConfig(
 				{
 					customGroups: [
 						{
-							elementNamePattern: "^react$",
-							groupName: "react",
+							elementNamePattern: "^vide$",
+							groupName: "vide",
 						},
 						{
 							elementNamePattern: "^@",
@@ -116,7 +116,7 @@ export default defineConfig(
 						},
 					],
 					groups: [
-						"react",
+						"vide",
 						"value-scoped",
 						{ newlinesBetween: 0 },
 						"type-scoped",
