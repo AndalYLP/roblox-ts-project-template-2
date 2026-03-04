@@ -35,7 +35,7 @@ export interface OnPlayerLeave {
 	 * means it is still safe to access player data before it is removed.
 	 * @hideinherited
 	 */
-	onPlayerLeave(playerEntity: PlayerEntity): void;
+	onPlayerLeave(playerEntity: PlayerEntity): Promise<void> | void;
 }
 
 /** A service that manages player entities in the game. */
@@ -106,7 +106,7 @@ export class PlayerService implements OnStart {
 					debug.profilebegin(id);
 					try {
 						const leaveEvent = async (): Promise<void> => {
-							event.onPlayerLeave(playerEntity);
+							await event.onPlayerLeave(playerEntity);
 						};
 
 						const [success, err] = leaveEvent().await();
