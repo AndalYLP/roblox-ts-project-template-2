@@ -35,7 +35,7 @@ export interface OnPlayerLeave {
 	 * means it is still safe to access player data before it is removed.
 	 * @hideinherited
 	 */
-	onPlayerLeave(playerEntity: PlayerEntity): Promise<void> | void;
+	onPlayerLeave(playerEntity: PlayerEntity): void;
 }
 
 /** A service that manages player entities in the game. */
