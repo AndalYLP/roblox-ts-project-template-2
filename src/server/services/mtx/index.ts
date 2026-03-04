@@ -17,7 +17,6 @@ import { noYield } from "utils/no-yield";
 import type {
 	GamePassStatusChanged,
 	MtxEvents,
-	RegisterHandlerForEachProduct,
 	RegisterProductHandler,
 } from "server/services/mtx/decorators";
 import type { OnPlayerJoin, PlayerService } from "server/services/player";
@@ -256,19 +255,19 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 		for (const { constructor, object } of mtxEvents) {
 			const singleton = Modding.resolveSingleton(constructor!) as Record<string, Callback>;
 
-			const productDecorators = Dictionary.merge(
-				Modding.getPropertyDecorators<typeof RegisterProductHandler>(object),
-				Modding.getPropertyDecorators<typeof RegisterHandlerForEachProduct>(object),
-			);
-
-			for (const [handler, { arguments: args }] of productDecorators) {
-				void this.loadDecorator(singleton, handler, "Product", args[0]);
+			for (const [handler, { arguments: args }] of Modding.getPropertyDecorators<
+				typeof RegisterProductHandler
+			>(object)) {
+				for (const product of args)
+					void this.loadDecorator(singleton, handler, "Product", product);
 			}
 
 			for (const [handler, { arguments: args }] of Modding.getPropertyDecorators<
 				typeof GamePassStatusChanged
 			>(object)) {
-				void this.loadDecorator(singleton, handler, "GamePass", args[0]);
+				for (const gamePass of args) {
+					void this.loadDecorator(singleton, handler, "GamePass", gamePass);
+				}
 			}
 		}
 	}
