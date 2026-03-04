@@ -13,7 +13,7 @@ import type { PlayerChatTagData } from "shared/store/atoms/player/chat-tag";
 @Service()
 export class TextChannelService implements OnPlayerJoin, OnPlayerLeave {
 	public readonly chatTags = {
-		Dev: {
+		developer: {
 			name: "Dev",
 			color: Color3.fromRGB(56, 179, 224),
 		},
@@ -46,7 +46,7 @@ export class TextChannelService implements OnPlayerJoin, OnPlayerLeave {
 
 	public onPlayerJoin({ userId }: PlayerEntity): void {
 		if (DEVELOPERS.includes(userId)) {
-			setPlayerChatTag(userId, this.chatTags.Dev);
+			setPlayerChatTag(userId, this.chatTags.developer);
 		}
 	}
 
