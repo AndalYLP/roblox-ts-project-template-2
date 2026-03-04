@@ -47,7 +47,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 	}
 
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
-		const { name: Name, player, userId } = playerEntity;
+		const { name, player, userId } = playerEntity;
 
 		const leaderstats = new Instance("Folder");
 		leaderstats.Name = "leaderstats";
@@ -55,7 +55,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 
 		this.playerToLeaderstatsMap.set(player, leaderstats);
 
-		this.logger.Info(`Assigning leaderboard stats to ${Name}.`);
+		this.logger.Info(`Assigning leaderboard stats to ${name}.`);
 
 		const playerData = getPlayerData(userId);
 		const valueMap = new Map<Leaderstats, LeaderstatValue>();

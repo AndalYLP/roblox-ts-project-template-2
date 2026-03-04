@@ -12,14 +12,14 @@ export class PlayerBadgeService implements OnPlayerJoin {
 	constructor(private readonly logger: Logger) {}
 
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
-		const { userId: UserId } = playerEntity;
+		const { userId } = playerEntity;
 
 		this.awardBadge(playerEntity, badge.Welcome).catch((err) => {
-			this.logger.Error(`Failed to check if ${UserId} has badge ${badge.Welcome}: ${err}`);
+			this.logger.Error(`Failed to check if ${userId} has badge ${badge.Welcome}: ${err}`);
 		});
 
 		this.awardUnrewardedBadges(playerEntity).catch((err) => {
-			this.logger.Error(`Failed to award unrewarded badges to ${UserId}: ${err}`);
+			this.logger.Error(`Failed to award unrewarded badges to ${userId}: ${err}`);
 		});
 	}
 
@@ -61,9 +61,9 @@ export class PlayerBadgeService implements OnPlayerJoin {
 	}
 
 	private async awardUnrewardedBadges(playerEntity: PlayerEntity): Promise<void> {
-		const { userId: UserId } = playerEntity;
+		const { userId } = playerEntity;
 
-		const badges = getPlayerAchievements(UserId)?.badges;
+		const badges = getPlayerAchievements(userId)?.badges;
 		if (badges === undefined) {
 			return;
 		}
@@ -74,7 +74,7 @@ export class PlayerBadgeService implements OnPlayerJoin {
 			}
 
 			this.awardBadge(playerEntity, badge).catch((err) => {
-				this.logger.Error(`Failed to check if ${UserId} has badge ${badge}: ${err}`);
+				this.logger.Error(`Failed to check if ${userId} has badge ${badge}: ${err}`);
 			});
 		}
 	}

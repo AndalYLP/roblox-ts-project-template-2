@@ -58,7 +58,7 @@ export class CharacterService implements OnPlayerJoin, OnStart {
 	}
 
 	private onRigLoaded(playerEntity: PlayerEntity, rig: CharacterRig): void {
-		const { janitor, player, userId: UserId } = playerEntity;
+		const { janitor, player, userId } = playerEntity;
 
 		janitor.Add(addToCollisionGroup(rig, CollisionGroup.Character, true), true);
 		rig.AddTag(Tag.PlayerCharacter);
@@ -88,7 +88,7 @@ export class CharacterService implements OnPlayerJoin, OnStart {
 			)
 			.catch((err) => {
 				this.logger.Info(
-					`Character appearance did not load for ${UserId}, with reason: ${err}`,
+					`Character appearance did not load for ${userId}, with reason: ${err}`,
 				);
 			});
 	}

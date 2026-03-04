@@ -111,9 +111,9 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 	}
 
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
-		const { userId: UserId } = playerEntity;
+		const { userId } = playerEntity;
 
-		const gamePasses = getPlayerMtx(UserId)?.gamePasses;
+		const gamePasses = getPlayerMtx(userId)?.gamePasses;
 		if (gamePasses === undefined) {
 			return;
 		}
@@ -203,17 +203,17 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 	}
 
 	private grantGamePass(playerEntity: PlayerEntity, gamePassId: GamePass): void {
-		const { userId: UserId } = playerEntity;
+		const { userId } = playerEntity;
 
 		if (!gamePassValidator(gamePassId)) {
 			this.logger.Warn(
-				`Player ${UserId} attempted to purchased invalid game pass ${gamePassId}`,
+				`Player ${userId} attempted to purchased invalid game pass ${gamePassId}`,
 			);
 			return;
 		}
 
-		this.logger.Info(`Player ${UserId} purchased game pass ${gamePassId}`);
-		setGamePassActive(UserId, gamePassId, true);
+		this.logger.Info(`Player ${userId} purchased game pass ${gamePassId}`);
+		setGamePassActive(userId, gamePassId, true);
 		this.notifyGamePassActive(playerEntity, gamePassId, true);
 	}
 
@@ -222,11 +222,11 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 		productId: Product,
 		currencySpent: number,
 	): boolean {
-		const { userId: UserId } = playerEntity;
+		const { userId } = playerEntity;
 
 		if (!productValidator(productId)) {
 			this.logger.Warn(
-				`Player ${UserId} attempted to purchased invalid product ${productId}`,
+				`Player ${userId} attempted to purchased invalid product ${productId}`,
 			);
 			return false;
 		}
@@ -245,8 +245,8 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 			return false;
 		}
 
-		this.logger.Info(`Player ${UserId} purchased developer product ${productId}`);
-		addDeveloperProductPurchase(UserId, productId, currencySpent);
+		this.logger.Info(`Player ${userId} purchased developer product ${productId}`);
+		addDeveloperProductPurchase(userId, productId, currencySpent);
 		return true;
 	}
 
@@ -328,7 +328,7 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 		playerEntity: PlayerEntity,
 		{ CurrencySpent, ProductId, PurchaseId }: ReceiptInfo,
 	): Promise<Enum.ProductPurchaseDecision> {
-		const { document, userId: UserId } = playerEntity;
+		const { document, userId } = playerEntity;
 
 		if (document.read().mtx.receiptHistory.includes(PurchaseId)) {
 			const [success] = document.save().await();
@@ -339,7 +339,7 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 			return Enum.ProductPurchaseDecision.PurchaseGranted;
 		}
 
-		const data = getPlayerMtx(UserId);
+		const data = getPlayerMtx(userId);
 		if (!data) {
 			return Enum.ProductPurchaseDecision.NotProcessedYet;
 		}
@@ -348,7 +348,7 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 			return Enum.ProductPurchaseDecision.NotProcessedYet;
 		}
 
-		this.updateReceiptHistory(UserId, data, PurchaseId);
+		this.updateReceiptHistory(userId, data, PurchaseId);
 
 		const [success] = document.save().await();
 		if (!success) {
@@ -378,16 +378,16 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 		active: boolean,
 	): Promise<void> {
 		await this.checkForGamePassOwned(playerEntity, gamePassId).then((owned) => {
-			const { userId: UserId } = playerEntity;
+			const { userId } = playerEntity;
 			if (!owned) {
 				this.logger.Warn(
-					`Player ${UserId} tried to activate a game pass ${gamePassId} that they do not own.`,
+					`Player ${userId} tried to activate a game pass ${gamePassId} that they do not own.`,
 				);
 
 				return;
 			}
 
-			setGamePassActive(UserId, gamePassId, active);
+			setGamePassActive(userId, gamePassId, active);
 			this.notifyGamePassActive(playerEntity, gamePassId, active);
 		});
 	}
