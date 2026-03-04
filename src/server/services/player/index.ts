@@ -106,7 +106,7 @@ export class PlayerService implements OnStart {
 					debug.profilebegin(id);
 					try {
 						const leaveEvent = async (): Promise<void> => {
-							await event.onPlayerLeave(playerEntity);
+							event.onPlayerLeave(playerEntity);
 						};
 
 						const [success, err] = leaveEvent().await();
