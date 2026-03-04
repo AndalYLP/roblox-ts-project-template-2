@@ -39,6 +39,16 @@ export class AudioController implements OnInit, OnStart {
 		this.logger.Info(`Setup SoundGroup instances`);
 	}
 
+	private onSettingsChanged(current: PlayerSettingsData): void {
+		const musicGroup = this.soundGroups.get(SoundType.Music);
+		assert(musicGroup, `Music SoundGroup not found`);
+		musicGroup.Volume = current.audio.musicVolume;
+
+		const sfxGroup = this.soundGroups.get(SoundType.SoundEffect);
+		assert(sfxGroup, `SoundEffect SoundGroup not found`);
+		sfxGroup.Volume = current.audio.sfxVolume;
+	}
+
 	public onStart(): void {
 		subscribe(getAllLocalPlayerSettings, (current) => {
 			if (!current) {
@@ -124,15 +134,5 @@ export class AudioController implements OnInit, OnStart {
 			Parent: SoundService,
 			Volume: 1,
 		});
-	}
-
-	private onSettingsChanged(current: PlayerSettingsData): void {
-		const musicGroup = this.soundGroups.get(SoundType.Music);
-		assert(musicGroup, `Music SoundGroup not found`);
-		musicGroup.Volume = current.audio.musicVolume;
-
-		const sfxGroup = this.soundGroups.get(SoundType.SoundEffect);
-		assert(sfxGroup, `SoundEffect SoundGroup not found`);
-		sfxGroup.Volume = current.audio.sfxVolume;
 	}
 }

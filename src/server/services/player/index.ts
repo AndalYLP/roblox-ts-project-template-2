@@ -41,17 +41,94 @@ export interface OnPlayerLeave {
 /** A service that manages player entities in the game. */
 @Service()
 export class PlayerService implements OnStart {
-	private readonly onEntityJoined = new Signal<(playerEntity: PlayerEntity) => void>();
-	private readonly onEntityRemoving = new Signal();
 	private readonly playerEntities = new Map<Player, PlayerEntity>();
 	private readonly playerJoinEvents: ListenerData<OnPlayerJoin>[] = [];
 	private readonly playerLeaveEvents: ListenerData<OnPlayerLeave>[] = [];
-
 	constructor(
 		private readonly logger: Logger,
 		private readonly playerDataService: PlayerDataService,
 		private readonly playerRemovalService: PlayerRemovalService,
 	) {}
+	private readonly onEntityJoined = new Signal<(playerEntity: PlayerEntity) => void>();
+
+	private readonly onEntityRemoving = new Signal();
+
+	/**
+	 * Called internally when a player joins the game.
+	 *
+	 * @param player - The player that joined the game.
+	 */
+	private async onPlayerJoin(player: Player): Promise<void> {
+		const playerDocument = await this.playerDataService.loadPlayerData(player);
+		if (!playerDocument) {
+			this.playerRemovalService.removeForBug(player, KickCode.PlayerInstantiationError);
+			return;
+		}
+
+		const janitor = this.setupPlayerJanitor(player, playerDocument);
+		const playerEntity = new PlayerEntity(player, janitor, playerDocument);
+		this.playerEntities.set(player, playerEntity);
+
+		debug.profilebegin("Lifecycle_Player_Join");
+		for (const { id, event } of this.playerJoinEvents) {
+			janitor
+				.AddPromise(
+					Promise.defer(() => {
+						debug.profilebegin(id);
+						event.onPlayerJoin(playerEntity);
+					}),
+				)
+				.catch((err) => {
+					this.logger.Error(`Error in player lifecycle ${id}: ${err}`);
+				});
+		}
+
+		debug.profileend();
+
+		this.logger.Info(`Player ${player.UserId} joined the game.`);
+		this.onEntityJoined.Fire(playerEntity);
+	}
+
+	/**
+	 * Called internally when a player is removed from the game. We hold the
+	 * PlayerEntity until all lifecycle events have been called, so that we can
+	 * access player data on player leaving if required.
+	 *
+	 * @param playerEntity - The player entity associated with the player.
+	 */
+	private async onPlayerRemoving(playerEntity: PlayerEntity): Promise<void> {
+		const promises: Promise<void>[] = [];
+
+		debug.profilebegin("Lifecycle_Player_Leave");
+		for (const { id, event } of this.playerLeaveEvents) {
+			promises.push(
+				Promise.defer<void>((resolve, reject) => {
+					debug.profilebegin(id);
+					try {
+						const leaveEvent = async (): Promise<void> => {
+							await event.onPlayerLeave(playerEntity);
+						};
+
+						const [success, err] = leaveEvent().await();
+						if (!success) {
+							reject(err);
+							return;
+						}
+
+						resolve();
+					} catch (err) {
+						this.logger.Error(`Error in player lifecycle ${id}: ${err}`);
+					}
+				}),
+			);
+		}
+
+		debug.profileend();
+
+		await Promise.all(promises).finally(() => {
+			playerEntity.janitor.Destroy();
+		});
+	}
 
 	public onStart(): void {
 		setupLifecycle<OnPlayerJoin>(this.playerJoinEvents);
@@ -166,83 +243,6 @@ export class PlayerService implements OnStart {
 			}
 
 			this.logger.Debug(`All player entities removed, closing game.`);
-		});
-	}
-
-	/**
-	 * Called internally when a player joins the game.
-	 *
-	 * @param player - The player that joined the game.
-	 */
-	private async onPlayerJoin(player: Player): Promise<void> {
-		const playerDocument = await this.playerDataService.loadPlayerData(player);
-		if (!playerDocument) {
-			this.playerRemovalService.removeForBug(player, KickCode.PlayerInstantiationError);
-			return;
-		}
-
-		const janitor = this.setupPlayerJanitor(player, playerDocument);
-		const playerEntity = new PlayerEntity(player, janitor, playerDocument);
-		this.playerEntities.set(player, playerEntity);
-
-		debug.profilebegin("Lifecycle_Player_Join");
-		for (const { id, event } of this.playerJoinEvents) {
-			janitor
-				.AddPromise(
-					Promise.defer(() => {
-						debug.profilebegin(id);
-						event.onPlayerJoin(playerEntity);
-					}),
-				)
-				.catch((err) => {
-					this.logger.Error(`Error in player lifecycle ${id}: ${err}`);
-				});
-		}
-
-		debug.profileend();
-
-		this.logger.Info(`Player ${player.UserId} joined the game.`);
-		this.onEntityJoined.Fire(playerEntity);
-	}
-
-	/**
-	 * Called internally when a player is removed from the game. We hold the
-	 * PlayerEntity until all lifecycle events have been called, so that we can
-	 * access player data on player leaving if required.
-	 *
-	 * @param playerEntity - The player entity associated with the player.
-	 */
-	private async onPlayerRemoving(playerEntity: PlayerEntity): Promise<void> {
-		const promises: Promise<void>[] = [];
-
-		debug.profilebegin("Lifecycle_Player_Leave");
-		for (const { id, event } of this.playerLeaveEvents) {
-			promises.push(
-				Promise.defer<void>((resolve, reject) => {
-					debug.profilebegin(id);
-					try {
-						const leaveEvent = async (): Promise<void> => {
-							await event.onPlayerLeave(playerEntity);
-						};
-
-						const [success, err] = leaveEvent().await();
-						if (!success) {
-							reject(err);
-							return;
-						}
-
-						resolve();
-					} catch (err) {
-						this.logger.Error(`Error in player lifecycle ${id}: ${err}`);
-					}
-				}),
-			);
-		}
-
-		debug.profileend();
-
-		await Promise.all(promises).finally(() => {
-			playerEntity.janitor.Destroy();
 		});
 	}
 

@@ -11,6 +11,18 @@ import type { PlayerEntity } from "server/services/player/entity";
 export class PlayerBadgeService implements OnPlayerJoin {
 	constructor(private readonly logger: Logger) {}
 
+	public onPlayerJoin(playerEntity: PlayerEntity): void {
+		const { userId: UserId } = playerEntity;
+
+		this.awardBadge(playerEntity, badge.Welcome).catch((err) => {
+			this.logger.Error(`Failed to check if ${UserId} has badge ${badge.Welcome}: ${err}`);
+		});
+
+		this.awardUnrewardedBadges(playerEntity).catch((err) => {
+			this.logger.Error(`Failed to award unrewarded badges to ${UserId}: ${err}`);
+		});
+	}
+
 	/**
 	 * Awards a badge to a player if they don't already have it.
 	 *
@@ -46,18 +58,6 @@ export class PlayerBadgeService implements OnPlayerJoin {
 
 	public async getBadgeInfo(badge: Badge): Promise<BadgeInfo> {
 		return Promise.try(() => BadgeService.GetBadgeInfoAsync(tonumber(badge)!));
-	}
-
-	public onPlayerJoin(playerEntity: PlayerEntity): void {
-		const { userId: UserId } = playerEntity;
-
-		this.awardBadge(playerEntity, badge.Welcome).catch((err) => {
-			this.logger.Error(`Failed to check if ${UserId} has badge ${badge.Welcome}: ${err}`);
-		});
-
-		this.awardUnrewardedBadges(playerEntity).catch((err) => {
-			this.logger.Error(`Failed to award unrewarded badges to ${UserId}: ${err}`);
-		});
 	}
 
 	private async awardUnrewardedBadges(playerEntity: PlayerEntity): Promise<void> {

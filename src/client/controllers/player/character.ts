@@ -36,10 +36,30 @@ export class CharacterController implements OnStart {
 
 	private currentCharacter?: CharacterRig;
 
+	constructor(private readonly logger: Logger) {}
 	public readonly onCharacterAdded = new Signal<(character: CharacterRig) => void>();
+
 	public readonly onCharacterRemoving = new Signal();
 
-	constructor(private readonly logger: Logger) {}
+	/**
+	 * Called when the character rig has been fully loaded.
+	 *
+	 * @param rig - The character rig that was loaded.
+	 */
+	private onRigLoaded(rig: CharacterRig): void {
+		this.logger.Debug(`Loaded character rig.`);
+		this.currentCharacter = rig;
+
+		for (const { id, event } of this.characterAddedEvents) {
+			Promise.defer(() => {
+				event.onCharacterAdded(rig);
+			}).catch((err) => {
+				this.logger.Error(`Error in character lifecycle ${id}: ${err}`);
+			});
+		}
+
+		this.onCharacterAdded.Fire(rig);
+	}
 
 	public onStart(): void {
 		setupLifecycle<OnCharacterAdded>(this.characterAddedEvents);
@@ -114,26 +134,6 @@ export class CharacterController implements OnStart {
 			this.removeCharacter();
 			this.onCharacterRemoving.Fire();
 		});
-	}
-
-	/**
-	 * Called when the character rig has been fully loaded.
-	 *
-	 * @param rig - The character rig that was loaded.
-	 */
-	private onRigLoaded(rig: CharacterRig): void {
-		this.logger.Debug(`Loaded character rig.`);
-		this.currentCharacter = rig;
-
-		for (const { id, event } of this.characterAddedEvents) {
-			Promise.defer(() => {
-				event.onCharacterAdded(rig);
-			}).catch((err) => {
-				this.logger.Error(`Error in character lifecycle ${id}: ${err}`);
-			});
-		}
-
-		this.onCharacterAdded.Fire(rig);
 	}
 
 	private removeCharacter(): void {

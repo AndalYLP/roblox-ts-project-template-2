@@ -68,6 +68,18 @@ export class PlayerDataService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		this.registerDataStore("Money", "balance.money");
 	}
 
+	public onPlayerJoin(playerEntity: PlayerEntity): void {
+		playerEntity.janitor.Add(
+			setInterval(() => {
+				this.savePlayerOrderedData(playerEntity);
+			}, ORDERED_DATA_UPDATE_TIME),
+		);
+	}
+
+	public onPlayerLeave(playerEntity: PlayerEntity): Promise<void> | void {
+		this.savePlayerOrderedData(playerEntity);
+	}
+
 	public getPlayerOrderedData(
 		orderedDatastore: OrderedData,
 		{ ascending = false, maxValue, minValue, pageSize = 100 }: OrderedDataConfig,
@@ -114,18 +126,6 @@ export class PlayerDataService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 			this.logger.Warn(`Failed to load data for ${player.UserId}: ${err}`);
 			this.playerRemovalService.removeForBug(player, KickCode.PlayerProfileUndefined);
 		}
-	}
-
-	public onPlayerJoin(playerEntity: PlayerEntity): void {
-		playerEntity.janitor.Add(
-			setInterval(() => {
-				this.savePlayerOrderedData(playerEntity);
-			}, ORDERED_DATA_UPDATE_TIME),
-		);
-	}
-
-	public onPlayerLeave(playerEntity: PlayerEntity): Promise<void> | void {
-		this.savePlayerOrderedData(playerEntity);
 	}
 
 	private getPlayerData(playerData: PlayerData, nestedKey: NestedKeyOf<PlayerData>): number {

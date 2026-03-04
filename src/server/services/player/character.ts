@@ -39,22 +39,6 @@ export class CharacterService implements OnPlayerJoin, OnStart {
 
 	constructor(private readonly logger: Logger) {}
 
-	public onStart(): void {
-		setupLifecycle<OnCharacterAdded>(this.characterAddedEvents);
-		setupLifecycle<OnCharacterRemoved>(this.characterRemovedEvents);
-	}
-
-	/**
-	 * Returns the character rig associated with the given player, if it exists.
-	 *
-	 * @param player - The player whose character rig to retrieve.
-	 * @returns The character rig associated with the player, or undefined if it
-	 *   does not exist.
-	 */
-	public getCharacterRig(player: Player): CharacterRig | undefined {
-		return this.characterRigs.get(player);
-	}
-
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
 		const { janitor, player } = playerEntity;
 
@@ -71,6 +55,58 @@ export class CharacterService implements OnPlayerJoin, OnStart {
 					});
 			}),
 		);
+	}
+
+	private onRigLoaded(playerEntity: PlayerEntity, rig: CharacterRig): void {
+		const { janitor, player, userId: UserId } = playerEntity;
+
+		janitor.Add(addToCollisionGroup(rig, CollisionGroup.Character, true), true);
+		rig.AddTag(Tag.PlayerCharacter);
+		this.characterRigs.set(player, rig);
+
+		debug.profilebegin("Lifecycle_Character_Added");
+		for (const { id, event } of this.characterAddedEvents) {
+			janitor
+				.AddPromise(
+					Promise.defer(() => {
+						debug.profilebegin(id);
+						event.onCharacterAdded(rig, playerEntity);
+					}),
+				)
+				.catch((err) => {
+					this.logger.Error(`Error in character lifecycle ${id}: ${err}`);
+				});
+		}
+
+		debug.profileend();
+
+		janitor
+			.AddPromise(
+				Promise.defer(() => {
+					return this.characterAppearanceLoaded(player, rig);
+				}),
+			)
+			.catch((err) => {
+				this.logger.Info(
+					`Character appearance did not load for ${UserId}, with reason: ${err}`,
+				);
+			});
+	}
+
+	public onStart(): void {
+		setupLifecycle<OnCharacterAdded>(this.characterAddedEvents);
+		setupLifecycle<OnCharacterRemoved>(this.characterRemovedEvents);
+	}
+
+	/**
+	 * Returns the character rig associated with the given player, if it exists.
+	 *
+	 * @param player - The player whose character rig to retrieve.
+	 * @returns The character rig associated with the player, or undefined if it
+	 *   does not exist.
+	 */
+	public getCharacterRig(player: Player): CharacterRig | undefined {
+		return this.characterRigs.get(player);
 	}
 
 	/**
@@ -144,42 +180,6 @@ export class CharacterService implements OnPlayerJoin, OnStart {
 			connection.Disconnect();
 			this.removeCharacter(playerEntity);
 		});
-	}
-
-	private onRigLoaded(playerEntity: PlayerEntity, rig: CharacterRig): void {
-		const { janitor, player, userId: UserId } = playerEntity;
-
-		janitor.Add(addToCollisionGroup(rig, CollisionGroup.Character, true), true);
-		rig.AddTag(Tag.PlayerCharacter);
-		this.characterRigs.set(player, rig);
-
-		debug.profilebegin("Lifecycle_Character_Added");
-		for (const { id, event } of this.characterAddedEvents) {
-			janitor
-				.AddPromise(
-					Promise.defer(() => {
-						debug.profilebegin(id);
-						event.onCharacterAdded(rig, playerEntity);
-					}),
-				)
-				.catch((err) => {
-					this.logger.Error(`Error in character lifecycle ${id}: ${err}`);
-				});
-		}
-
-		debug.profileend();
-
-		janitor
-			.AddPromise(
-				Promise.defer(() => {
-					return this.characterAppearanceLoaded(player, rig);
-				}),
-			)
-			.catch((err) => {
-				this.logger.Info(
-					`Character appearance did not load for ${UserId}, with reason: ${err}`,
-				);
-			});
 	}
 
 	private removeCharacter(playerEntity: PlayerEntity): void {

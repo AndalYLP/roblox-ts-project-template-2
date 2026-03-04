@@ -60,8 +60,8 @@ export default defineConfig(
 				{
 					customGroups: [
 						{
-							elementNamePattern: "^(onInit|onPhysics|onRender|onStart|onTick)",
-							groupName: "flamework",
+							elementNamePattern: "^on[A-Z].*",
+							groupName: "events",
 						},
 					],
 					fallbackSort: { order: "asc", type: "alphabetical" },
@@ -83,7 +83,7 @@ export default defineConfig(
 
 						"constructor",
 
-						"flamework",
+						"events",
 
 						["method", "function-property"],
 						["protected-method", "protected-function-property"],

@@ -110,6 +110,36 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 		void this.initRegister();
 	}
 
+	public onPlayerJoin(playerEntity: PlayerEntity): void {
+		const { userId: UserId } = playerEntity;
+
+		const gamePasses = getPlayerMtx(UserId)?.gamePasses;
+		if (gamePasses === undefined) {
+			return;
+		}
+
+		const unowned = Dictionary.values(gamePass).filter(
+			(gamePassId) => !gamePasses.has(gamePassId),
+		);
+		for (const gamePassId of unowned) {
+			this.checkForGamePassOwned(playerEntity, gamePassId)
+				.then((owned) => {
+					if (!owned) {
+						return;
+					}
+
+					this.grantGamePass(playerEntity, gamePassId);
+				})
+				.catch((err) => {
+					this.logger.Warn(`Error checking game pass ${gamePassId}: ${err}`);
+				});
+		}
+
+		for (const [id, gamePassData] of gamePasses) {
+			this.notifyGamePassActive(playerEntity, id, gamePassData.active);
+		}
+	}
+
 	public onStart(): void {
 		events.mtx.setGamePassActive.connect(
 			this.playerService.withPlayerEntity((playerEntity, gamePassId, active) => {
@@ -154,36 +184,6 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 		this.productInfoCache.set(productId, productInfo);
 
 		return productInfo;
-	}
-
-	public onPlayerJoin(playerEntity: PlayerEntity): void {
-		const { userId: UserId } = playerEntity;
-
-		const gamePasses = getPlayerMtx(UserId)?.gamePasses;
-		if (gamePasses === undefined) {
-			return;
-		}
-
-		const unowned = Dictionary.values(gamePass).filter(
-			(gamePassId) => !gamePasses.has(gamePassId),
-		);
-		for (const gamePassId of unowned) {
-			this.checkForGamePassOwned(playerEntity, gamePassId)
-				.then((owned) => {
-					if (!owned) {
-						return;
-					}
-
-					this.grantGamePass(playerEntity, gamePassId);
-				})
-				.catch((err) => {
-					this.logger.Warn(`Error checking game pass ${gamePassId}: ${err}`);
-				});
-		}
-
-		for (const [id, gamePassData] of gamePasses) {
-			this.notifyGamePassActive(playerEntity, id, gamePassData.active);
-		}
 	}
 
 	private async checkForGamePassOwned(

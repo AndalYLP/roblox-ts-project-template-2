@@ -21,6 +21,16 @@ export class TextChannelService implements OnPlayerJoin, OnPlayerLeave {
 
 	constructor(private readonly logger: Logger) {}
 
+	public onPlayerJoin({ userId }: PlayerEntity): void {
+		if (DEVELOPERS.includes(userId)) {
+			setPlayerChatTag(userId, this.chatTags.developer);
+		}
+	}
+
+	public onPlayerLeave({ userId }: PlayerEntity): void {
+		deletePlayerTagData(userId);
+	}
+
 	public createChannel(name: string): TextChannel {
 		return Make("TextChannel", {
 			Name: name,
@@ -42,16 +52,6 @@ export class TextChannelService implements OnPlayerJoin, OnPlayerLeave {
 		});
 
 		return result;
-	}
-
-	public onPlayerJoin({ userId }: PlayerEntity): void {
-		if (DEVELOPERS.includes(userId)) {
-			setPlayerChatTag(userId, this.chatTags.developer);
-		}
-	}
-
-	public onPlayerLeave({ userId }: PlayerEntity): void {
-		deletePlayerTagData(userId);
 	}
 
 	public sendMessage(channel: TextChannel, message: string, metadata?: string): void {

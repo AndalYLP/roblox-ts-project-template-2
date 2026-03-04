@@ -46,31 +46,6 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		this.registerStat("Money", "IntValue", "balance.money");
 	}
 
-	/**
-	 * Returns a given stat object for a player. This can be used to update the
-	 * leaderboard values for a given player if the stat object is not available
-	 * in the reflex store.
-	 *
-	 * @param player - The player to get the stat object for.
-	 * @param statName - The name of the stat to find.
-	 * @returns The stat object if it exists.
-	 */
-	public getStatObject(player: Player, statName: Leaderstats): LeaderstatValue | undefined {
-		const valueMap = this.playerToValueMap.get(player);
-		if (!valueMap) {
-			return;
-		}
-
-		const entry = this.leaderstats.find(
-			(leaderstatsEntry) => leaderstatsEntry.name === statName,
-		);
-		if (!entry) {
-			return;
-		}
-
-		return valueMap.get(entry.name);
-	}
-
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
 		const { name: Name, player, userId } = playerEntity;
 
@@ -120,6 +95,31 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		}
 
 		this.playerToLeaderstatsMap.delete(player);
+	}
+
+	/**
+	 * Returns a given stat object for a player. This can be used to update the
+	 * leaderboard values for a given player if the stat object is not available
+	 * in the reflex store.
+	 *
+	 * @param player - The player to get the stat object for.
+	 * @param statName - The name of the stat to find.
+	 * @returns The stat object if it exists.
+	 */
+	public getStatObject(player: Player, statName: Leaderstats): LeaderstatValue | undefined {
+		const valueMap = this.playerToValueMap.get(player);
+		if (!valueMap) {
+			return;
+		}
+
+		const entry = this.leaderstats.find(
+			(leaderstatsEntry) => leaderstatsEntry.name === statName,
+		);
+		if (!entry) {
+			return;
+		}
+
+		return valueMap.get(entry.name);
 	}
 
 	/**
