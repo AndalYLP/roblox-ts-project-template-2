@@ -32,6 +32,7 @@ export function changeSetting<
 			settings: {
 				...settings,
 				[settingCategory]: {
+					...settings[settingCategory],
 					[settingType]: value,
 				},
 			},
