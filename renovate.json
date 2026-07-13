@@ -5,7 +5,7 @@
 		":pinAllExceptPeerDependencies",
 		"github>christopher-buss/rokit-renovate-config",
 		"helpers:pinGitHubActionDigests",
-		"npm:unpublishSafe"
+		"security:minimumReleaseAgeNpm"
 	],
 	"packageRules": [
 		{
