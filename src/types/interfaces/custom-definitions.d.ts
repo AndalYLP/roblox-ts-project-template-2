@@ -21,6 +21,15 @@ interface ReplicatedStorage {
 	} & Folder;
 }
 
+interface StarterPlayerScripts {
+	TS: {
+		__test__: {
+			/** @hidden */
+			__ID__: "STARTER_PLAYER_SCRIPTS/TS/__test__";
+		} & ModuleScript;
+	} & Folder;
+}
+
 interface TestService {
 	"jest.config": {
 		/** @hidden */

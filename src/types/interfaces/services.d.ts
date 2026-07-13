@@ -20,6 +20,19 @@ declare global {
 		TS: {
 			__test__: {
 				"jest.config": ModuleScript;
+				store: {
+					"balance.spec": ModuleScript;
+					"filter-payload.spec": ModuleScript;
+					"mtx.spec": ModuleScript;
+					"player-data.spec": ModuleScript;
+					"settings.spec": ModuleScript;
+				} & Folder;
+				support: {
+					"make-player-data": ModuleScript;
+				} & Folder;
+				utils: {
+					"flatten-atoms.spec": ModuleScript;
+				} & Folder;
 			} & Folder;
 			centurion: {
 				types: {
@@ -88,8 +101,18 @@ declare global {
 	interface ServerScriptService {
 		TS: {
 			__test__: {
+				"character-service.spec": ModuleScript;
 				"jest.config": ModuleScript;
-				"test.spec": ModuleScript;
+				"leaderstats-service.spec": ModuleScript;
+				"mtx-service.spec": ModuleScript;
+				"player-badge-service.spec": ModuleScript;
+				"player-data-service.spec": ModuleScript;
+				"player-service.spec": ModuleScript;
+				support: {
+					"service-stubs": ModuleScript;
+				} & Folder;
+				"text-channel-service.spec": ModuleScript;
+				"throttle.spec": ModuleScript;
 			} & Folder;
 			centurion: {
 				commands: {
@@ -103,7 +126,11 @@ declare global {
 				} & Folder;
 				runtime: ModuleScript;
 			} & Folder;
-			network: ModuleScript;
+			network: {
+				middleware: {
+					throttle: ModuleScript;
+				} & Folder;
+			} & ModuleScript;
 			runtime: Script;
 			services: {
 				mtx: {
@@ -148,6 +175,14 @@ declare global {
 	}
 	interface Workspace {
 		Baseplate: Part;
+	}
+	interface StarterPlayerScripts {
+		TS: {
+			__test__: {
+				/** @hidden */
+				__ID__: "STARTER_PLAYER_SCRIPTS/TS/__test__";
+			} & ModuleScript;
+		} & Folder;
 	}
 	type InstanceKeys<T> = {
 		[K in keyof T]: T[K] extends Instance ? K : never;

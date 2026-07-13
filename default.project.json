@@ -53,7 +53,10 @@
 			"StarterPlayerScripts": {
 				"$className": "StarterPlayerScripts",
 				"TS": {
-					"$path": "out/src/client"
+					"$path": "out/src/client",
+					"__test__": {
+						"$path": "out/test/client"
+					}
 				}
 			}
 		},
