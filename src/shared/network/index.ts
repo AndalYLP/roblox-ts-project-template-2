@@ -1,6 +1,8 @@
 import { Networking } from "@flamework/networking";
 
+import type { DailyRewardClientToServerEvents } from "shared/network/remotes/daily-reward";
 import type { MtxClientToServerEvents } from "shared/network/remotes/mtx";
+import type { SettingsClientToServerEvents } from "shared/network/remotes/settings";
 import type {
 	StoreClientToServerEvents,
 	StoreServerToClientEvents,
@@ -9,7 +11,9 @@ import type { TextChannelServerToClientEvents } from "shared/network/remotes/tex
 
 /** Fired by client to server. */
 interface ClientToServerEvents {
+	dailyReward: DailyRewardClientToServerEvents;
 	mtx: MtxClientToServerEvents;
+	settings: SettingsClientToServerEvents;
 	store: StoreClientToServerEvents;
 }
 
