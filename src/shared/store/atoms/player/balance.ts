@@ -18,6 +18,6 @@ export function addBalance(userId: string, amount: number): void {
 	});
 }
 
-export function getPlayerBalance(userId: string): PlayerBalanceData | undefined {
+export function getPlayerBalanceData(userId: string): PlayerBalanceData | undefined {
 	return getPlayerData(userId)?.balance;
 }
