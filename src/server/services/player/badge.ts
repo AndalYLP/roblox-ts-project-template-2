@@ -2,7 +2,7 @@ import { Service } from "@flamework/core";
 import { BadgeService } from "@rbxts/services";
 import type { Logger } from "@rbxts/log";
 
-import { getPlayerAchievements, setBadgeStatus } from "shared/store/atoms/player/achievements";
+import { getPlayerAchievementsData, setBadgeStatus } from "shared/store/atoms/player/achievements";
 import { type Badge, badge } from "types/enums/badge";
 import type { OnPlayerJoin } from "server/services/player";
 import type { PlayerEntity } from "server/services/player/entity";
@@ -48,7 +48,7 @@ export class PlayerBadgeService implements OnPlayerJoin {
 		{ player, userId: UserId }: PlayerEntity,
 		badge: Badge,
 	): Promise<boolean> {
-		const hasBadge = getPlayerAchievements(UserId)?.badges.get(badge);
+		const hasBadge = getPlayerAchievementsData(UserId)?.badges.get(badge);
 		if (hasBadge !== undefined) {
 			return true;
 		}
@@ -63,7 +63,7 @@ export class PlayerBadgeService implements OnPlayerJoin {
 	private async awardUnrewardedBadges(playerEntity: PlayerEntity): Promise<void> {
 		const { userId } = playerEntity;
 
-		const badges = getPlayerAchievements(userId)?.badges;
+		const badges = getPlayerAchievementsData(userId)?.badges;
 		if (badges === undefined) {
 			return;
 		}

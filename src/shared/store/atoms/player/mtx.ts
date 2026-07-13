@@ -51,7 +51,7 @@ export function setGamePassActive(userId: string, gamePass: GamePass, active: bo
 }
 
 export function getGamePassActive(userId: string, gamePass: GamePass): boolean | undefined {
-	return getPlayerMtx(userId)?.gamePasses.get(gamePass)?.active;
+	return getPlayerMtxData(userId)?.gamePasses.get(gamePass)?.active;
 }
 
 export function updateReceiptHistory(userId: string, receiptHistory: Array<string>): void {
@@ -68,6 +68,6 @@ export function updateReceiptHistory(userId: string, receiptHistory: Array<strin
 	});
 }
 
-export function getPlayerMtx(userId: string): PlayerMtxData | undefined {
+export function getPlayerMtxData(userId: string): PlayerMtxData | undefined {
 	return getPlayerData(userId)?.mtx;
 }

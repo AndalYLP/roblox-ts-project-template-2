@@ -7,7 +7,7 @@ import type { Logger } from "@rbxts/log";
 import { events } from "server/network";
 import {
 	addDeveloperProductPurchase,
-	getPlayerMtx,
+	getPlayerMtxData,
 	type PlayerMtxData,
 	setGamePassActive,
 	updateReceiptHistory,
@@ -112,7 +112,7 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
 		const { userId } = playerEntity;
 
-		const gamePasses = getPlayerMtx(userId)?.gamePasses;
+		const gamePasses = getPlayerMtxData(userId)?.gamePasses;
 		if (gamePasses === undefined) {
 			return;
 		}
@@ -193,7 +193,7 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 			throw `Invalid game pass id ${gamePassId}`;
 		}
 
-		const owned = getPlayerMtx(UserId)?.gamePasses.has(gamePassId);
+		const owned = getPlayerMtxData(UserId)?.gamePasses.has(gamePassId);
 		if (owned === true) {
 			return true;
 		}
@@ -338,7 +338,7 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 			return Enum.ProductPurchaseDecision.PurchaseGranted;
 		}
 
-		const data = getPlayerMtx(userId);
+		const data = getPlayerMtxData(userId);
 		if (!data) {
 			return Enum.ProductPurchaseDecision.NotProcessedYet;
 		}

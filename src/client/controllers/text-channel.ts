@@ -4,7 +4,7 @@ import type { OnStart } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
 
 import { events } from "client/network";
-import { getPlayerChatTag } from "shared/store/atoms/player/chat-tag";
+import { getPlayerChatTagData } from "shared/store/atoms/player/chat-tag";
 
 @Controller()
 export class TextChannelController implements OnStart {
@@ -15,7 +15,7 @@ export class TextChannelController implements OnStart {
 		message: TextChatMessage,
 		properties: TextChatMessageProperties,
 	): void {
-		const playerTagData = getPlayerChatTag(tostring(player.UserId));
+		const playerTagData = getPlayerChatTagData(tostring(player.UserId));
 
 		if (playerTagData === undefined) {
 			return;

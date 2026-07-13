@@ -5,7 +5,7 @@ export interface PlayerChatTagData {
 	color: Color3;
 }
 
-export function getPlayerChatTag(userId: string): PlayerChatTagData | undefined {
+export function getPlayerChatTagData(userId: string): PlayerChatTagData | undefined {
 	return playersAtom.chatTag()[userId];
 }
 

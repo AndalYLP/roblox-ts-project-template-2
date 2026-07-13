@@ -39,7 +39,7 @@ export function changeSetting<
 	});
 }
 
-export function getAllPlayerSettings(userId: string): PlayerSettingsData | undefined {
+export function getAllPlayerSettingsData(userId: string): PlayerSettingsData | undefined {
 	return getPlayerData(userId)?.settings;
 }
 
@@ -51,5 +51,5 @@ export function getPlayerSetting<
 	settingCategory: Category,
 	settingType: SettingType,
 ): PlayerSettingsData[Category][SettingType] | undefined {
-	return getAllPlayerSettings(userId)?.[settingCategory][settingType];
+	return getAllPlayerSettingsData(userId)?.[settingCategory][settingType];
 }

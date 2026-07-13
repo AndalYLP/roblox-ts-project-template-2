@@ -19,6 +19,6 @@ export function setBadgeStatus(userId: string, badge: Badge, status: boolean): v
 	});
 }
 
-export function getPlayerAchievements(userId: string): PlayerAchievementsData | undefined {
+export function getPlayerAchievementsData(userId: string): PlayerAchievementsData | undefined {
 	return getPlayerData(userId)?.achievements;
 }

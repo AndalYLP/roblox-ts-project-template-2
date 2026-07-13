@@ -7,7 +7,10 @@ import type { Logger } from "@rbxts/log";
 
 import { USER_ID } from "shared/constants/player";
 import { SoundSystem } from "shared/modules/3dSound";
-import { getAllPlayerSettings, type PlayerSettingsData } from "shared/store/atoms/player/settings";
+import {
+	getAllPlayerSettingsData,
+	type PlayerSettingsData,
+} from "shared/store/atoms/player/settings";
 
 export enum SoundType {
 	Music = "Music",
@@ -23,7 +26,7 @@ interface PlaySoundOptions {
 }
 
 function getAllLocalPlayerSettings(): PlayerSettingsData | undefined {
-	return getAllPlayerSettings(USER_ID);
+	return getAllPlayerSettingsData(USER_ID);
 }
 
 @Controller()
