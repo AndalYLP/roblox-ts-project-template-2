@@ -87,8 +87,8 @@ importers:
         specifier: 0.3.0
         version: 0.3.0(@rbxts/charm@0.10.0)(@rbxts/vide@0.6.1)
       '@rbxts/vide-ripple':
-        specifier: 0.10.1
-        version: 0.10.1(@rbxts/vide@0.6.1)
+        specifier: 0.10.2
+        version: 0.10.2(@rbxts/vide@0.6.1)
       '@rbxts/zone-plus':
         specifier: 3.2.0
         version: 3.2.0
@@ -479,6 +479,9 @@ packages:
   '@rbxts/ripple@0.10.1':
     resolution: {integrity: sha512-nBxSQCg4PKbQbFg08UGx0tBxWiufP/G0WaJ8QAV64V1bGxIWjfRmtrcuABodC1soTRDdVqqMm7C/CkYWP5Cm/g==}
 
+  '@rbxts/ripple@0.10.2':
+    resolution: {integrity: sha512-IakL24BomX5BX0CZSMjDSZdCUNwRbTA6GP+H62qgXQymql3h9MLjit4Jsaz9+NLrKAZfNKSfajMREr/fJkNEdw==}
+
   '@rbxts/ripple@0.9.3':
     resolution: {integrity: sha512-GmwjQl7a8pvGPGQYLmaAcf2RBPpneOL5P1+U8CzTHt9tBhCdk0TEJ/MQoTv9JnHD62RMBE1jogQBvuGgl9VXAg==}
 
@@ -515,8 +518,8 @@ packages:
       '@rbxts/charm': 0.10.0
       '@rbxts/vide': 0.6.1
 
-  '@rbxts/vide-ripple@0.10.1':
-    resolution: {integrity: sha512-QkgAdKxnIyTt0IkbH7E9HcTuBxAuyofECWm2MFQ5aMtUqv67ABxeZCj7Wo1omMTys8iR+i6c9xz/m+tdFtFGrg==}
+  '@rbxts/vide-ripple@0.10.2':
+    resolution: {integrity: sha512-4ttXkNjwphV5ZaEC5d3fZzXsCjLVmoB+JDibK4FzuSqUSCfSzTZGMEHVi8nRD+kzJFn/hX8vi12J91koXp84WQ==}
     peerDependencies:
       '@rbxts/vide': 0.6.1
 
@@ -1937,6 +1940,8 @@ snapshots:
 
   '@rbxts/ripple@0.10.1': {}
 
+  '@rbxts/ripple@0.10.2': {}
+
   '@rbxts/ripple@0.9.3': {}
 
   '@rbxts/services@1.6.0': {}
@@ -1964,9 +1969,9 @@ snapshots:
       '@rbxts/charm': 0.10.0
       '@rbxts/vide': 0.6.1
 
-  '@rbxts/vide-ripple@0.10.1(@rbxts/vide@0.6.1)':
+  '@rbxts/vide-ripple@0.10.2(@rbxts/vide@0.6.1)':
     dependencies:
-      '@rbxts/ripple': 0.10.1
+      '@rbxts/ripple': 0.10.2
       '@rbxts/vide': 0.6.1
 
   '@rbxts/vide@0.6.1': {}
