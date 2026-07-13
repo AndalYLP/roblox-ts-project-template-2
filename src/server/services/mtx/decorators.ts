@@ -16,7 +16,7 @@ export const MtxEvents = Modding.createMetaDecorator("Class");
  * @param gamePass - The game pass to listen for.
  */
 export const GamePassStatusChanged =
-	Modding.createMetaDecorator<[...gamePass: GamePass[]]>("Method");
+	Modding.createMetaDecorator<[...gamePass: Array<GamePass>]>("Method");
 
 /**
  * Registers a `method` as a handler for a specific product. The handler will be
@@ -33,4 +33,4 @@ export const GamePassStatusChanged =
  *  product, and should never yield.
  */
 export const RegisterProductHandler =
-	Modding.createMetaDecorator<[...product: Product[]]>("Method");
+	Modding.createMetaDecorator<[...product: Array<Product>]>("Method");

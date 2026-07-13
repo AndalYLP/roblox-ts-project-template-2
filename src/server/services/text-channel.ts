@@ -38,8 +38,8 @@ export class TextChannelService implements OnPlayerJoin, OnPlayerLeave {
 		});
 	}
 
-	public getPlayersOnChannel(channel: TextChannel): Player[] {
-		const result: Player[] = [];
+	public getPlayersOnChannel(channel: TextChannel): Array<Player> {
+		const result: Array<Player> = [];
 		channel.GetChildren().forEach((instance) => {
 			if (!instance.IsA("TextSource")) {
 				return;

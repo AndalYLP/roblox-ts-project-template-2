@@ -47,7 +47,7 @@ const ORDERED_DATA_UPDATE_TIME = 3 * 60;
 export class PlayerDataService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 	private readonly collection: Collection<PlayerData>;
 	private readonly dataStoreName = IS_STUDIO ? "development" : "production";
-	private readonly orderedDataStores: OrderedDataEntry[] = [];
+	private readonly orderedDataStores: Array<OrderedDataEntry> = [];
 
 	constructor(
 		private readonly logger: Logger,

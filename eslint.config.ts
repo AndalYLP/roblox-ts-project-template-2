@@ -31,6 +31,7 @@ export default defineConfig(
 			},
 		},
 		rules: {
+			"@typescript-eslint/array-type": ["error", { default: "generic" }],
 			"@typescript-eslint/consistent-type-imports": [
 				"warn",
 				{
@@ -43,6 +44,15 @@ export default defineConfig(
 				{
 					allowExpressions: true,
 					allowTypedFunctionExpressions: true,
+				},
+			],
+			"@typescript-eslint/explicit-member-accessibility": [
+				"error",
+				{
+					accessibility: "explicit",
+					overrides: {
+						constructors: "no-public",
+					},
 				},
 			],
 			"@typescript-eslint/no-floating-promises": "error",

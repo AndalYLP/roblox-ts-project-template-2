@@ -33,8 +33,8 @@ export interface OnCharacterRemoved {
 
 @Service()
 export class CharacterService implements OnPlayerJoin, OnStart {
-	private readonly characterAddedEvents: ListenerData<OnCharacterAdded>[] = [];
-	private readonly characterRemovedEvents: ListenerData<OnCharacterRemoved>[] = [];
+	private readonly characterAddedEvents: Array<ListenerData<OnCharacterAdded>> = [];
+	private readonly characterRemovedEvents: Array<ListenerData<OnCharacterRemoved>> = [];
 	private readonly characterRigs = new Map<Player, CharacterRig>();
 
 	constructor(private readonly logger: Logger) {}

@@ -31,8 +31,8 @@ export interface OnCharacterRemoved {
  */
 @Controller()
 export class CharacterController implements OnStart {
-	private readonly characterAddedEvents: ListenerData<OnCharacterAdded>[] = [];
-	private readonly characterRemovedEvents: ListenerData<OnCharacterRemoved>[] = [];
+	private readonly characterAddedEvents: Array<ListenerData<OnCharacterAdded>> = [];
+	private readonly characterRemovedEvents: Array<ListenerData<OnCharacterRemoved>> = [];
 
 	private currentCharacter?: CharacterRig;
 

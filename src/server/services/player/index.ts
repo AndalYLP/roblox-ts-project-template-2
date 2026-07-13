@@ -42,8 +42,8 @@ export interface OnPlayerLeave {
 @Service()
 export class PlayerService implements OnStart {
 	private readonly playerEntities = new Map<Player, PlayerEntity>();
-	private readonly playerJoinEvents: ListenerData<OnPlayerJoin>[] = [];
-	private readonly playerLeaveEvents: ListenerData<OnPlayerLeave>[] = [];
+	private readonly playerJoinEvents: Array<ListenerData<OnPlayerJoin>> = [];
+	private readonly playerLeaveEvents: Array<ListenerData<OnPlayerLeave>> = [];
 	constructor(
 		private readonly logger: Logger,
 		private readonly playerDataService: PlayerDataService,
@@ -97,7 +97,7 @@ export class PlayerService implements OnStart {
 	 * @param playerEntity - The player entity associated with the player.
 	 */
 	private async onPlayerRemoving(playerEntity: PlayerEntity): Promise<void> {
-		const promises: Promise<void>[] = [];
+		const promises: Array<Promise<void>> = [];
 
 		debug.profilebegin("Lifecycle_Player_Leave");
 		for (const { id, event } of this.playerLeaveEvents) {

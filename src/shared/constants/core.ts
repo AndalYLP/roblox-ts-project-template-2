@@ -7,7 +7,7 @@ import { $NODE_ENV } from "rbxts-transform-env";
 /** Game's name */
 export const GAME_NAME = "Template for roblox-ts";
 /** Array of userIds from the developers. */
-export const DEVELOPERS: string[] = [tostring(game.CreatorId)];
+export const DEVELOPERS: Array<string> = [tostring(game.CreatorId)];
 /**
  * Indicates whether the environment is production, based on the `NODE_ENV`
  * environment variable.
