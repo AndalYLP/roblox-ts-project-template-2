@@ -3,12 +3,14 @@ import { atom } from "@rbxts/charm";
 import type { PlayerAchievementsData } from "shared/store/atoms/player/achievements";
 import type { PlayerBalanceData } from "shared/store/atoms/player/balance";
 import type { PlayerChatTagData } from "shared/store/atoms/player/chat-tag";
+import type { PlayerDailyRewardData } from "shared/store/atoms/player/daily-reward";
 import type { PlayerMtxData } from "shared/store/atoms/player/mtx";
 import type { PlayerSettingsData } from "shared/store/atoms/player/settings";
 
 export interface PlayerData {
 	readonly achievements: PlayerAchievementsData;
 	readonly balance: PlayerBalanceData;
+	readonly dailyReward: PlayerDailyRewardData;
 	readonly mtx: PlayerMtxData;
 	readonly settings: PlayerSettingsData;
 }

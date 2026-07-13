@@ -9,6 +9,10 @@ export const defaultPlayerData: PlayerData = {
 	balance: {
 		money: 0,
 	},
+	dailyReward: {
+		lastClaimTime: 0,
+		streak: 0,
+	},
 	mtx: {
 		gamePasses: new Map(),
 		products: new Map(),
