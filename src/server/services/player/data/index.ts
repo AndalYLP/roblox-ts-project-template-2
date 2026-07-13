@@ -22,7 +22,7 @@ import type { OnPlayerJoin, OnPlayerLeave } from "server/services/player";
 import type { PlayerEntity } from "server/services/player/entity";
 import type { PlayerRemovalService } from "server/services/player/removal";
 
-interface OrderedDataEntry {
+export interface OrderedDataEntry {
 	name: OrderedData;
 	playerDataKey?: NestedKeyOf<PlayerData>;
 }
@@ -65,7 +65,7 @@ export class PlayerDataService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		});
 	}
 	public onInit(): Promise<void> | void {
-		this.registerDataStore("Money", "balance.money");
+		this.registerOrderedDataStore("Money", "balance.money");
 	}
 
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
@@ -140,7 +140,7 @@ export class PlayerDataService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		return value;
 	}
 
-	private registerDataStore(
+	private registerOrderedDataStore(
 		dataStoreName: OrderedData,
 		playerDataKey?: NestedKeyOf<PlayerData>,
 	): void {

@@ -13,7 +13,9 @@ interface LeaderstatValueTypes {
 	StringValue: string;
 }
 
-interface LeaderstatEntry<T extends keyof LeaderstatValueTypes = keyof LeaderstatValueTypes> {
+export interface LeaderstatEntry<
+	T extends keyof LeaderstatValueTypes = keyof LeaderstatValueTypes,
+> {
 	name: Leaderstats;
 	playerDataKey?: NestedKeyOf<PlayerData>;
 	valueType: T;
