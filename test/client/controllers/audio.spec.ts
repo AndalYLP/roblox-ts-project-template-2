@@ -37,6 +37,9 @@ describe("AudioController", () => {
 			sound: 123,
 			soundType: SoundType.SoundEffect,
 		});
+		// Detach immediately: a bare numeric id resolves to a missing asset, and a
+		// parented Sound would emit a load error that fails the headless runner.
+		sound.Parent = undefined;
 
 		expect(sound.SoundId).toBe("rbxassetid://123");
 		expect(sound.SoundGroup).toBe(internals.soundGroups.get(SoundType.SoundEffect));
