@@ -6,11 +6,11 @@ export interface PlayerAchievementsData {
 }
 
 export function setBadgeStatus(userId: string, badge: Badge, status: boolean): void {
-	updatePlayerData(userId, (data) => {
-		const { achievements } = data;
+	updatePlayerData(userId, (state) => {
+		const { achievements } = state;
 
 		return {
-			...data,
+			...state,
 			achievements: {
 				...achievements,
 				badges: new Map([...achievements.badges]).set(badge, status),

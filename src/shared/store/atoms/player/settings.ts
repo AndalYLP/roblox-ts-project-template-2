@@ -24,11 +24,11 @@ export function changeSetting<
 	settingType: SettingType,
 	value: PlayerSettingsData[Category][SettingType],
 ): void {
-	updatePlayerData(userId, (data) => {
-		const { settings } = data;
+	updatePlayerData(userId, (state) => {
+		const { settings } = state;
 
 		return {
-			...data,
+			...state,
 			settings: {
 				...settings,
 				[settingCategory]: {

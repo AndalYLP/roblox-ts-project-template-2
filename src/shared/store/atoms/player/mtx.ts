@@ -12,8 +12,8 @@ export function addDeveloperProductPurchase(
 	product: Product,
 	currencySpent: number,
 ): void {
-	updatePlayerData(userId, (data) => {
-		const { mtx } = data;
+	updatePlayerData(userId, (state) => {
+		const { mtx } = state;
 
 		const purchaseInfo = {
 			purchasePrice: currencySpent,
@@ -21,7 +21,7 @@ export function addDeveloperProductPurchase(
 		};
 
 		return {
-			...data,
+			...state,
 			mtx: {
 				...mtx,
 				products: new Map([...mtx.products]).set(product, {
@@ -37,11 +37,11 @@ export function addDeveloperProductPurchase(
 }
 
 export function setGamePassActive(userId: string, gamePass: GamePass, active: boolean): void {
-	updatePlayerData(userId, (data) => {
-		const { mtx } = data;
+	updatePlayerData(userId, (state) => {
+		const { mtx } = state;
 
 		return {
-			...data,
+			...state,
 			mtx: {
 				...mtx,
 				gamePasses: new Map([...mtx.gamePasses]).set(gamePass, { active }),
@@ -55,11 +55,11 @@ export function getGamePassActive(userId: string, gamePass: GamePass): boolean |
 }
 
 export function updateReceiptHistory(userId: string, receiptHistory: Array<string>): void {
-	updatePlayerData(userId, (data) => {
-		const { mtx } = data;
+	updatePlayerData(userId, (state) => {
+		const { mtx } = state;
 
 		return {
-			...data,
+			...state,
 			mtx: {
 				...mtx,
 				receiptHistory: receiptHistory,

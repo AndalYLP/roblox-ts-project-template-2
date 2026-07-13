@@ -5,11 +5,11 @@ export interface PlayerBalanceData {
 }
 
 export function addBalance(userId: string, amount: number): void {
-	updatePlayerData(userId, (data) => {
-		const { balance } = data;
+	updatePlayerData(userId, (state) => {
+		const { balance } = state;
 
 		return {
-			...data,
+			...state,
 			balance: {
 				...balance,
 				money: balance.money + amount,
