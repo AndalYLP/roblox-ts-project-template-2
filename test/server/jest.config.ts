@@ -2,7 +2,7 @@ import type { Config } from "@rbxts/jest";
 
 import config from "test/jest.config";
 
-export default {
+export = {
 	...config,
 	displayName: "🟢 SERVER",
 } satisfies Config;
