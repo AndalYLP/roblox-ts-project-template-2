@@ -39,8 +39,8 @@ importers:
         specifier: 3.13.3-ts.1
         version: 3.13.3-ts.1
       '@rbxts/jest-globals':
-        specifier: 3.13.3-ts.1
-        version: 3.13.3-ts.1
+        specifier: 3.13.3-ts.2
+        version: 3.13.3-ts.2
       '@rbxts/lapis':
         specifier: 0.3.8
         version: 0.3.8(@rbxts/t@3.2.1)
@@ -432,8 +432,14 @@ packages:
   '@rbxts/jest-globals@3.13.3-ts.1':
     resolution: {integrity: sha512-vbALjRL4x2z/KPwI/6Rvxcd6wyU7c1c9x57U1YAKRwjDCdQFdDah+0y4QV9uJ09VgvKw0WODJzmPJNkLGdG8iQ==}
 
+  '@rbxts/jest-globals@3.13.3-ts.2':
+    resolution: {integrity: sha512-uTvy0MLWXL5O7vyCmS9bX13wob9D6aRdGK6KtCjCBVH3PANnjHWAJSZPK2eXKxe8F6F28P8HgFaP1JPqrMPcHA==}
+
   '@rbxts/jest-matcher-utils@3.13.3-ts.1':
     resolution: {integrity: sha512-AjZiZaSq0PJhVnL7st22CSv3COMt3Lzoq9GpIHE0MGFnnXg7Ym7+Ig86hwS1t8sT7Z9HiYXb+wq86U3ck80z5g==}
+
+  '@rbxts/jest-matcher-utils@3.13.3-ts.2':
+    resolution: {integrity: sha512-Ty2qilzmJts3jqLObW4gWhVJB2gL8OaqamAahmvTsIULyAjhqyG2gMzc/2RJz+VeTSwYY8HLRtKR00eC5oLc9Q==}
 
   '@rbxts/jest@3.13.3-ts.1':
     resolution: {integrity: sha512-3Nd0PTYG+Dej1Gz0MSJlzirycbaahZtGFKXvFnu2pNZKqvti9QCzFVHsMZ2GYWAYG3DwlgYRsaxNfLsQ/gMy8A==}
@@ -1872,7 +1878,18 @@ snapshots:
       '@rbxts/jest-matcher-utils': 3.13.3-ts.1
       '@rbxts/pretty-format': 3.13.3-ts.1
 
+  '@rbxts/jest-globals@3.13.3-ts.2':
+    dependencies:
+      '@rbxts-js/jest-globals': 3.13.3-ts.3
+      '@rbxts/jest-matcher-utils': 3.13.3-ts.2
+      '@rbxts/pretty-format': 3.13.3-ts.1
+
   '@rbxts/jest-matcher-utils@3.13.3-ts.1':
+    dependencies:
+      '@rbxts-js/jest-matcher-utils': 3.13.3-ts.3
+      '@rbxts/pretty-format': 3.13.3-ts.1
+
+  '@rbxts/jest-matcher-utils@3.13.3-ts.2':
     dependencies:
       '@rbxts-js/jest-matcher-utils': 3.13.3-ts.3
       '@rbxts/pretty-format': 3.13.3-ts.1
