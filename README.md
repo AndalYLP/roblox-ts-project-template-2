@@ -110,7 +110,12 @@ and `@gamePassStatusChanged` decorators — see the docblock in
 
 ## Testing
 
-Unit tests use Jest and live next to the runtime as `*.spec.ts` under [`test/`](test).
+Unit tests use Jest and live next to the runtime as `*.spec.ts` under [`test/`](test), split by the
+context they run in:
+
+- [`test/server`](test/server) and [`test/shared`](test/shared) run on the server.
+- [`test/client`](test/client) runs on the client — controllers, hooks and other code from the
+  isolated client container.
 
 ```sh
 # Run tests inside Studio via run-in-roblox
@@ -123,6 +128,21 @@ pnpm dev:cloud_test
 Cloud testing requires Open Cloud credentials (see [`test.yaml`](.github/workflows/test.yaml) for the
 expected variables): `ROBLOX_OC_API_KEY`, `ROBLOX_UNIVERSE_ID`, `ROBLOX_PLACE_ID` and
 `TEST_TASK_FILE`.
+
+### Server vs. client context
+
+The runner in [`test/runtime.server.ts`](test/runtime.server.ts) drives all three roots. `run-in-roblox`
+executes at plugin level where `RunService:IsClient()` is `true`, so the client specs load and run
+alongside the server ones. Open Cloud, however, is **server-only** (`IsClient()` is `false`), so any
+client spec that loads a client-only module fails there.
+
+Most client code is fine on both, but `test/client/controllers/audio.spec` pulls in the 3D-sound
+module, which hard-errors off the client. It is therefore skipped when `IsClient()` is false, via
+`testPathIgnorePatterns` in [`test/client/jest.config.ts`](test/client/jest.config.ts). Anything else
+that transitively imports a client-only guard should be gated the same way.
+
+> Note: Vide-based UI cannot be unit-tested here — Vide requires its modules by string, which
+> jest-lua does not support (`Require-by-string is not enabled`).
 
 ## Assets
 
