@@ -48,6 +48,12 @@
 				"$path": "out/src/utils"
 			}
 		},
+		"ReplicatedFirst": {
+			"$className": "ReplicatedFirst",
+			"TS": {
+				"$path": "out/src/replicated-first"
+			}
+		},
 		"StarterPlayer": {
 			"$className": "StarterPlayer",
 			"StarterPlayerScripts": {
