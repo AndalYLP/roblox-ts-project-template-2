@@ -5,6 +5,7 @@ import type { OnInit } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
 
 import { getPlayerData, type PlayerData } from "shared/store/atoms/player/atom";
+import { getNestedValue } from "utils/get-nested-value";
 import type { OnPlayerJoin, OnPlayerLeave } from "server/services/player";
 import type { PlayerEntity } from "server/services/player/entity";
 
@@ -135,12 +136,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		playerData: PlayerData,
 		nestedKey: NestedKeyOf<PlayerData>,
 	): ValueOf<LeaderstatValueTypes> {
-		const keys = nestedKey.split(".");
-		let value = playerData;
-		for (const key of keys) {
-			value = value[key as never];
-		}
-
+		const value = getNestedValue(playerData, nestedKey);
 		assert(t.number(value) || t.string(value), `Value is not a number or string: ${value}`);
 
 		return value;

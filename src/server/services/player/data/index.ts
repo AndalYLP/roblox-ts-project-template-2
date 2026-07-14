@@ -18,6 +18,7 @@ import {
 	setPlayerData,
 } from "shared/store/atoms/player/atom";
 import { KickCode } from "types/enums/kick-reason";
+import { getNestedValue } from "utils/get-nested-value";
 import type { OnPlayerJoin, OnPlayerLeave } from "server/services/player";
 import type { PlayerEntity } from "server/services/player/entity";
 import type { PlayerRemovalService } from "server/services/player/removal";
@@ -129,12 +130,7 @@ export class PlayerDataService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 	}
 
 	private getPlayerData(playerData: PlayerData, nestedKey: NestedKeyOf<PlayerData>): number {
-		const keys = nestedKey.split(".");
-		let value = playerData;
-		for (const key of keys) {
-			value = value[key as never];
-		}
-
+		const value = getNestedValue(playerData, nestedKey);
 		assert(t.number(value), `Value is not a number: ${value}`);
 
 		return value;
