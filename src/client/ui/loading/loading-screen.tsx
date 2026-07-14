@@ -2,13 +2,12 @@ import { useEventListener } from "@rbxts/pretty-vide-utils";
 import { RunService } from "@rbxts/services";
 import Vide, { source } from "@rbxts/vide";
 
+import { Frame } from "client/ui/components/primitive/frame";
+import { Text } from "client/ui/components/primitive/text";
 import { px, usePx } from "client/ui/hooks/use-px";
+import { palette } from "client/ui/theme";
 import { GAME_NAME } from "shared/constants/core";
 
-const BACKGROUND = Color3.fromRGB(15, 15, 20);
-const FOREGROUND = Color3.fromRGB(235, 235, 235);
-const ACCENT = Color3.fromRGB(90, 130, 245);
-const ACCENT_LIGHT = Color3.fromRGB(160, 195, 255);
 /** Spinner rotation speed, in degrees per second. */
 const SPIN_SPEED = 200;
 /** Seconds each step of the "loading…" dot cycle is shown. */
@@ -41,11 +40,12 @@ export function LoadingScreen({ transparency }: LoadingScreenProps): Vide.Node {
 
 	return (
 		<screengui DisplayOrder={1_000_000} IgnoreGuiInset={true} ResetOnSpawn={false}>
-			<frame
-				BackgroundColor3={BACKGROUND}
-				BackgroundTransparency={transparency}
-				BorderSizePixel={0}
-				Size={UDim2.fromScale(1, 1)}
+			<Frame
+				backgroundColor={() => palette().background}
+				backgroundTransparency={transparency}
+				native={{ BorderSizePixel: 0 }}
+				position={UDim2.fromScale(0.5, 0.5)}
+				size={UDim2.fromScale(1, 1)}
 			>
 				<uilistlayout
 					FillDirection={Enum.FillDirection.Vertical}
@@ -53,35 +53,42 @@ export function LoadingScreen({ transparency }: LoadingScreenProps): Vide.Node {
 					Padding={() => new UDim(0, px(16))}
 					VerticalAlignment={Enum.VerticalAlignment.Center}
 				/>
-				<textlabel
-					AutomaticSize={Enum.AutomaticSize.XY}
-					BackgroundTransparency={1}
-					Font={Enum.Font.GothamBold}
-					Text={GAME_NAME}
-					TextColor3={FOREGROUND}
-					TextSize={() => px(34)}
-					TextTransparency={transparency}
+				<Text
+					font={Enum.Font.GothamBold}
+					native={{
+						AutomaticSize: Enum.AutomaticSize.XY,
+						TextTransparency: transparency,
+					}}
+					text={GAME_NAME}
+					textColor={() => palette().foreground}
+					textSize={() => px(34)}
 				/>
-				<frame BackgroundTransparency={1} Size={() => UDim2.fromOffset(px(28), px(28))}>
-					<uicorner CornerRadius={new UDim(1, 0)} />
-					<uistroke Color={ACCENT} Thickness={() => px(3)} Transparency={transparency}>
+				<Frame
+					backgroundTransparency={1}
+					cornerRadius={new UDim(1, 0)}
+					size={() => UDim2.fromOffset(px(28), px(28))}
+				>
+					<uistroke
+						Color={() => palette().accent}
+						Thickness={() => px(3)}
+						Transparency={transparency}
+					>
 						<uigradient
-							Color={new ColorSequence(ACCENT, ACCENT_LIGHT)}
+							Color={() => new ColorSequence(palette().accent, palette().accentLight)}
 							Rotation={rotation}
 							Transparency={SPINNER_ARC}
 						/>
 					</uistroke>
-				</frame>
-				<textlabel
-					BackgroundTransparency={1}
-					Font={Enum.Font.GothamMedium}
-					Size={() => UDim2.fromOffset(px(110), px(20))}
-					Text={() => `loading${string.rep(".", dots())}`}
-					TextColor3={FOREGROUND}
-					TextSize={() => px(16)}
-					TextTransparency={transparency}
+				</Frame>
+				<Text
+					font={Enum.Font.GothamMedium}
+					native={{ TextTransparency: transparency }}
+					size={() => UDim2.fromOffset(px(110), px(20))}
+					text={() => `loading${string.rep(".", dots())}`}
+					textColor={() => palette().foreground}
+					textSize={() => px(16)}
 				/>
-			</frame>
+			</Frame>
 		</screengui>
 	);
 }
