@@ -53,6 +53,13 @@ export class AudioController implements OnInit, OnStart {
 	}
 
 	public onStart(): void {
+		// `subscribe` only fires on subsequent changes, so apply whatever is
+		// already synced in case the settings atom was hydrated before this ran.
+		const initial = getAllLocalPlayerSettings();
+		if (initial) {
+			this.onSettingsChanged(initial);
+		}
+
 		subscribe(getAllLocalPlayerSettings, (current) => {
 			if (!current) {
 				return;
