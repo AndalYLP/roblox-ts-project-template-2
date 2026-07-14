@@ -1,5 +1,4 @@
 import { Service } from "@flamework/core";
-import { t } from "@rbxts/t";
 import type { OnStart } from "@flamework/core";
 
 import { events } from "server/network";
@@ -18,11 +17,14 @@ export class SettingsService implements OnStart {
 	public onStart(): void {
 		events.settings.setAudioVolume.connect(
 			this.playerService.withPlayerEntity((playerEntity, setting, value) => {
-				if (!t.number(value)) {
-					return;
-				}
-
 				changeSetting(playerEntity.userId, "audio", setting, math.clamp(value, 0, 1));
+			}),
+		);
+
+		// The theme value is guarded to `ThemeName` by Flamework networking.
+		events.settings.setTheme.connect(
+			this.playerService.withPlayerEntity((playerEntity, theme) => {
+				changeSetting(playerEntity.userId, "display", "theme", theme);
 			}),
 		);
 	}

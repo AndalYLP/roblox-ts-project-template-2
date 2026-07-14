@@ -23,6 +23,9 @@ export const defaultPlayerData: PlayerData = {
 			musicVolume: 1,
 			sfxVolume: 1,
 		},
+		display: {
+			theme: "dark",
+		},
 	},
 };
 

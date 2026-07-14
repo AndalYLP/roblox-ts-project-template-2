@@ -67,6 +67,9 @@ export function makePlayerData(overrides?: Partial<PlayerData>): PlayerData {
 				musicVolume: 1,
 				sfxVolume: 1,
 			},
+			display: {
+				theme: "dark",
+			},
 		},
 		...overrides,
 	};
