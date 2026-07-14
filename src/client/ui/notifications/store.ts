@@ -1,6 +1,6 @@
 import { source } from "@rbxts/vide";
 
-export type NotificationKind = "error" | "info" | "success";
+import type { NotificationKind } from "types/notification";
 
 export interface Notification {
 	readonly id: number;
