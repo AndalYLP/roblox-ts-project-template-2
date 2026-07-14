@@ -330,6 +330,10 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 		const { document, userId } = playerEntity;
 
 		if (document.read().mtx.receiptHistory.includes(PurchaseId)) {
+			// The PurchaseId being in the in-memory document does NOT guarantee it
+			// was persisted — a prior attempt may have granted in-memory but failed
+			// to save. Re-save here so we only acknowledge the receipt once the grant
+			// is durable; otherwise a crash would drop a paid-for purchase.
 			const [success] = document.save().await();
 			if (!success) {
 				return Enum.ProductPurchaseDecision.NotProcessedYet;
@@ -398,7 +402,7 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 		if (updatedReceiptHistory.size() > this.purchaseIdLog) {
 			updatedReceiptHistory = Array.shift(
 				updatedReceiptHistory,
-				updatedReceiptHistory.size() - this.purchaseIdLog + 1,
+				updatedReceiptHistory.size() - this.purchaseIdLog,
 			);
 		}
 

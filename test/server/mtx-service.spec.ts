@@ -71,7 +71,7 @@ describe("MtxService", () => {
 			}
 
 			const history = getPlayerMtxData(USER)!.receiptHistory;
-			expect(history.size() <= internals.purchaseIdLog).toBe(true);
+			expect(history.size()).toBe(internals.purchaseIdLog);
 			expect(history.includes(`id-${total - 1}`)).toBe(true);
 			expect(history.includes("id-0")).toBe(false);
 		});
