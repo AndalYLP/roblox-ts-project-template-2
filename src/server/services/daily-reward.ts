@@ -3,7 +3,7 @@ import type { OnStart } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
 
 import { events } from "server/network";
-import { Currency } from "server/services/analytics";
+import { Currency, CustomEvent } from "server/services/analytics";
 import { getDailyReward } from "shared/functions/daily-reward";
 import { addBalance, getPlayerBalanceData } from "shared/store/atoms/player/balance";
 import {
@@ -89,6 +89,8 @@ export class DailyRewardService implements OnStart {
 			getPlayerBalanceData(userId)?.money ?? amount,
 			{ transactionType: Enum.AnalyticsEconomyTransactionType.TimedReward },
 		);
+		// `value` carries the streak depth so the event is useful for retention analysis.
+		this.analyticsService.logCustomEvent(player, CustomEvent.ClaimedDailyReward, streak);
 
 		this.logger.Info(`Player ${userId} claimed daily reward ${amount} (streak ${streak})`);
 		return { amount, streak };
