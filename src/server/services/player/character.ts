@@ -71,6 +71,7 @@ export class CharacterService implements OnPlayerJoin, OnStart {
 					Promise.defer(() => {
 						debug.profilebegin(id);
 						event.onCharacterAdded(rig, playerEntity);
+						debug.profileend();
 					}),
 				)
 				.catch((err) => {

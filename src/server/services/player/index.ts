@@ -76,6 +76,7 @@ export class PlayerService implements OnStart {
 					Promise.defer(() => {
 						debug.profilebegin(id);
 						event.onPlayerJoin(playerEntity);
+						debug.profileend();
 					}),
 				)
 				.catch((err) => {
@@ -97,34 +98,27 @@ export class PlayerService implements OnStart {
 	 * @param playerEntity - The player entity associated with the player.
 	 */
 	private async onPlayerRemoving(playerEntity: PlayerEntity): Promise<void> {
-		const promises: Array<Promise<void>> = [];
-
 		debug.profilebegin("Lifecycle_Player_Leave");
-		for (const { id, event } of this.playerLeaveEvents) {
-			promises.push(
-				Promise.defer<void>((resolve, reject) => {
-					debug.profilebegin(id);
-					try {
-						const leaveEvent = async (): Promise<void> => {
-							await event.onPlayerLeave(playerEntity);
-						};
-
-						const [success, err] = leaveEvent().await();
-						if (!success) {
-							reject(err);
-							return;
-						}
-
-						resolve();
-					} catch (err) {
-						this.logger.Error(`Error in player lifecycle ${id}: ${err}`);
-					}
-				}),
-			);
-		}
-
+		// Each handler resolves regardless of outcome (errors are caught and
+		// logged), so a failing leave handler can never stall the others or skip
+		// the janitor below.
+		const promises = this.playerLeaveEvents.map(({ id, event }) =>
+			Promise.try(() => {
+				debug.profilebegin(id);
+				try {
+					// Only the synchronous portion of the handler is profiled;
+					// `try/finally` keeps the marker balanced even if it throws.
+					return event.onPlayerLeave(playerEntity);
+				} finally {
+					debug.profileend();
+				}
+			}).catch((err) => {
+				this.logger.Error(`Error in player lifecycle ${id}: ${err}`);
+			}),
+		);
 		debug.profileend();
 
+		// Always clean up the entity — this closes and saves the player document.
 		await Promise.all(promises).finally(() => {
 			playerEntity.janitor.Destroy();
 		});
