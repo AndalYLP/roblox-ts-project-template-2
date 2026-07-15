@@ -15,7 +15,7 @@ export class PlayerBadgeService implements OnPlayerJoin {
 		const { userId } = playerEntity;
 
 		this.awardBadge(playerEntity, badge.Welcome).catch((err) => {
-			this.logger.Error(`Failed to check if ${userId} has badge ${badge.Welcome}: ${err}`);
+			this.logger.Error(`Failed to award badge ${badge.Welcome} to ${userId}: ${err}`);
 		});
 
 		this.awardUnrewardedBadges(playerEntity).catch((err) => {
@@ -24,40 +24,52 @@ export class PlayerBadgeService implements OnPlayerJoin {
 	}
 
 	/**
-	 * Awards a badge to a player if they don't already have it.
+	 * Awards a badge to a player if they don't already own it.
 	 *
-	 * If the badge is unable to be awarded, the error will be logged and the
-	 * badge will not be awarded. We will still internally track that the badge
-	 * was attempted to be awarded so that any function that relies on a badge
-	 * having been awarded will consider it as awarded.
+	 * A failed award (Roblox returned false, or the badge is disabled) is recorded
+	 * as not-yet-granted rather than owned, so
+	 * {@link PlayerBadgeService.awardUnrewardedBadges} can retry it on a later join.
 	 *
 	 * @param playerEntity - The player entity to award the badge to.
-	 * @param badge - The badge to be awarded.
+	 * @param badgeId - The badge to be awarded.
 	 * @returns A promise that resolves when the badge has been awarded.
 	 */
 	public async awardBadge(playerEntity: PlayerEntity, badgeId: Badge): Promise<void> {
-		const hasBadge = await this.checkIfPlayerHasBadge(playerEntity, badgeId);
-		if (hasBadge) {
+		if (await this.checkIfPlayerHasBadge(playerEntity, badgeId)) {
 			return;
 		}
 
 		return this.giveBadge(playerEntity, badgeId);
 	}
 
+	/**
+	 * Whether the player owns the badge. A locally-confirmed award is trusted
+	 * without a network call; otherwise the authoritative Roblox state is queried
+	 * and a positive result is cached so we don't ask again.
+	 *
+	 * A stored `false` — a prior award attempt Roblox rejected — is treated as
+	 * "not owned" so it can be retried; it must NOT be collapsed into "owned".
+	 */
 	public async checkIfPlayerHasBadge(
-		{ player, userId: UserId }: PlayerEntity,
-		badge: Badge,
+		{ player, userId }: PlayerEntity,
+		badgeId: Badge,
 	): Promise<boolean> {
-		const hasBadge = getPlayerAchievementsData(UserId)?.badges.get(badge);
-		if (hasBadge !== undefined) {
+		if (getPlayerAchievementsData(userId)?.badges.get(badgeId) === true) {
 			return true;
 		}
 
-		return Promise.try(() => BadgeService.UserHasBadgeAsync(player.UserId, tonumber(badge)!));
+		const owned = await Promise.try(() =>
+			BadgeService.UserHasBadgeAsync(player.UserId, tonumber(badgeId)!),
+		);
+		if (owned) {
+			setBadgeStatus(userId, badgeId, true);
+		}
+
+		return owned;
 	}
 
-	public async getBadgeInfo(badge: Badge): Promise<BadgeInfo> {
-		return Promise.try(() => BadgeService.GetBadgeInfoAsync(tonumber(badge)!));
+	public async getBadgeInfo(badgeId: Badge): Promise<BadgeInfo> {
+		return Promise.try(() => BadgeService.GetBadgeInfoAsync(tonumber(badgeId)!));
 	}
 
 	private async awardUnrewardedBadges(playerEntity: PlayerEntity): Promise<void> {
@@ -68,21 +80,19 @@ export class PlayerBadgeService implements OnPlayerJoin {
 			return;
 		}
 
-		for (const [badge, hasBadge] of badges) {
-			if (hasBadge) {
+		// Retry every badge a prior attempt recorded as not-yet-granted (`false`).
+		for (const [badgeId, awarded] of badges) {
+			if (awarded) {
 				continue;
 			}
 
-			this.awardBadge(playerEntity, badge).catch((err) => {
-				this.logger.Error(`Failed to check if ${userId} has badge ${badge}: ${err}`);
+			this.awardBadge(playerEntity, badgeId).catch((err) => {
+				this.logger.Error(`Failed to retry badge ${badgeId} for ${userId}: ${err}`);
 			});
 		}
 	}
 
-	private async giveBadge(
-		{ player, userId: UserId }: PlayerEntity,
-		badgeId: Badge,
-	): Promise<void> {
+	private async giveBadge({ player, userId }: PlayerEntity, badgeId: Badge): Promise<void> {
 		const badgeInfo = await this.getBadgeInfo(badgeId);
 		if (!badgeInfo.IsEnabled) {
 			this.logger.Warn(`Badge ${badgeId} is not enabled.`);
@@ -97,11 +107,11 @@ export class PlayerBadgeService implements OnPlayerJoin {
 		}
 
 		if (!awarded) {
-			this.logger.Warn(`Awarded badge ${badgeId} to ${UserId} but it was not successful.`);
+			this.logger.Warn(`Awarded badge ${badgeId} to ${userId} but it was not successful.`);
 		} else {
-			this.logger.Info(`Awarded badge ${badgeId} to ${UserId}`);
+			this.logger.Info(`Awarded badge ${badgeId} to ${userId}`);
 		}
 
-		setBadgeStatus(UserId, badgeId, awarded);
+		setBadgeStatus(userId, badgeId, awarded);
 	}
 }
