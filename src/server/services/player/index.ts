@@ -167,12 +167,12 @@ export class PlayerService implements OnStart {
 	}
 
 	/**
-	 * Retrieves the player entity asynchronously. This method will reject if
-	 * the player disconnects before the entity is created.
+	 * Retrieves the player entity asynchronously, waiting for it to be created if
+	 * it does not exist yet.
 	 *
 	 * @param player - The player object.
-	 * @returns A promise that resolves to the player entity, or undefined if
-	 *   not found.
+	 * @returns A promise that resolves to the player entity, or `undefined` if the
+	 *   player disconnects before their entity is created.
 	 */
 	public async getPlayerEntityAsync(player: Player): Promise<PlayerEntity | undefined> {
 		const potentialEntity = this.getPlayerEntity(player);
@@ -190,11 +190,14 @@ export class PlayerService implements OnStart {
 		});
 
 		const [success, playerEntity] = promise.await();
-		if (!success) {
-			throw `Player ${player.UserId} disconnected before entity was created`;
-		}
-
 		disconnect.cancel();
+
+		if (!success) {
+			// The player disconnected before their entity was created. That is a
+			// routine outcome, not an error — callers handle it through the
+			// `undefined` this signature already declares.
+			return undefined;
+		}
 
 		return playerEntity;
 	}
