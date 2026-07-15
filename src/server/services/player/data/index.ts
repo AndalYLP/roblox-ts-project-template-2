@@ -104,6 +104,15 @@ export class PlayerDataService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 			const document = await this.collection.load(userId, [player.UserId]);
 
 			if (!player.IsDescendantOf(Players)) {
+				// The player left while their data was loading. The document loaded
+				// successfully and holds a session lock, so close it (releasing the
+				// lock) instead of leaking it until Lapis steals the lock back.
+				await document.close().catch((err) => {
+					this.logger.Warn(
+						`Failed to close document for ${player.UserId} after early leave: ${err}`,
+					);
+				});
+
 				return;
 			}
 
