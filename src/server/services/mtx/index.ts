@@ -100,7 +100,13 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 		);
 
 		MarketplaceService.ProcessReceipt = (...args): Enum.ProductPurchaseDecision => {
-			const result = this.processReceipt(...args).expect();
+			const [success, result] = this.processReceipt(...args).await();
+			if (!success) {
+				// Never let an error escape into Roblox's callback: an explicit
+				// NotProcessedYet is retried predictably, a thrown error is not.
+				this.logger.Error(`ProcessReceipt errored, receipt will be retried: ${result}`);
+				return Enum.ProductPurchaseDecision.NotProcessedYet;
+			}
 
 			this.logger.Info(`ProcessReceipt result: ${result}`);
 			return result;
@@ -316,7 +322,11 @@ export class MtxService implements OnInit, OnPlayerJoin, OnStart {
 
 		const playerEntity = await this.playerService.getPlayerEntityAsync(player);
 		if (!playerEntity) {
-			this.logger.Error(`No entity for player ${player.UserId}, cannot process receipt`);
+			// Routine: the player left before their entity existed. Roblox retries
+			// the receipt later, so this is not an error.
+			this.logger.Warn(
+				`Player ${player.UserId} disconnected before their entity was created, receipt will be retried`,
+			);
 			return Enum.ProductPurchaseDecision.NotProcessedYet;
 		}
 
