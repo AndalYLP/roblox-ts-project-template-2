@@ -9,6 +9,8 @@ export interface NotificationServerToClientEvents {
 	 *
 	 * @param message - The text to display.
 	 * @param kind - The visual style / severity of the toast.
+	 * @param duration - Optional seconds to keep the toast on screen; omit to use
+	 *   the client's default duration.
 	 */
-	show: (message: string, kind: NotificationKind) => void;
+	show: (message: string, kind: NotificationKind, duration?: number) => void;
 }
