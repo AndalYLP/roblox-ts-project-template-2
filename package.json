@@ -38,7 +38,7 @@
     "eslint-plugin-perfectionist": "5.10.0",
     "eslint-plugin-prettier": "5.5.5",
     "eslint-plugin-roblox-ts": "1.3.1",
-    "eslint-plugin-unused-imports": "4.3.0",
+    "eslint-plugin-unused-imports": "4.4.1",
     "rbxts-build": "github:AndalYLP/rbxts-build#add-custom-definition-for-sync-command",
     "rbxts-transform-env": "3.0.0",
     "rbxts-transformer-flamework": "1.3.2",
