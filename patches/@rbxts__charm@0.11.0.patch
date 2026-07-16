@@ -1,0 +1,13 @@
+diff --git a/src/init.luau b/src/init.luau
+index ff877859fc36dacac232f79c56b35773bff7e586..c2271b2adc63ca11f212172bdc9485402ed6b5b5 100644
+--- a/src/init.luau
++++ b/src/init.luau
+@@ -3,7 +3,7 @@
+ 	https://github.com/stackblitz/alien-signals/blob/master/src/system.ts
+ ]]
+ 
+-local system = require("@self/system")
++local system = require(script.system)
+ 
+ export type Link = system.Link
+ export type ReactiveFlags = system.ReactiveFlags

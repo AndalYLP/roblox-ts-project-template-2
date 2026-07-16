@@ -7,6 +7,14 @@ settings:
 overrides:
   '@rbxts/vide': 0.6.1
 
+patchedDependencies:
+  '@rbxts/charm-sync@0.4.0':
+    hash: fd03b0d6fae37891e447a516ecb7c6c47e35a33c4fecaf30b407f50bc24542f4
+    path: patches/@rbxts__charm-sync@0.4.0.patch
+  '@rbxts/charm@0.11.0':
+    hash: c0b51316b5decd54626fc3d0379ae04747d52aa8bb00a03e3ceabb75221b0980
+    path: patches/@rbxts__charm@0.11.0.patch
+
 importers:
 
   .:
@@ -28,10 +36,10 @@ importers:
         version: 1.0.8(@rbxts/centurion@1.0.1)
       '@rbxts/charm':
         specifier: 0.11.0
-        version: 0.11.0
+        version: 0.11.0(patch_hash=c0b51316b5decd54626fc3d0379ae04747d52aa8bb00a03e3ceabb75221b0980)
       '@rbxts/charm-sync':
         specifier: 0.4.0
-        version: 0.4.0
+        version: 0.4.0(patch_hash=fd03b0d6fae37891e447a516ecb7c6c47e35a33c4fecaf30b407f50bc24542f4)
       '@rbxts/janitor':
         specifier: 1.18.3-ts.0
         version: 1.18.3-ts.0
@@ -1852,11 +1860,11 @@ snapshots:
       '@rbxts/services': 1.6.0
       '@rbxts/t': 3.2.1
 
-  '@rbxts/charm-sync@0.4.0':
+  '@rbxts/charm-sync@0.4.0(patch_hash=fd03b0d6fae37891e447a516ecb7c6c47e35a33c4fecaf30b407f50bc24542f4)':
     dependencies:
-      '@rbxts/charm': 0.11.0
+      '@rbxts/charm': 0.11.0(patch_hash=c0b51316b5decd54626fc3d0379ae04747d52aa8bb00a03e3ceabb75221b0980)
 
-  '@rbxts/charm@0.11.0': {}
+  '@rbxts/charm@0.11.0(patch_hash=c0b51316b5decd54626fc3d0379ae04747d52aa8bb00a03e3ceabb75221b0980)': {}
 
   '@rbxts/compiler-types@1.2.3-types.1': {}
 
@@ -1957,7 +1965,7 @@ snapshots:
 
   '@rbxts/vide-charm@0.4.0(@rbxts/vide@0.6.1)':
     dependencies:
-      '@rbxts/charm': 0.11.0
+      '@rbxts/charm': 0.11.0(patch_hash=c0b51316b5decd54626fc3d0379ae04747d52aa8bb00a03e3ceabb75221b0980)
       '@rbxts/vide': 0.6.1
 
   '@rbxts/vide-ripple@0.10.2(@rbxts/vide@0.6.1)':

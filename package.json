@@ -80,6 +80,10 @@
   "pnpm": {
     "overrides": {
       "@rbxts/vide": "0.6.1"
+    },
+    "patchedDependencies": {
+      "@rbxts/charm@0.11.0": "patches/@rbxts__charm@0.11.0.patch",
+      "@rbxts/charm-sync@0.4.0": "patches/@rbxts__charm-sync@0.4.0.patch"
     }
   },
   "rbxts-build": {
