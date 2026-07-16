@@ -20,13 +20,30 @@ const DAY = 24 * 60 * 60;
 const USER_ID = 1;
 const USER = tostring(USER_ID);
 
+interface LoggedEvent {
+	event: string;
+	value?: number;
+}
+
 describe("DailyRewardService", () => {
 	let service: DailyRewardService;
 	let entity: PlayerEntity;
+	let customEvents: Array<LoggedEvent>;
 
 	beforeEach(() => {
 		resetPlayerAtoms();
-		const analytics = { logCurrencyGranted: () => {} } as unknown as AnalyticsService;
+		customEvents = [];
+		// Records custom events so the analytics contract is asserted, not just
+		// satisfied — a stub that only keeps `claim` from erroring would let a
+		// missing event slip through.
+		const analytics = {
+			logCurrencyGranted: () => {},
+			// Method shorthand, not an arrow: the service calls this as a method, so
+			// roblox-ts passes `self` first and an arrow would shift every argument.
+			logCustomEvent(_player: Player, event: string, value?: number) {
+				customEvents.push({ event, value });
+			},
+		} as unknown as AnalyticsService;
 		service = new DailyRewardService(
 			makeLogger().logger,
 			{} as unknown as PlayerService,
@@ -84,6 +101,15 @@ describe("DailyRewardService", () => {
 
 			expect(result).toBeUndefined();
 			expect(getPlayerBalanceData(USER)?.money).toBe(50);
+			expect(customEvents.size()).toBe(0);
+		});
+
+		it("logs the claim as a custom event carrying the streak", () => {
+			seed({ lastClaimTime: os.time() - DAY, streak: 3 });
+
+			service.claim(entity);
+
+			expect(customEvents).toEqual([{ event: "ClaimedDailyReward", value: 4 }]);
 		});
 
 		it("advances the streak on a consecutive day", () => {
