@@ -16,22 +16,25 @@ export interface Palette {
 /** Used until the player's persisted theme has replicated. */
 const DEFAULT_THEME: ThemeName = "dark";
 
+// Neutral, Roblox-native palette: desaturated grey surfaces (matching the
+// in-experience topbar/menus) with Roblox's signature blue as the only accent.
+// Kept deliberately plain so the template reads as stock Roblox UI.
 export const THEMES: Record<ThemeName, Palette> = {
 	dark: {
-		accent: Color3.fromRGB(90, 130, 245),
-		accentLight: Color3.fromRGB(160, 195, 255),
-		background: Color3.fromRGB(15, 15, 20),
-		foreground: Color3.fromRGB(235, 235, 235),
-		surface: Color3.fromRGB(28, 28, 36),
-		surfaceLight: Color3.fromRGB(48, 48, 60),
+		accent: Color3.fromRGB(0, 162, 255),
+		accentLight: Color3.fromRGB(87, 194, 255),
+		background: Color3.fromRGB(18, 19, 21),
+		foreground: Color3.fromRGB(255, 255, 255),
+		surface: Color3.fromRGB(32, 34, 37),
+		surfaceLight: Color3.fromRGB(48, 50, 54),
 	},
 	light: {
-		accent: Color3.fromRGB(60, 110, 235),
-		accentLight: Color3.fromRGB(120, 160, 250),
-		background: Color3.fromRGB(238, 239, 244),
-		foreground: Color3.fromRGB(28, 28, 36),
+		accent: Color3.fromRGB(0, 162, 255),
+		accentLight: Color3.fromRGB(87, 194, 255),
+		background: Color3.fromRGB(242, 243, 245),
+		foreground: Color3.fromRGB(25, 27, 29),
 		surface: Color3.fromRGB(255, 255, 255),
-		surfaceLight: Color3.fromRGB(228, 230, 238),
+		surfaceLight: Color3.fromRGB(226, 228, 232),
 	},
 };
 
