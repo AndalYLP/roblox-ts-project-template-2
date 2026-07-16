@@ -39,7 +39,7 @@ run()
 	.then((finishLoading) => {
 		Log.Info("Flamework ignited succesfully");
 		FLAMEWORK_IGNITED.Fire();
-		task.wait(5);
+
 		finishLoading();
 	})
 	.catch((err) => {
