@@ -7,5 +7,5 @@ export interface StoreClientToServerEvents {
 }
 
 export interface StoreServerToClientEvents {
-	sync: (payload: SyncPayload<GlobalAtoms>) => void;
+	sync: (payload: Array<SyncPayload<GlobalAtoms, true>>) => void;
 }

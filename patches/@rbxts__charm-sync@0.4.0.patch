@@ -1,0 +1,78 @@
+diff --git a/src/client.luau b/src/client.luau
+index a514b750230e132a7425dba35c4f33311bb44c1b..35f7d6f08f4fa89982a5316231771619e261d6f1 100644
+--- a/src/client.luau
++++ b/src/client.luau
+@@ -1,6 +1,6 @@
+-local Charm = require("../Charm")
+-local patch = require("./patch")
+-local types = require("./types")
++local Charm = require(script.Parent.Parent.Charm)
++local patch = require(script.Parent.patch)
++local types = require(script.Parent.types)
+ 
+ type SyncPayload = types.SyncPayload
+ type ReactiveProxy<T = { [any]: any }> = types.ReactiveProxy<T>
+diff --git a/src/init.luau b/src/init.luau
+index 53a63538a393eac95de5bb8306bc5b9b83495caf..4f877adfbc2c2cfd9c7cb2bb4f5877deb8374e0b 100644
+--- a/src/init.luau
++++ b/src/init.luau
+@@ -1,9 +1,9 @@
+-local client = require("@self/client")
+-local config = require("@self/config")
+-local patch = require("@self/patch")
+-local server = require("@self/server")
+-local types = require("@self/types")
+-local utils = require("@self/utils")
++local client = require(script.client)
++local config = require(script.config)
++local patch = require(script.patch)
++local server = require(script.server)
++local types = require(script.types)
++local utils = require(script.utils)
+ 
+ export type None = types.None
+ export type SyncPayload = types.SyncPayload
+diff --git a/src/patch.luau b/src/patch.luau
+index d6b940fdbaaaa33f023ea595b2feacefa3a90719..afff148551270a16e9be57004f2c0f4c7e7d9604 100644
+--- a/src/patch.luau
++++ b/src/patch.luau
+@@ -1,7 +1,7 @@
+-local Charm = require("../Charm")
+-local config = require("./config")
+-local types = require("./types")
+-local validate = require("./validate")
++local Charm = require(script.Parent.Parent.Charm)
++local config = require(script.Parent.config)
++local types = require(script.Parent.types)
++local validate = require(script.Parent.validate)
+ 
+ local flags = Charm.flags
+ 
+diff --git a/src/server.luau b/src/server.luau
+index ca04ba74e1fa12e7cc03a033962aff6c84f77705..9b54b9c676549cd3ed5f251a260e54b3e3cba011 100644
+--- a/src/server.luau
++++ b/src/server.luau
+@@ -1,8 +1,8 @@
+-local Charm = require("../Charm")
+-local config = require("./config")
+-local patch = require("./patch")
+-local types = require("./types")
+-local utils = require("./utils")
++local Charm = require(script.Parent.Parent.Charm)
++local config = require(script.Parent.config)
++local patch = require(script.Parent.patch)
++local types = require(script.Parent.types)
++local utils = require(script.Parent.utils)
+ 
+ type SyncPayload = types.SyncPayload
+ 
+diff --git a/src/utils.luau b/src/utils.luau
+index 4a49871333a621083a75d0a87d540d8d1f397a35..589199320f51d772788e6a2d77a04c69716ec9fe 100644
+--- a/src/utils.luau
++++ b/src/utils.luau
+@@ -1,4 +1,4 @@
+-local Charm = require("../Charm")
++local Charm = require(script.Parent.Parent.Charm)
+ 
+ type Atom<T> = Charm.Atom<T>
+ 
