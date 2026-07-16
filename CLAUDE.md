@@ -11,14 +11,34 @@ Luau, synced with **Rojo**.
   `run-in-roblox`. **Always verify with this.** Do NOT manually `rm -rf out` / run raw `rbxtsc` — that
   causes incremental-build flakiness (missing `out/test/*`, rojo "path not found").
 - `pnpm dev:cloud_test` — headless tests via Lune/Open Cloud (needs `.env` creds).
+- `pnpm dev:compile` — `rbxtsc` only. Use it to read type errors directly: `dev:build`/`dev:test` run
+  the compiler quietly, so a compile failure surfaces as a confusing downstream rojo error instead.
 - `pnpm lint` — `eslint src` (CI lints `src` only; the perfectionist plugin sorts imports/members, so
   run `eslint --fix`).
+
+### Patched dependencies
+
+`patches/` holds pnpm patches registered under `pnpm.patchedDependencies`. **Charm 0.11 and charm-sync
+0.4 require their own internals by string** (`require("@self/system")`), which jest-lua rejects
+("Require-by-string is not enabled for use inside Jest") — that makes *every* spec importing Charm fail
+to load. The patches rewrite those to instance requires (`require(script.system)`). **Re-create them if
+you bump Charm.**
+
+`pnpm install` runs `prepare`, which uses `cp` and **fails on Windows**, aborting patch application.
+Install with `pnpm install --ignore-scripts`.
 
 ### Stale-build recovery
 
 If you hit `attempt to call a table value` (broken Flamework decorators), a rojo "path not found", or
 missing `out/test/*.luau`, the incremental build (Flamework/rbxts-build) is stale. Fix with **one**
 `pnpm clean` then `pnpm dev:test`. This is rare — don't clean on every run.
+
+If a build still fails at rojo with "path not found" afterwards, it's usually **not** rojo: a failed
+`rbxtsc` leaves `out/` empty and rojo then can't resolve its `$path`s. Run `pnpm dev:compile` to see
+the real type errors.
+
+A stale build **skips files silently, hiding real type errors** — specs keep "passing" against stale
+compiled output. If something compiles but behaves impossibly, clean-compile before believing it.
 
 ## Layout
 

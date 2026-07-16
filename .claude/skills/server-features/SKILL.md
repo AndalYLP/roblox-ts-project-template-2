@@ -32,7 +32,7 @@ Put **config/pure logic** (reward tables, formulas) in `shared/functions/`, **no
 
 ## Store-driven over events
 
-Player atoms sync to the client (`charm-sync` + `filterPayload`). Prefer having the client
+Player atoms sync to the client via `charm-sync` (see **Sync** below). Prefer having the client
 `subscribe(...)` to the atom and react, instead of firing a redundant server→client event — the state
 already replicates. Detect a real change by ignoring the initial load:
 
@@ -44,6 +44,25 @@ subscribe(() => getPlayerDailyRewardData(USER_ID), (current, previous) => {
 ```
 
 Only add a server→client remote when the client genuinely needs data that isn't in the store.
+
+## Sync (charm-sync)
+
+Three files: `shared/store/sync/atoms.ts` (`atoms` = the signal map, `GlobalAtoms = typeof atoms`),
+`server/store/sync.server.ts`, `client/store/sync.client.ts`.
+
+- **Privacy is enforced at the signal source, not on the payload.**
+  `shared/store/sync/player-signals.ts` builds a per-client map: it spreads `...atoms` and overrides
+  only `playersAtom.datastore` with a `computed` narrowed to that player's own entry. So every payload
+  Charm produces is already scoped, and nothing downstream has to filter.
+  **Spread, never re-list** — a re-listed map means each new atom must be remembered here or it
+  silently stops syncing. Covered by `test/shared/store/player-signals.spec.ts`.
+- **Client and server must register the same shape**, or keys won't match and sync dies *silently*
+  (no error, the client just never updates). `client.addSignals(atoms)` and
+  `server.addSignalsToClient<GlobalAtoms>(player, getPlayerSignals(userId))` both use the unwrapped
+  map — wrapping either side (`{ atoms }`) prefixes every key. Nothing type-checks this agreement.
+- `server.connect` / `client.patch` take an **array** of payloads per flush, not one (batching; see
+  `config.preserveHistory`). Pass `<GlobalAtoms>` explicitly or the payload type widens to
+  `ServerSignalMap`.
 
 ## Network
 
