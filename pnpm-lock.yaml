@@ -27,11 +27,11 @@ importers:
         specifier: 1.0.8
         version: 1.0.8(@rbxts/centurion@1.0.1)
       '@rbxts/charm':
-        specifier: 0.10.0
-        version: 0.10.0
+        specifier: 0.11.0
+        version: 0.11.0
       '@rbxts/charm-sync':
-        specifier: 0.3.0
-        version: 0.3.0(@rbxts/charm@0.10.0)
+        specifier: 0.4.0
+        version: 0.4.0
       '@rbxts/janitor':
         specifier: 1.18.3-ts.0
         version: 1.18.3-ts.0
@@ -84,8 +84,8 @@ importers:
         specifier: 0.6.1
         version: 0.6.1
       '@rbxts/vide-charm':
-        specifier: 0.3.0
-        version: 0.3.0(@rbxts/charm@0.10.0)(@rbxts/vide@0.6.1)
+        specifier: 0.4.0
+        version: 0.4.0(@rbxts/vide@0.6.1)
       '@rbxts/vide-ripple':
         specifier: 0.10.2
         version: 0.10.2(@rbxts/vide@0.6.1)
@@ -409,13 +409,11 @@ packages:
   '@rbxts/centurion@1.0.1':
     resolution: {integrity: sha512-RFkIvnivn43/jYCg0ue90fXg+aRlhFUUc8OmYP0UWpIPRxTF3PTHpMKp7EZMXoZl7J7XzUngcqYcL1senBnenQ==}
 
-  '@rbxts/charm-sync@0.3.0':
-    resolution: {integrity: sha512-+kvyn6pUXkLpvxFnZhMDE/v15LA1gnfKlmmiK85O0EX5GoY1Yqs4GJUGy1X04b7OdTeXxX9rKrFpmJNX+9054A==}
-    peerDependencies:
-      '@rbxts/charm': 0.10.0
+  '@rbxts/charm-sync@0.4.0':
+    resolution: {integrity: sha512-cBsyZ+Ra/bjeKWTELb1pZMAbjAYi272a7QL0ngZDmMphlzs1Zg6whIRFOuz9ERB8HKlMwZDtqxYM1f5ePaTadg==}
 
-  '@rbxts/charm@0.10.0':
-    resolution: {integrity: sha512-pcGpNyqNOcJ7r9UbAjFaUqU0F9Q+wCr4/2kUs8L0hh4dVhUN7t6ur4P7zAMzNuMJQG8YP47a9rq0l0/LlhLuow==}
+  '@rbxts/charm@0.11.0':
+    resolution: {integrity: sha512-dqEJ48C4N/7GkAA6veMJyENKxNvme0GYiBV9T5+xPo4gGHJ+Qf8nt0ErTRB3dtMWpnxiPgVD0Xfyi0qEOPiryw==}
 
   '@rbxts/compiler-types@1.2.3-types.1':
     resolution: {integrity: sha512-SXXIBazyJ7N6d2xcy471/kqZZpCv7EDOWrRJ45jcv3g00VQaZwYl4Elr10woqRloIblQanwJ7yUqGXAsWv7iuQ==}
@@ -479,9 +477,6 @@ packages:
   '@rbxts/ripple@0.10.2':
     resolution: {integrity: sha512-IakL24BomX5BX0CZSMjDSZdCUNwRbTA6GP+H62qgXQymql3h9MLjit4Jsaz9+NLrKAZfNKSfajMREr/fJkNEdw==}
 
-  '@rbxts/ripple@0.10.2':
-    resolution: {integrity: sha512-IakL24BomX5BX0CZSMjDSZdCUNwRbTA6GP+H62qgXQymql3h9MLjit4Jsaz9+NLrKAZfNKSfajMREr/fJkNEdw==}
-
   '@rbxts/ripple@0.9.3':
     resolution: {integrity: sha512-GmwjQl7a8pvGPGQYLmaAcf2RBPpneOL5P1+U8CzTHt9tBhCdk0TEJ/MQoTv9JnHD62RMBE1jogQBvuGgl9VXAg==}
 
@@ -512,10 +507,9 @@ packages:
   '@rbxts/validate-tree@2.0.2':
     resolution: {integrity: sha512-OA0E9ZjEeOpPa3XeV5/oC51aro2QFcL5dItufbagYZW8TOsX8C+FDXLx+A/ulMwcF42WcFNcQybxzcWSS/QSrA==}
 
-  '@rbxts/vide-charm@0.3.0':
-    resolution: {integrity: sha512-leefLurc48uaJ72HAUBe0JsDcdvr4qib+XWC5196hkbDAOqdjqyjt8e1qY7WK8myG+QKOrU4U3M1hGFVJKdbKg==}
+  '@rbxts/vide-charm@0.4.0':
+    resolution: {integrity: sha512-GVlxSQB+WBEqtRk4gX4dCYM/yWhSu7LxjU2Ia6Vo/a//50gsWDnEZ77orY8ta5mF4AIv5DI0LuO6pxC2WnrUJQ==}
     peerDependencies:
-      '@rbxts/charm': 0.10.0
       '@rbxts/vide': 0.6.1
 
   '@rbxts/vide-ripple@0.10.2':
@@ -1337,7 +1331,6 @@ packages:
 
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
-    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   validate-npm-package-license@3.0.4:
@@ -1859,11 +1852,11 @@ snapshots:
       '@rbxts/services': 1.6.0
       '@rbxts/t': 3.2.1
 
-  '@rbxts/charm-sync@0.3.0(@rbxts/charm@0.10.0)':
+  '@rbxts/charm-sync@0.4.0':
     dependencies:
-      '@rbxts/charm': 0.10.0
+      '@rbxts/charm': 0.11.0
 
-  '@rbxts/charm@0.10.0': {}
+  '@rbxts/charm@0.11.0': {}
 
   '@rbxts/compiler-types@1.2.3-types.1': {}
 
@@ -1940,8 +1933,6 @@ snapshots:
 
   '@rbxts/ripple@0.10.2': {}
 
-  '@rbxts/ripple@0.10.2': {}
-
   '@rbxts/ripple@0.9.3': {}
 
   '@rbxts/services@1.6.0': {}
@@ -1964,9 +1955,9 @@ snapshots:
 
   '@rbxts/validate-tree@2.0.2': {}
 
-  '@rbxts/vide-charm@0.3.0(@rbxts/charm@0.10.0)(@rbxts/vide@0.6.1)':
+  '@rbxts/vide-charm@0.4.0(@rbxts/vide@0.6.1)':
     dependencies:
-      '@rbxts/charm': 0.10.0
+      '@rbxts/charm': 0.11.0
       '@rbxts/vide': 0.6.1
 
   '@rbxts/vide-ripple@0.10.2(@rbxts/vide@0.6.1)':
