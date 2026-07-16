@@ -65,7 +65,7 @@
     "@rbxts/log": "0.6.3",
     "@rbxts/make": "1.0.6",
     "@rbxts/pretty-vide-utils": "0.0.5",
-    "@rbxts/ripple": "0.10.1",
+    "@rbxts/ripple": "0.10.2",
     "@rbxts/services": "1.6.0",
     "@rbxts/set-timeout": "1.1.2",
     "@rbxts/sift": "0.0.11",
