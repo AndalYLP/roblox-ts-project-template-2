@@ -73,7 +73,7 @@
     "@rbxts/ui-labs": "2.4.2",
     "@rbxts/validate-tree": "2.0.2",
     "@rbxts/vide": "0.6.1",
-    "@rbxts/vide-charm": "0.3.0",
+    "@rbxts/vide-charm": "0.4.0",
     "@rbxts/vide-ripple": "0.10.2",
     "@rbxts/zone-plus": "3.2.0"
   },
