@@ -49,7 +49,10 @@ describe("balance atom", () => {
 			USER,
 			makePlayerData({
 				balance: { money: 0 },
-				settings: { audio: { musicVolume: 0.5, sfxVolume: 0.25 } },
+				settings: {
+					audio: { musicVolume: 0.5, sfxVolume: 0.25 },
+					display: { theme: "dark" },
+				},
 			}),
 		);
 

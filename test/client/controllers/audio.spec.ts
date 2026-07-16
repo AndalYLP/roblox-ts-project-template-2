@@ -46,7 +46,10 @@ describe("AudioController", () => {
 	});
 
 	it("applies volume settings to the matching groups", () => {
-		internals.onSettingsChanged({ audio: { musicVolume: 0.3, sfxVolume: 0.7 } });
+		internals.onSettingsChanged({
+			audio: { musicVolume: 0.3, sfxVolume: 0.7 },
+			display: { theme: "dark" },
+		});
 
 		// `SoundGroup.Volume` is a 32-bit float, so it reads back slightly off from
 		// the double literals — compare with tolerance rather than exact equality.

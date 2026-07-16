@@ -12,7 +12,12 @@ describe("settings atom", () => {
 		resetPlayerAtoms();
 		setPlayerData(
 			USER,
-			makePlayerData({ settings: { audio: { musicVolume: 1, sfxVolume: 1 } } }),
+			makePlayerData({
+				settings: {
+					audio: { musicVolume: 1, sfxVolume: 1 },
+					display: { theme: "dark" },
+				},
+			}),
 		);
 	});
 
