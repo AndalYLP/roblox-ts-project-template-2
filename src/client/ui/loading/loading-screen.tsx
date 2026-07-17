@@ -59,6 +59,7 @@ export function LoadingScreen({ transparency }: LoadingScreenProps): Vide.Node {
 						AutomaticSize: Enum.AutomaticSize.XY,
 						TextTransparency: transparency,
 					}}
+					size={new UDim2()}
 					text={GAME_NAME}
 					textColor={() => palette().foreground}
 					textSize={() => px(34)}
