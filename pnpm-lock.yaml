@@ -1186,7 +1186,7 @@ packages:
     engines: {node: '>=6'}
 
   rbxts-build@https://codeload.github.com/AndalYLP/rbxts-build/tar.gz/958545279184e138d8770d04219d30b6c1275a19:
-    resolution: {tarball: https://codeload.github.com/AndalYLP/rbxts-build/tar.gz/958545279184e138d8770d04219d30b6c1275a19}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/AndalYLP/rbxts-build/tar.gz/958545279184e138d8770d04219d30b6c1275a19}
     version: 2.4.3
     hasBin: true
 
