@@ -64,6 +64,15 @@ Construct services directly and pass stubbed deps — do NOT ignite Flamework.
   ```
   A no-op stub also breaks the moment the service starts calling a method it doesn't have
   (`attempt to call missing method '<x>' of table`) — add the method when you add the call.
+- **Context-based subsystems** (a class that takes a `FooContext` of callbacks instead of
+  Flamework DI — see the "subsystem extraction" convention in CLAUDE.md) test the same way:
+  `new Subsystem(stubContext)`, no Flamework. Two stub styles coexist in one context — the
+  **class-instance collaborators** it hands in (another subsystem, a service…) are called as methods,
+  so stub those with **method shorthand** (absorbs `self`); the context's own **function-type
+  properties** (`readonly onX: () => void`) are called with `.`, so stub those with **arrows**.
+  Capture a `schedule(secs, cb)`-style property to fire timers synchronously in the test.
+  Logic-only paths test cleanly; paths that `task.wait` or touch real `Instance`s aren't
+  unit-testable — cover those with `dev:test` / in Studio.
 - Time-based logic (daily reward): `math.floor(t / DAY)` day-index diffs are exact, so seed
   `lastClaimTime = os.time() - N * DAY` relative to `os.time()`.
 

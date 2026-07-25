@@ -15,6 +15,8 @@ Luau, synced with **Rojo**.
   the compiler quietly, so a compile failure surfaces as a confusing downstream rojo error instead.
 - `pnpm lint` — `eslint src` (CI lints `src` only; the perfectionist plugin sorts imports/members, so
   run `eslint --fix`).
+- `pnpm assets:upload` — **Asphalt** uploads assets under `assets/**/*` and regenerates the typed
+  `assets` module (`src/shared/constants/assets/`). See the `assets` skill.
 
 ### Patched dependencies
 
@@ -63,9 +65,18 @@ compiled output. If something compiles but behaves impossibly, clean-compile bef
   `Funnels`, `ONBOARDING_STEPS`) — don't scatter raw strings.
 - **UI**: use the primitives in `client/ui/components/primitive/` (never raw `<frame>`/`<textlabel>`/
   `<textbutton>`); extra props go through the `native` prop.
+- **Extracting subsystems** from a large component/service: pull cohesive logic into a plain class
+  that takes a **`Context` interface**. Declare that context's members as `readonly` **function-type
+  properties** (`readonly foo: () => T`), **not** method shorthand — roblox-ts then emits self-free
+  `.` calls, matching the **arrows capturing `this`** the parent implements them with (a method-shorthand
+  member compiles to a `:` call and shifts every argument by one). Keep owned/shared state in the parent;
+  the class holds only its own choreography. The subsystem is then unit-testable by stubbing the context
+  (see the `testing` skill).
 
 ## Skills
 
 - `testing` — writing/running tests, the server-only harness, client-spec gating, stale-build recovery.
 - `vide-ui` — building UI with the primitives, reactivity, and UI-Labs stories.
 - `server-features` — adding services, data slices, network remotes, and analytics.
+- `centurion-commands` — adding dev/admin slash commands, groups, argument types, and guards.
+- `assets` — adding/using image assets via Asphalt (`assets/`, `pnpm assets:upload`, the `images` module).

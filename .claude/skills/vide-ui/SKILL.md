@@ -47,6 +47,8 @@ Never write raw `<frame>` / `<textlabel>` / `<textbutton>` / `<imagelabel>` / `<
 
 ## Stories (UI-Labs)
 
+- **Write the story FIRST, before (or alongside) the component** — it's how the work is reviewed in
+  Studio as you go. Every new component gets a `*.story.tsx`; don't defer it to the end.
 - File `*.story.tsx` (excluded from prod build; present in dev, discovered by the UI-Labs plugin in
   Studio). Snippet in `.vscode/vide.code-snippets`.
 - `export = CreateVideStory({ vide: Vide, controls: {...} }, ({ controls }) => { usePx(); return <Comp/>; })`.

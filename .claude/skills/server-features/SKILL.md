@@ -17,6 +17,15 @@ Stack: **Flamework** (services, DI, lifecycle), **Charm** (atoms + `charm-sync`)
   `Player`-first callback into an entity-first one, e.g. when connecting a remote.
 - Never let a background/marketplace/analytics call crash gameplay — wrap in `pcall` and log (see
   `AnalyticsService`, `MtxService`).
+- **Log levels** (`setupLogger` in `shared/functions/logger.ts`): the sink routes `Warn`/`Error`/
+  `Fatal` through Luau `warn()`/`error()`, which **Roblox surfaces on the dev dashboard** — reserve
+  them for *real* problems a developer must act on (misconfig, failed requests, missing instances).
+  `Info`/`Debug`/`Verbose` go through `print()`, never the dashboard. So:
+  - **`Warn`/`Error`/`Fatal`** — dashboard-worthy problems only.
+  - **`Info`** — notable gameplay/lifecycle events (a rope snapping, a penalty, a purchase), however
+    dramatic. Ships to output in production.
+  - **`Debug`/`Verbose`** — fine-grained diagnostics. The prod min level is `Information` (dev is
+    `Debugging`), so these are **dropped in production** — use them freely for noisy dev-only detail.
 
 ## Player data (persisted)
 
