@@ -45,7 +45,7 @@
     "rbxts-transformer-inline": "1.2.71",
     "rimraf": "6.1.3",
     "roblox-ts": "3.0.0",
-    "typescript": "5.9.3",
+    "typescript": "7.0.2",
     "typescript-eslint": "8.63.0"
   },
   "dependencies": {
