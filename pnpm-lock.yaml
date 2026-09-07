@@ -108,8 +108,8 @@ importers:
         specifier: 3.0.0-types.0
         version: 3.0.0-types.0
       '@rbxts/types':
-        specifier: 1.0.906
-        version: 1.0.906
+        specifier: 1.0.949
+        version: 1.0.949
       '@typescript-eslint/eslint-plugin':
         specifier: 8.63.0
         version: 8.63.0(@typescript-eslint/parser@8.63.0(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.5(jiti@2.6.1))(typescript@5.9.3)
@@ -488,8 +488,8 @@ packages:
   '@rbxts/t@3.2.1':
     resolution: {integrity: sha512-/fnf2QSx+TI3HSJ6QW2ikvGQk0mlx/63UXo60pLAKGqbxXiAuTJh88bpKpHw6aCzfFLJAwrVIcgCUOokLMPcag==}
 
-  '@rbxts/types@1.0.906':
-    resolution: {integrity: sha512-WmuBYq/EqFXi687DnaKMQOpXorypR2Kq2JEsiWxz1OBKTg9Vvcy7w8y9UV5JPaJK+GgVp5rw0MjnxYffKHsldA==}
+  '@rbxts/types@1.0.949':
+    resolution: {integrity: sha512-iRDxwdDjYgHJWhLXecJdrtpoKTI0qtVPsEMIjlRHWn2bu9LGQBSTxWzsAGe9bHYPftGqL3pE3ydVF2q/YaVVEA==}
 
   '@rbxts/ui-labs@2.4.2':
     resolution: {integrity: sha512-9cyzDYN4mM7KSupZpbHRCUWCfSHzy8LCqa9Czys2jaKYUCn8oV4j5AE+5jTrHD/8RcltP5EvCSFIFwB0N/NfxA==}
@@ -850,6 +850,7 @@ packages:
   eslint@9.39.5:
     resolution: {integrity: sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -1894,7 +1895,7 @@ snapshots:
   '@rbxts/make@1.0.6':
     dependencies:
       '@rbxts/compiler-types': 1.2.3-types.1
-      '@rbxts/types': 1.0.906
+      '@rbxts/types': 1.0.949
 
   '@rbxts/message-templates@0.3.2': {}
 
@@ -1929,7 +1930,7 @@ snapshots:
 
   '@rbxts/t@3.2.1': {}
 
-  '@rbxts/types@1.0.906': {}
+  '@rbxts/types@1.0.949': {}
 
   '@rbxts/ui-labs@2.4.2': {}
 
